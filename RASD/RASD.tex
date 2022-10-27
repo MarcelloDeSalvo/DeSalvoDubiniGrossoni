@@ -1,0 +1,210 @@
+\documentclass[table, 12pt]{article} % \documentclass{} is the first command in any LaTeX code.  It is used to define what kind of document you are creating such as an article or a book, and begins the document preamble
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{float}
+\usepackage[export]{adjustbox}
+\usepackage{longtable}
+\usepackage{listings}
+%\usepackage{alloy}
+
+
+
+% The preamble ends with the command \begin{document}
+\begin{document} % All begin commands must be paired with an end command somewhere
+    
+    \begin{titlepage}
+        \centering
+        {\scshape\large AY 2022/2023 \par}
+        \vfill
+        \includegraphics[width=200pt]{assets/logo_polimi}\par\vspace{1cm}
+        \vspace{0.5cm}
+        {\huge\bfseries RASD\@: Requirement Analysis
+            and Specification Document \par}
+        \vspace{1cm}
+        {\large {Marcello De Salvo\quad Riccardo Grossoni \par Francesco Dubini}\par}
+        \vfill
+        {\large Professor\par
+            Elisabetta \textsc{Di Nitto}}
+        \vfill
+        {\large \textbf{Version 0.1}\\ \today \par}
+    \end{titlepage}
+    
+    \thispagestyle{plain}
+    \pagenumbering{gobble}
+
+    % Blank page
+    \mbox{}
+
+    % Table of content page
+    \newpage
+    \pagenumbering{roman}
+    \tableofcontents
+
+    % Start of the document
+    \newpage
+    \pagenumbering{arabic}
+
+    \section{Introduction}
+        \emph{Intro}
+    
+    \subsection{Purpose} %goals of the project
+        \emph{Purpose} 
+
+    \subsubsection{Goals}
+        \newcounter{goalCtr}
+        \underline{Shared goals}
+        \begin{enumerate}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Goal title} \\Goal 1 
+        \end{enumerate}
+        \underline{eMSPs}
+        \begin{enumerate}
+            \item \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Goal title}\\
+            Goal text
+
+            \item \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Goal title}\\
+            Goal text
+        \end{enumerate}
+        
+    
+    \subsubsection{Key Performance Indexes}
+        Text
+        \begin{itemize}  
+            \item \textbf{(K1) K1}: K1 text.
+            \item \textbf{(K2) K2}: K2 text.
+            \item \textbf{(K3) K3}: k3 text.
+            \item \textbf{(K4) K4}: K4 text.
+            \item \textbf{(K5) K5}: K5 text.
+        \end{itemize}
+        
+        The previous KPIs are thought as indexes to understand if the application is reaching the expected goals, especially:
+        
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{|l|l|}
+                \hline
+                \textbf{KPI} & \textbf{Goals}\\\hline
+                K1 & G1, G2, G3, G4\\\hline
+                K2 & G1, G2 \\\hline
+                K3 & G10\\\hline   
+                K4 & G5 \\\hline
+                K5 & G6, G7, G8\\\hline
+            \end{tabular}
+        \end{table}
+    
+    \subsection{Scope} %analysis of the world and shared phenomena
+    %ADD: basic service and advanced functionalities
+    \subsubsection*{Shared Phenomena}
+        \newcounter{machineP}
+        \rowcolors{2}{red!25}{}
+        \begin{center}
+        \begin{tabular}{|c|p{0.70\textwidth}|c|}
+            \hline
+            \textbf{ID} & \textbf{Phenomenom}\\\hline\hline
+            \stepcounter{machineP}
+            M\arabic{machineP} & Text \\\hline
+            \stepcounter{machineP}
+            M\arabic{machineP} & Text \\\hline %might remove this
+            \stepcounter{machineP}
+            M\arabic{machineP} & Text \\\hline
+            \stepcounter{machineP}
+            M\arabic{machineP} &  Text \\\hline
+            \stepcounter{machineP}
+            M\arabic{machineP} &  Text \\\hline
+            \hline
+        \end{tabular}
+        \end{center}
+    
+    \subsubsection*{World Phenomena}
+    \newcounter{worldP}
+    \begin{center}
+        \rowcolors{2}{red!25}{}
+        \begin{tabular}{|c|p{0.70\textwidth}|c|}
+            \hline
+            \textbf{ID} & \textbf{Phenomenom}\\\hline\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Text \\\hline
+            \hline
+        \end{tabular}
+    \end{center}
+    
+    \subsection{Definitions, acronyms, abbreviations}
+    \subsubsection*{Definitions}
+        \begin{itemize}
+            \item \textbf{Def 1}: def 1 
+            \item \textbf{Def 2}: def 2
+            \item \textbf{Def 3}: def 3
+            \item \textbf{Def 4}: def 4
+            \item \textbf{Def 5}: def 5
+            \item \textbf{Def 6}: def 6
+            \item \textbf{Def 7}: def 7
+            \item \textbf{Def 8}: def 8  
+        \end{itemize}
+
+    \subsubsection*{Acronyms}
+        \begin{itemize}
+            \item \textbf{UML}: Unified Modeling Language
+        \end{itemize}
+
+    \subsection{Revision history}
+        \begin{itemize}
+            \item Version 0.1: Setup
+            \begin{itemize}
+                \item[--] Created first layout
+            \end{itemize}
+        \end{itemize}
+
+    \subsection{Reference documents}
+        \begin{itemize}
+            \item Specification document: "Assignment RDD AY 2022-2023"
+            \item Alloy documentation: https://alloytools.org/documentation.html
+        \end{itemize}
+    
+    \subsection{Document structure}
+        \begin{itemize}
+            \item \textbf{Section 1} Intro.
+            \item \textbf{Section 2} Overall Description
+            \item \textbf{Section 3} Section 2 Expanded + Requirements.
+            \item \textbf{Section 4} Alloy.
+        \end{itemize}
+
+    \newpage
+
+
+
+\end{document} % This is the end of the document
