@@ -51,71 +51,58 @@
     \pagenumbering{arabic}
 
     \section{Introduction}
-        \emph{Intro}
-    
+        \emph{Electric mobility} (e-Mobility) is a way to reduce the carbon footprint caused by motorized vehicles in urban and sub-urban areas.\\
+        % One way to do so while using an electric vehicle is to fit and optimize the charging process into our daily schedule
+        Comfortably knowing how to fit the charging process into one's daily schedule is a fundamental step towards that goal.
+        
     \subsection{Purpose} %goals of the project
-        \emph{Purpose} 
+
+        %One of the biggest drawbacks of electric vehicles is the toll the charging process takes in terms of time. So on and so forth
+         
+        In the last 3 years the number of electric vehicles has doubled and, with the proposed european legislation on banning diesel fuel by 2035, the future seems to be full-electric. This rapid change requires a better and more efficient infrastructure to serve this ever increasing demand.
+
+        %In these years the number of electric vehicles has been on the rise and, as it is expcted to be quadrupled by 2050, a better working infrastructure for them is needed.
+        
+        %Electric vehicles will quadruple in the next 5 years. As of now, having to charge your car in the middle of the day can prove to be a very daunting task
+
+        \emph{eMall} (e-Mobility for all) aims to ease the charging process for the users through the \emph{e-Mobility Service Provider's} (eMSP) platform,
+        providing all the needed end-users' services and by actively communicating with multiple \emph{Charging Point Operators'} (CPOs) \emph{Management Systems} (CPMS).   
 
     \subsubsection{Goals}
         \newcounter{goalCtr}
-        \underline{Shared goals}
-        \begin{enumerate}
-            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Goal title} \\Goal 1 
-        \end{enumerate}
-        \underline{eMSPs}
-        \begin{enumerate}
-            \item \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Goal title}\\
-            Goal text
-
-            \item \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Goal title}\\
-            Goal text
-        \end{enumerate}
-        
-    
-    \subsubsection{Key Performance Indexes}
-        Text
-        \begin{itemize}  
-            \item \textbf{(K1) K1}: K1 text.
-            \item \textbf{(K2) K2}: K2 text.
-            \item \textbf{(K3) K3}: k3 text.
-            \item \textbf{(K4) K4}: K4 text.
-            \item \textbf{(K5) K5}: K5 text.
+        \underline{User goals}
+        \begin{itemize}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Know about the charging stations nearby, their cost, any special offer they have.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Book a charge in a specific charging station for a certain timeframe.}\\ description
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Start the charging process at a certain station.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Notify the user when the charging process is finished.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Pay for the obtained service.}
         \end{itemize}
-        
-        The previous KPIs are thought as indexes to understand if the application is reaching the expected goals, especially:
-        
-        \begin{table}[H]
-            \centering
-            \begin{tabular}{|l|l|}
-                \hline
-                \textbf{KPI} & \textbf{Goals}\\\hline
-                K1 & G1, G2, G3, G4\\\hline
-                K2 & G1, G2 \\\hline
-                K3 & G10\\\hline   
-                K4 & G5 \\\hline
-                K5 & G6, G7, G8\\\hline
-            \end{tabular}
-        \end{table}
+
     
     \subsection{Scope} %analysis of the world and shared phenomena
     %ADD: basic service and advanced functionalities
     \subsubsection*{Shared Phenomena}
-        \newcounter{machineP}
+        \newcounter{sharedP}
         \rowcolors{2}{red!25}{}
         \begin{center}
         \begin{tabular}{|c|p{0.70\textwidth}|c|}
             \hline
             \textbf{ID} & \textbf{Phenomenom}\\\hline\hline
-            \stepcounter{machineP}
-            M\arabic{machineP} & Text \\\hline
-            \stepcounter{machineP}
-            M\arabic{machineP} & Text \\\hline %might remove this
-            \stepcounter{machineP}
-            M\arabic{machineP} & Text \\\hline
-            \stepcounter{machineP}
-            M\arabic{machineP} &  Text \\\hline
-            \stepcounter{machineP}
-            M\arabic{machineP} &  Text \\\hline
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & User registers through the application \\\hline
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & User logs into the application \\\hline %might remove this
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & User gets notified by the system about the status of the charge \\\hline
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & User is suggested by the system to go and charge the vehicle, depending on the status of the battery, his daily schedule and the charging type\\\hline
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & User is presented with special offers made available by some CPOs\\\hline
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & User checks the availability of charging slots at nearby stations \\\hline
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & User pays the cost of the charge through the application \\\hline
             \hline
         \end{tabular}
         \end{center}
@@ -128,33 +115,15 @@
             \hline
             \textbf{ID} & \textbf{Phenomenom}\\\hline\hline
             \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
+            W\arabic{worldP} & Power outage in a station nearby area\\\hline
             \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
+            W\arabic{worldP} & Physical problem in the charging station\\\hline
             \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
+            W\arabic{worldP} & Physical problem in the electric vehicle\\\hline
             \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
+            W\arabic{worldP} & Unexpected changes in the user daily schedule\\\hline
             \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
-            \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
-            \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
-            \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
-            \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
-            \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
-            \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
-            \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
-            \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
-            \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
+            W\arabic{worldP} & Person other than the user is driving the car\\\hline
             \stepcounter{worldP}
             W\arabic{worldP} & Text \\\hline
             \stepcounter{worldP}
@@ -163,24 +132,29 @@
         \end{tabular}
     \end{center}
     
+    \newpage
     \subsection{Definitions, acronyms, abbreviations}
     \subsubsection*{Definitions}
         \begin{itemize}
-            \item \textbf{Def 1}: def 1 
-            \item \textbf{Def 2}: def 2
-            \item \textbf{Def 3}: def 3
-            \item \textbf{Def 4}: def 4
-            \item \textbf{Def 5}: def 5
-            \item \textbf{Def 6}: def 6
-            \item \textbf{Def 7}: def 7
-            \item \textbf{Def 8}: def 8  
+            \item \textbf{User}: any electric car owner.
+            \item \textbf{e-Mobility Service Providers}: company offering an electric vehicle charging service to drivers by providing access to multiple charging points around a geographic area.
+            \item \textbf{Charging Point Operator}: charging point stations owner.
+            \item \textbf{Charge Point Management System}: charging Point Operator's IT infrastructure. Handles the acquisition of energy from external Distribution System Operators and distributes it to the connected vehicles. It can also makes automatic decisions, such as the amount of energy to be used for each connected vehicle.
+            \item \textbf{Distribution System Operator}: entity responsible for distributing and managing energy from the generation sources to the final consumers.
         \end{itemize}
 
     \subsubsection*{Acronyms}
         \begin{itemize}
+            \item \textbf{EV}: Electric vehicle
+            \item \textbf{eMSP}: e-Mobility Service Providers
+            \item \textbf{CPO}: Charging Point Operator
+            \item \textbf{CPMS}: Charge Point Management System
+            \item \textbf{DSO}: (3rd party) Distribution System Operator
+            \item \textbf{API}: Application Programming Interface
             \item \textbf{UML}: Unified Modeling Language
         \end{itemize}
 
+    \newpage
     \subsection{Revision history}
         \begin{itemize}
             \item Version 0.1: Setup
@@ -193,17 +167,114 @@
         \begin{itemize}
             \item Specification document: "Assignment RDD AY 2022-2023"
             \item Alloy documentation: https://alloytools.org/documentation.html
+            \item Data on number of electric vehicles: https://www.iea.org/data-and-statistics/charts/global-electric-car-stock-2010-2021
         \end{itemize}
     
     \subsection{Document structure}
         \begin{itemize}
-            \item \textbf{Section 1} Intro.
-            \item \textbf{Section 2} Overall Description
-            \item \textbf{Section 3} Section 2 Expanded + Requirements.
-            \item \textbf{Section 4} Alloy.
+            \item \textbf{Section 1}: introduces the problem, describes every goal of the project and gives an analysis of the world and shared phenomena.
+            \item \textbf{Section 2}: gives an overall description of the project and all the interactions that will occur between the system and the final users, including a list of possible scenarios and a description of all the actors involved. It provides also an UML class diagram that will be used as a reference point for the developers.
+            \item \textbf{Section 3}: includes all the project's requirements and an in-depth description everything presented in Section 2.
+            \item \textbf{Section 4}: shows the Alloy model defined for this project.
         \end{itemize}
 
     \newpage
+
+
+
+
+
+
+    \section{Overall Description}
+
+    \subsection{Product perspective}
+    Text \textit{Product Functions (\ref{product_functions})} section.
+
+        \subsubsection{Scenarios}
+        \label{scenarios}
+            \begin{enumerate}
+
+            \item Person1 
+            \begin{itemize}
+                \item Action1
+            \end{itemize}
+
+        
+        \end{enumerate}
+
+
+        \subsubsection{Class diagram}
+        \label{class_diagram}
+            Text \textit{daily plan}
+            footnotemark\footnotemark.
+            \footnotetext{Text}
+
+            \begin{itemize}
+                \item \textbf{Type of Data 1}\\
+                Text
+                \item \textbf{Type of Data 2}\\
+                Text
+            \end{itemize}
+            
+            Image of the class diagram
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.45, center]{assets/logo_polimi.jpg}
+                    \caption{High-level UML}
+                    \label{fig: UML}
+                \end{figure}
+            \end{center}
+
+            
+    \subsection{Product functions}
+    \label{product_functions}
+    
+        \subsubsection{Sign-up and shared functions}
+        \begin{itemize}
+            \item \textbf{Sign-up:} let the user sign-up thorugh an email and a password.
+            \footnotetext{Text}
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[width=\textwidth]{assets/logo_polimi.jpg}
+                    \caption{Sign Up BPMN}
+                    \label{fig: singup}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+        
+        \subsubsection{Other function 1}
+        \begin{itemize}                                 
+            \item \textbf{Text:} text
+        \end{itemize}
+        \footnotetext{text}
+        
+        
+    \subsection{User characteristics}
+    The application has been thought for the three different user categories that follows:
+        \begin{itemize}
+            \item \textbf{text}  explains text
+            \item \textbf{text}  explains text   
+            \item \textbf{text}  explains text
+        \end{itemize}
+        \subsection{Assumptions, dependencies and constraints}
+        \newcounter{assumptionCtr}
+        \begin{itemize}
+            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 1
+            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 2
+            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 3\footnotemark
+            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 4\%
+            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 5
+            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 6
+            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 7
+            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 8
+            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 9
+            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 10
+            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 11
+            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 12
+            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 13\footnotemark[\value{footnote}]
+            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 14
+        \end{itemize}
+        \footnotetext{footnote}
 
 
 
