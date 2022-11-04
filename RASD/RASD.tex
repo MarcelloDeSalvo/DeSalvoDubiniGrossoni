@@ -182,25 +182,92 @@
 
 
 
-
-
+    
 
     \section{Overall Description}
 
     \subsection{Product perspective}
-    Text \textit{Product Functions (\ref{product_functions})} section.
+    In this section we mainly describe some typical scenarios, all the \textit{Product Functions (\ref{product_functions})} offered by the eMall system and the\textit{UML(\ref{class_diagram})} class-diagram.
 
         \subsubsection{Scenarios}
         \label{scenarios}
             \begin{enumerate}
-
-            \item Person1 
+            
+            \item Mister Fontana has just bought an electric vehicle and wants to create an account for the application.  
             \begin{itemize}
-                \item Action1
+                \item He opens the web app and clicks the "Sign Up" button
+                \item He inserts all the required information in the mandatory fields and presses the "Confirm" button
+                \item The system verifies that the mail has not been used before. After passing the verification a confirmation e-mail is sent to mister Fontana's mailbox
+                \item He checks his mailbox to see if he received the confimation e-mail
+            \end{itemize}
+                
+            \item Mister Brambilla is about to finish a meeting and is about to have a 2 hour break. eMall detects that he's about to go on break, and it sends him an e-mail suggesting him to charge his car
+            \begin{itemize}
+                \item He receives an e-mail suggesting him to charge his car 
+                \item He logs on the eMall webapp
+                \item The eMall webapp suggests the closest chargers and the ones with eventual discounts
+                \item Brambilla selects his preferred charging station and books it
+                \item eMall prompts a link to help Brambilla get there
+                \item Brambilla opens the link and heads there
             \end{itemize}
 
-        
-        \end{enumerate}
+            \item Mister Fontana is on vacation and since he's new to the area he wants to know which charging stations are nearby
+            \begin{itemize}
+                \item He opens the web application and logs-In
+                \item He navigates to the interactive map section
+                \item He clicks the "current position" button
+                \item He gets notified by the web application that his GPS position is not turned on
+                \item He turns on the GPS and then searches all the nearby stations by simply clicking the "current position" button and viewing the map 
+                
+            \end{itemize}
+            
+            \item Miss Sala will go to the hairdresser next sunday. She knows that in the parking lot near the hairdresser there's a charging station and she wants to make sure that a spot will be available that day, so she decides to book a spot for that charging station
+            \begin{itemize}
+                \item She opens the web application and logs-In
+                \item She selects the "Book a spot" option
+                \item She compiles the requested fields with date, time of arrival and location and selects confirm
+                \item The system checks if a charging spot for that date and time is still available, in that case a confirmation message is shown and the booking is saved. If no spot is still available an "unsuccesful booking" message is shown and the booking is aborted
+                \item After successfully booking a spot the system sends a mail with a recap of the booking 
+                \item Miss Sala after reaching the charging station on the booked timeframe unlocks the booked charging spot via the web app and can start the starting process
+            \end{itemize}
+            
+            \item Mister Ferrari has booked a charging spot for saturday. He realizes that he has lost the keys to his car, and will not make it in time. While he searches for his keys he forgets to delete the reservation.
+            \begin{itemize}
+                \item The system locks the charging spot while waiting for mister Ferrari
+                \item 5 minutes after the booked time, if the reservated user doesn't show up, the charging spot is unlocked and the reservation is cancelled
+                \item Other users can now start using the previously reserved charging spot
+            \end{itemize}
+
+            \item Mister Rana wants to start the charging process and pay, since he's arrived at the booked station near his office
+            \begin{itemize}
+                \item He opens the web application and logs-In
+                \item He navigates to the "booking list" section
+                \item He plugs-in the charging cable to the car 
+                \item He selects the right station and clicks the "start charging" button
+                \item He's then asked to pay inside the web app and he pays with his credit card
+                \item He finally sees that the car has started to charge
+                \item When the charging ends he gets notified by the application
+            \end{itemize}
+
+            \item Mister Rossi wants to plan his trip to Rome with his electric car. He would also like to save money by selecting the cheapest charging stations along the itinerary.
+            \begin{itemize}
+                \item He opens the web-application and he logs-In
+                \item He plans his trip inside the navigation system or the in-app map
+                \item He then sorts the charging stations by the charging price and the special offers
+                \item He books the cheaper ones that covers the right amount of distance from each other
+            \end{itemize}
+            
+            \item Mister Lamborghini wants to delete his booked charge since his schedule changed and he can no longer make it there in time.
+            \begin{itemize}
+                \item He opens the web-application and he logs-In
+                \item On the webapp he opens his "bookings list"
+                \item He then selects the one he wants to delete and clicks on "cancel booking"
+                \item An email of the succesful cancellation is sent and the system deletes the previous reservation
+            \end{itemize}
+            
+
+            
+            \end{enumerate}
 
 
         \subsubsection{Class diagram}
@@ -250,31 +317,29 @@
         
         
     \subsection{User characteristics}
-    The application has been thought for the three different user categories that follows:
-        \begin{itemize}
-            \item \textbf{text}  explains text
-            \item \textbf{text}  explains text   
-            \item \textbf{text}  explains text
-        \end{itemize}
-        \subsection{Assumptions, dependencies and constraints}
-        \newcounter{assumptionCtr}
-        \begin{itemize}
-            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 1
-            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 2
-            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 3\footnotemark
-            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 4\%
-            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 5
-            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 6
-            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 7
-            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 8
-            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 9
-            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 10
-            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 11
-            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 12
-            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 13\footnotemark[\value{footnote}]
-            \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 14
-        \end{itemize}
-        \footnotetext{footnote}
+    The application has been thought for anybody that owns an electric car and wants to plan his charging process. 
+    Because of this, the potential user base comprises of any electric vehicle owner with a device connected to the internet.
+    The user should also be capable of interacting with a webapp
+        
+    \subsection{Assumptions, dependencies and constraints}
+    \newcounter{assumptionCtr}
+    \begin{itemize}
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 1
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 2
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 3\footnotemark
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 4\%
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 5
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 6
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 7
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 8
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 9
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 10
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 11
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 12
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 13\footnotemark[\value{footnote}]
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 14
+    \end{itemize}
+    \footnotetext{footnote}
 
 
 
