@@ -79,7 +79,7 @@
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Pay for the obtained service.}
         \end{itemize}
 
-    
+    \newpage
     \subsection{Scope} %analysis of the world and shared phenomena
     %ADD: basic service and advanced functionalities
     \subsubsection*{Shared Phenomena}
@@ -88,21 +88,21 @@
         \begin{center}
         \begin{tabular}{|c|p{0.70\textwidth}|c|}
             \hline
-            \textbf{ID} & \textbf{Phenomenom}\\\hline\hline
+            \textbf{ID} & \textbf{Phenomenom} &  \textbf{Controller}\\\hline\hline
             \stepcounter{sharedP}
-            S\arabic{sharedP} & User registers through the application \\\hline
+            S\arabic{sharedP} & User registers through the application & World \\\hline
             \stepcounter{sharedP}
-            S\arabic{sharedP} & User logs into the application \\\hline %might remove this
+            S\arabic{sharedP} & User logs into the application & World \\\hline %might remove this
             \stepcounter{sharedP}
-            S\arabic{sharedP} & User gets notified by the system about the status of the charge \\\hline
+            S\arabic{sharedP} & User gets notified by the system about the status of the charge & Machine \\\hline
             \stepcounter{sharedP}
-            S\arabic{sharedP} & User is suggested by the system to go and charge the vehicle, depending on the status of the battery, his daily schedule and the charging type\\\hline
+            S\arabic{sharedP} & User is suggested by the system to go and charge the vehicle, depending on the status of the battery, his daily schedule and the charging type & Machine \\\hline
             \stepcounter{sharedP}
-            S\arabic{sharedP} & User is presented with special offers made available by some CPOs\\\hline
+            S\arabic{sharedP} & User is presented with special offers made available by some CPOs & Machine\\\hline
             \stepcounter{sharedP}
-            S\arabic{sharedP} & User checks the availability of charging slots at nearby stations \\\hline
+            S\arabic{sharedP} & The system shows the availability of nearby charging stations &  Machine \\\hline%User checks the availability of charging slots at nearby stations%
             \stepcounter{sharedP}
-            S\arabic{sharedP} & User pays the cost of the charge through the application \\\hline
+            S\arabic{sharedP} & User pays the cost of the charge through the application & World \\\hline
             \hline
         \end{tabular}
         \end{center}
@@ -124,10 +124,6 @@
             W\arabic{worldP} & Unexpected changes in the user daily schedule\\\hline
             \stepcounter{worldP}
             W\arabic{worldP} & Person other than the user is driving the car\\\hline
-            \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
-            \stepcounter{worldP}
-            W\arabic{worldP} & Text \\\hline
             \hline
         \end{tabular}
     \end{center}
@@ -302,7 +298,7 @@
             \footnotetext{Text}
             \begin{center}
                 \begin{figure}[!h]
-                    \includegraphics[width=\textwidth]{assets/logo_polimi.jpg}
+                    \includegraphics[width=\textwidth]{assets/placeholder.jpg}
                     \caption{Sign Up BPMN}
                     \label{fig: singup}
                 \end{figure}
@@ -313,7 +309,6 @@
         \begin{itemize}                                 
             \item \textbf{Text:} text
         \end{itemize}
-        \footnotetext{text}
         
         
     \subsection{User characteristics}
@@ -324,23 +319,288 @@
     \subsection{Assumptions, dependencies and constraints}
     \newcounter{assumptionCtr}
     \begin{itemize}
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 1
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 2
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 3\footnotemark
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 4\%
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 5
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 6
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 7
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 8
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 9
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Users have access to the internet while using the web application
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The infrastructure of the charging stations is reliable and works 99\% of the time
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: User's car works properly while charging
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Information about the charging stations offered by the CPMS are accurate (such as position, state and availability )
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The DSO's infrastructure is working and their data is reliable 
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Information about the user's schedule is correct and meaningful
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Users own an IT device to connect to the application
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Each user registers only once, and always feeds correct information to the app     
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The data supplied by the user's devices are correct (battery charge, current position)
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 10
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 11
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 12
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 13\footnotemark[\value{footnote}]
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 14
-    \end{itemize}
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 13
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 808
+       \end{itemize}
     \footnotetext{footnote}
 
+    
+    
+    
+    \newpage
+    \section{Specific Requirements}
+    
+    \subsection{External Interface Requirements}
+
+    \subsubsection{User Interfaces}
+    Users should interface the web application through devices that must be connected to the Internet. The service will be accessed through a web browser from the web site domain (i.g. www.eMall.com).
+    As the service will be used by a lot of different kinds of users, the web application interface should be as simple and intuitive as possible.
+    
+
+    \subsubsection{Hardware Interfaces}
+    \label{hardware_interfaces}
+    Since the system provides a web application, there's not an hardware interface. 
+    In order to give a complete experience, the system should be given the access/permission to the user's GPS position or navigation system.  
+
+    \subsubsection{Software Interfaces}
+    \label{software_interfaces}
+    To access the application a web browser is required. Additional software like a calendar and GPS is necessary for accessing all the funcionalities of the application. The software will also take advantage of some interfaces to accomplish its requirements. An external API is necessary to visualize on maps the user location and the near charging stations. %frase copiatissima%
+    
+    \subsubsection{Communication Interfaces}
+    Internet connections will be mandatory since the web application must communicate with the web server and the CPMS APIs.
+    Communication with the CPMS will be ASYNCRONOUS/etc..
+
+    \newpage
+    \subsection{Functional Requirements}
+
+    \subsubsection{List of Requirements}
+    \newcounter{RequirementCtr}
+    \rowcolors{2}{}{PineGreen!25}
+    \begin{longtable}{|c|p{0.69\textwidth}|}
+        \hline
+        \textbf{ID} & \textbf{Requirement}\\ \hline\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must allow registered and logged-in users to use the app.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must allow registered users to log-in using their e-mail\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must show the user the nearby charging stations through an interactive map.\\\hline  
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission.\\\hline  
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must notify the user when the charge has finished.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must noitify the user about discounted prices.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must show the user the prices of the charging stations.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must access the User calendar schedule in order to suggest the best charging timeframes, if given permission.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must suggest the user on which charging stations to go based on the car battery and his daily schedule.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must communicate with the CPMS in order to retrieve all needed information about the charging stations.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must allow the user to book a charging spot for a future date.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must allow the user to cancel a future reservation for a charging spot.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must allow the user to pay for the charge.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must respect the GDPR and the user's privacy.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must unlock the reserved charging spot if the user doesn't show up.\\\hline    
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must allow the user to start or stop the charge via the application.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The system must notify the user of the upcoming booked sessions.\\\hline
+    \end{longtable}
+
+    \subsubsection{Mapping}
+    \rowcolors{1}{white!100}{}
+    \newcounter{goalCtr2}
+    %written explanation of how the G,D and R go together
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} &  help\\\hline
+                \cellcolor{pink!50}D2 &  app\\\hline
+                \cellcolor{pink!50}D3 & used\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} &  TEXT\\\hline
+                \cellcolor{pink!50}D2 & TEXT\\\hline
+                \cellcolor{pink!50}D3 & TEXT\\\hline
+                \cellcolor{pink!50}D8 & TEXT\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} &  initiatives\\\hline
+                \cellcolor{pink!50}D2 &  app\\\hline
+                \cellcolor{pink!50}D3 &  used\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \newpage
+    \subsubsection{Use Cases}
+    \setcounter{secnumdepth}{4}
+
+    \paragraph{Use Cases Diagram}
+    \begin{itemize}
+        \item \textbf {Policy Makers}
+        \begin{center}
+            \begin{figure}[H]
+                \includegraphics[scale=0.55, center]{assets/placeholder.png}
+                \caption{Policy Maker - Use Case Diagram}
+                \label{fig: UseCase_PolicyMaker}
+            \end{figure}
+        \end{center}
+        \newpage
+        \item \textbf {Farmers}
+        \begin{center}
+            \begin{figure}[H]
+                \includegraphics[scale=0.60, center]{assets/placeholder.png}
+                \caption{Farmer - Use Case Diagram}
+                \label{fig: UseCase_Farmer}
+            \end{figure}
+        \end{center}
+        \newpage
+        \item \textbf {Agronomists}
+        \begin{center}
+            \begin{figure}[H]
+                \includegraphics[scale=0.60, center]{assets/placeholder.png}
+                \caption{Agronomist - Use Case Diagram}
+                \label{fig: UseCase_Agronomist}
+            \end{figure}
+        \end{center}
+        \newpage
+    \end{itemize}
+
+    \paragraph{Use Cases Description}
+
+    For more details \ref{sequencediagram}.
+    
+        \begin{itemize}
+            \item \textbf {Shared Use Cases}
+            
+            \begin{table}[H]
+                \item[] \textbf{Sign Up}
+                \item[] 
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Sign Up\\ \hline
+                    \textbf{Actor} & U\\ \hline
+                    \textbf{Entry condition} & User wants to register in the system\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item text
+                                                
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} & User data are saved into the system and registration ends successfully  \\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item text
+                        
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 3\\ \hline                    
+                \end{tabular}
+            \end{table}
+
+           
+            \item \textbf {U}
 
 
-\end{document} % This is the end of the document
+            \newpage
+            \item \textbf{text}
+            
+           
+
+
+        \item \textbf{Use Cases to requirement mapping}
+        0
+        \item[] \begin{longtable}{|p{0.31\textwidth}|p{0.69\textwidth}|}
+                    \hline
+                    \cellcolor{SpringGreen!50}\textbf{1)Sign Up}\centering & R3) text
+                                                                     
+                                                                     R2) text\\\hline
+                   
+            \end{longtable}
+    
+    \end{itemize}
+
+        \newpage
+        \subsubsection{Sequence Diagrams} \label{sequencediagram} 
+        \begin{itemize}
+            \item \textbf{Shared Sequence Diagrams}\\
+            
+            \textbf{Sign Up}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/placeholder.png}
+                    \caption{Shared Sequence Diagram - Sign Up Sequence Diagram}
+                    \label{fig: sequence_signup}
+                \end{figure}
+            \end{center}
+
+            \item \textbf{Farmers}\\
+
+           
+        \end{itemize}
+        \newpage
+
+
+    \subsection{Performance Requirements}
+    text
+    \subsection{Design Constraints}
+
+    \subsubsection{Standards compliance}
+    text
+    %\subsubsection{Any other constraint}
+
+    \subsection{Software System Attributes}
+    \subsubsection{Reliability}
+    text
+
+    \subsubsection{Availability}
+    text
+
+    
+
+    \begin{table}[H]
+        \begin{center}
+        \label{tab:availability}
+        \begin{tabular}{l|c|r}
+            \textbf{Component} & \textbf{Availability} & \textbf{Downtime}\\
+            \hline
+            cell here & cell here & cell here\\
+            
+            \hline
+            cell here & cell here & cell here
+        \end{tabular}
+        \end{center}
+    \end{table}
+
+    \subsubsection{Security}
+    %text here%
+    \subsubsection{Maintainability}
+    %text here%
+    \subsubsection{Portability}
+    %text here%
+    \newpage
+    \section{Formal Analysis using Alloy}
+    \subsection{Formal Analysis Purpose}
+    The following analysis aims to formally prove the correctness of the system model by exploiting Alloy verification tool. To achieve so, we test the model by checking if some of the previous defined goals are met. 
+
+    Specifically, we stress:
+    \begin{itemize}
+        \item \textbf{(G3) }: 
+        
+    \end{itemize}
+
+    Plus, we runned some empty predicates \texttt{show} to generate some more general instances of the app system.
+
+    \end{document} % This is the end of the document
