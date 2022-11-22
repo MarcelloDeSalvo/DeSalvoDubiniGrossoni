@@ -137,6 +137,7 @@
             \item \textbf{Charging Point Operator}: charging point stations owner.
             \item \textbf{Charge Point Management System}: charging Point Operator's IT infrastructure. Handles the acquisition of energy from external Distribution System Operators and distributes it to the connected vehicles. It can also makes automatic decisions, such as the amount of energy to be used for each connected vehicle.
             \item \textbf{Distribution System Operator}: entity responsible for distributing and managing energy from the generation sources to the final consumers.
+            \item \textbf{Open Charge Point Interface}: open protocol used for connections between charge station operators and service providers.
         \end{itemize}
 
     \subsubsection*{Acronyms}
@@ -145,6 +146,7 @@
             \item \textbf{eMSP}: e-Mobility Service Providers
             \item \textbf{CPO}: Charging Point Operator
             \item \textbf{CPMS}: Charge Point Management System
+            \item \textbf{OCPI}: Open Charge Point Interface
             \item \textbf{DSO}: (3rd party) Distribution System Operator
             \item \textbf{API}: Application Programming Interface
             \item \textbf{UML}: Unified Modeling Language
@@ -268,49 +270,97 @@
 
         \subsubsection{Class diagram}
         \label{class_diagram}
-            Text \textit{daily plan}
-            footnotemark\footnotemark.
-            \footnotetext{Text}
-
-            \begin{itemize}
-                \item \textbf{Type of Data 1}\\
-                Text
-                \item \textbf{Type of Data 2}\\
-                Text
-            \end{itemize}
+            In the UML diagram there are described all the main entities in the system.
+            We can see that the system is composed by 2 main actors: the \textit{User} and the \textit{CPO}.\\
+            The user owns an \textit{E-car} and can book a charging spot, while the charging station is the entity that provides the charging service.\\
+            Data regarding the charging stations and the sockets are provided by the CPMS \textit{OCPI API} which is used by the \textit{Booking}, \textit{Charging Process} and \textit{Charging station} entities to retrive or send all the needed information, and that is implemented inside the CPMS subsystem.\\
+            There's also an entity for the \textit{Socket} in order to store the information about the socket's status and his price, and another one for the \textit{Offer} that can be applied to all the charging stations owned by the same CPO.\\
+            Information about the Users' daily schedule are represented inside the \textit{Calendar Schedule} and the the \textit{Event} entity, that use the \textit{Calendar API} to retrive the user's appointments.\\
+            There's also an interface for the \textit{Payment} that can be implemented by different payment methods.
             
-            Image of the class diagram
             \begin{center}
                 \begin{figure}[H]
-                    \includegraphics[scale=0.45, center]{assets/logo_polimi.jpg}
+                    \includegraphics[scale=0.55, center]{assets/UML_versione_1_0.png}
                     \caption{High-level UML}
                     \label{fig: UML}
                 \end{figure}
             \end{center}
 
-            
+    \newpage
     \subsection{Product functions}
     \label{product_functions}
     
-        \subsubsection{Sign-up and shared functions}
+        \subsubsection{Sign-up}
         \begin{itemize}
             \item \textbf{Sign-up:} let the user sign-up thorugh an email and a password.
-            \footnotetext{Text}
+        
             \begin{center}
                 \begin{figure}[!h]
-                    \includegraphics[width=\textwidth]{assets/placeholder.jpg}
+                    \includegraphics[width=\textwidth]{assets/bpmn/sign-up.png}
                     \caption{Sign Up BPMN}
                     \label{fig: singup}
                 \end{figure}
             \end{center}
         \end{itemize}
         
-        \subsubsection{Other function 1}
+        \newpage
+        \subsubsection{Check nearby stations}
         \begin{itemize}                                 
-            \item \textbf{Text:} text
+            \item \textbf{Check aera:} let the user check the nearby charging stations through an inter map and the GPS position.
+        
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[scale=0.60, center]{assets/bpmn/Check area.png}
+                    \caption{check nearby stations}
+                    \label{fig: check nearby stations}
+                \end{figure}
+            \end{center}
         \end{itemize}
         
         
+        \subsubsection{Smart suggestions}
+        \begin{itemize}                                 
+            \item \textbf{Suggestions:} notify the user about the best charging stations to use based on the user's schedule and the current price.
+            
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[scale=0.60, center]{assets/bpmn/Suggestions.png}
+                    \caption{User's schedule suggestions}
+                    \label{fig: User's schedule suggestions}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+
+        \newpage
+        \subsubsection{Booking a charging spot}
+        \begin{itemize}                                 
+            \item \textbf{Booking:} let the user book a charging spot for a specific timeframe. The user can also see the available charging spots and the price for each one.
+            
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[width=\textwidth]{assets/bpmn/Booking.png}
+                    \caption{Booking a charging spot}
+                    \label{fig: Booking a charging spot}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+
+        \newpage
+        \subsubsection{Charging Process}
+        \begin{itemize}                                 
+            \item \textbf{Charging Process:} let the user start the charging process and pay for the service.
+        
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[width=\textwidth]{assets/bpmn/Charging Process.png}
+                    \caption{Charging Process}
+                    \label{fig: Charging Process}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+        
+    
+    \newpage
     \subsection{User characteristics}
     The application has been thought for anybody that owns an electric car and wants to plan his charging process. 
     Because of this, the potential user base comprises of any electric vehicle owner with a device connected to the internet.
@@ -328,13 +378,10 @@
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Users own an IT device to connect to the application
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Each user registers only once, and always feeds correct information to the app     
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The data supplied by the user's devices are correct (battery charge, current position)
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 10
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 11
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 12
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 13
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: ass. 808
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Special offers regarding the charging stations are correct and reliable
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Special offers provided by one CPO concern all the charging stations owned by that CPO
        \end{itemize}
-    \footnotetext{footnote}
+
 
     
     
