@@ -66,17 +66,44 @@
         %Electric vehicles will quadruple in the next 5 years. As of now, having to charge your car in the middle of the day can prove to be a very daunting task
 
         \emph{eMall} (e-Mobility for all) aims to ease the charging process for the users through the \emph{e-Mobility Service Provider's} (eMSP) platform,
-        providing all the needed end-users' services and by actively communicating with multiple \emph{Charging Point Operators'} (CPOs) \emph{Management Systems} (CPMS).   
+        providing all the needed end-users' services and by actively communicating with multiple \emph{Charging Point Operators'} (CPOs) \emph{Management Systems} (CPMS).
+        The eMall platform will also provide a dashboard for the \emph{Charging Point Operators' workers}(CPOW) to change some settings that can also be done automatically by the CPMS.
 
     \subsubsection{Goals}
         \newcounter{goalCtr}
         \underline{User goals}
         \begin{itemize}
-            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Know about the charging stations nearby, their cost, any special offer they have.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Know about the charging stations nearby, including their cost and any special offer they have.}
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Book a charge in a specific charging station for a certain timeframe.}\\ description
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Start the charging process at a certain station.}
-            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Notify the user when the charging process is finished.}
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Pay for the obtained service.}
+        \end{itemize}
+        
+        \newpage
+        \underline{eMSP goals}
+        \begin{itemize}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Be able to communicate with multiple CPMS.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Suggest the user convenient charging timeframes based on his upcoming schedule.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Notify the user when the charging process is finished.}
+        \end{itemize}
+        
+        \underline{CPMS goals}
+        \begin{itemize}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Be able to communicate with multiple eMSPs.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Be able to communicate with at least one DSO.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Communicate the location and “external” status of a charging station.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Know the “internal” status of a charging station .}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Start charging a vehicle according to the amount of power supplied by the socket, and monitor the charging process to infer when the battery is full.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Acquire from the DSOs information about the current price of energy.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Decide from which DSO to acquire energy (if more than one is available).}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Dynamically decide where to get energy for charging (station battery, DSO, or a mix according to availability and cost).}
+        \end{itemize}
+
+        \underline{CPOW goals}
+        \begin{itemize}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Change the source of energy between batteries and grid.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Insert special and limited offers.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Change the price of a charging station.}
         \end{itemize}
 
     \newpage
@@ -103,6 +130,9 @@
             S\arabic{sharedP} & The system shows the availability of nearby charging stations &  Machine \\\hline%User checks the availability of charging slots at nearby stations%
             \stepcounter{sharedP}
             S\arabic{sharedP} & User pays the cost of the charge through the application & World \\\hline
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & CPOW inserts a new discount into the system & World \\\hline
+            
             \hline
         \end{tabular}
         \end{center}
@@ -138,6 +168,9 @@
             \item \textbf{Charge Point Management System}: charging Point Operator's IT infrastructure. Handles the acquisition of energy from external Distribution System Operators and distributes it to the connected vehicles. It can also makes automatic decisions, such as the amount of energy to be used for each connected vehicle.
             \item \textbf{Distribution System Operator}: entity responsible for distributing and managing energy from the generation sources to the final consumers.
             \item \textbf{Open Charge Point Interface}: open protocol used for connections between charge station operators and service providers.
+            \item \textbf{Open Charge Point Protocol}: open protocol used for connections between charge stations and their charge point management system.
+            \item \textbf{DIN SPEC 70121}: Standard for digital communication between a charging station and an electric vehicle.
+            \item \textbf{ISO 15118}: Alternative standard for digital communication between a charging station and an electric vehicle.
         \end{itemize}
 
     \subsubsection*{Acronyms}
@@ -147,9 +180,12 @@
             \item \textbf{CPO}: Charging Point Operator
             \item \textbf{CPMS}: Charge Point Management System
             \item \textbf{OCPI}: Open Charge Point Interface
+            \item \textbf{OCPP}: Open Charge Point Protocol
             \item \textbf{DSO}: (3rd party) Distribution System Operator
             \item \textbf{API}: Application Programming Interface
             \item \textbf{UML}: Unified Modeling Language
+            \item \textbf{CPOW}: Charging Point Operator Worker
+            \item \textbf{BESS}: Battery Energy Storage System
         \end{itemize}
 
     \newpage
@@ -280,9 +316,17 @@
             
             \begin{center}
                 \begin{figure}[H]
-                    \includegraphics[scale=0.55, center]{assets/UML_versione_1_0.png}
-                    \caption{High-level UML}
-                    \label{fig: UML}
+                    \includegraphics[scale=0.55, center]{assets/UML_EMSP.png}
+                    \caption{High-level UML - EMSP Subsystem}
+                    \label{fig: UML EMSP}
+                \end{figure}
+            \end{center}
+            \newpage
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/UML_CPMS.png}
+                    \caption{High-level UML - CPMS Subsystem}
+                    \label{fig: UML CPMS}
                 \end{figure}
             \end{center}
 
@@ -380,6 +424,7 @@
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The data supplied by the user's devices are correct (battery charge, current position)
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Special offers regarding the charging stations are correct and reliable
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Special offers provided by one CPO concern all the charging stations owned by that CPO
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol
        \end{itemize}
 
 
@@ -415,43 +460,87 @@
     \subsubsection{List of Requirements}
     \newcounter{RequirementCtr}
     \rowcolors{2}{}{PineGreen!25}
+    \underline{Shared Requirements}
     \begin{longtable}{|c|p{0.69\textwidth}|}
         \hline
         \textbf{ID} & \textbf{Requirement}\\ \hline\hline
         \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The system must allow registered and logged-in users to use the app.\\\hline
         \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must allow registered users to log-in using their e-mail\\\hline
-        \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must show the user the nearby charging stations through an interactive map.\\\hline  
-        \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission.\\\hline  
-        \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must notify the user when the charge has finished.\\\hline
-        \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must noitify the user about discounted prices.\\\hline
-        \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must show the user the prices of the charging stations.\\\hline
-        \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must access the User calendar schedule in order to suggest the best charging timeframes, if given permission.\\\hline
-        \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must suggest the user on which charging stations to go based on the car battery and his daily schedule.\\\hline
-        \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must communicate with the CPMS in order to retrieve all needed information about the charging stations.\\\hline
-        \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must allow the user to book a charging spot for a future date.\\\hline
-        \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must allow the user to cancel a future reservation for a charging spot.\\\hline
-        \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must allow the user to pay for the charge.\\\hline
-        \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The system must respect the GDPR and the user's privacy.\\\hline
         \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must unlock the reserved charging spot if the user doesn't show up.\\\hline    
+        R\arabic{RequirementCtr}    & The system must allow registered users to log-in using their e-mail\\\hline
         \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must allow the user to start or stop the charge via the application.\\\hline
+        R\arabic{RequirementCtr}    & Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol \\\hline
+    \end{longtable}  
+    \rowcolors{1}{white!100}{} 
+    \rowcolors{2}{}{PineGreen!25}
+    \underline{EMSP Subsystem Requirements}
+    \begin{longtable}{|c|p{0.69\textwidth}|}
+        \hline
+        \textbf{ID} & \textbf{Requirement}\\ \hline\hline       
         \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must notify the user of the upcoming booked sessions.\\\hline
+        R\arabic{RequirementCtr}    & The eMSP subsystem must show the user the nearby charging stations through an interactive map.\\\hline  
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The eMSP subsystem must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission.\\\hline  
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The eMSP subsystem must notify the user when the charge has finished.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The eMSP subsystem must noitify the user about discounted prices.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The eMSP subsystem must show the user the prices of the charging stations.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The eMSP subsystem must access the User calendar schedule in order to suggest the best charging timeframes, if given permission.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The eMSP subsystem must suggest the user on which charging stations to go based on the car battery and his daily schedule.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The eMSP subsystem must communicate with the CPMSs in order to retrieve all needed information about the charging stations.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The eMSP subsystem must allow the user to book a charging spot for a future date.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The eMSP subsystem must allow the user to cancel a future reservation for a charging spot.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The eMSP subsystem must allow the user to pay for the charge through an external payment service.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The eMSP subsystem must allow the user to start or stop the charge via the application.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The eMSP subsystem must notify the user of the upcoming booked sessions.\\\hline
+    \end{longtable}  
+    \rowcolors{1}{white!100}{}  
+    \rowcolors{2}{}{PineGreen!25}
+    \underline{CPMS Subsystem Requirements}
+    \begin{longtable}{|c|p{0.69\textwidth}|}
+        \hline
+        \textbf{ID} & \textbf{Requirement}\\ \hline\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The CPMS subsystem must communicate with the DSO according to a standard protocol.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the DSO current energy price.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The CPMS subsystem must automatically decide from which DSO to acquire energy.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the charging station's battery status.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The CPMS subsystem must dynamically change the energy source depending on the internal station's battery status and the available DSOs' prices.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The CPMS subsystem must communicate the location of the charging stations to all connected eMSPs.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the internal status of the sockets through the OCPP standard protocol.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPI standard protocol.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the battery status of the car through the DIN/ISO specifications.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The CPMS subsystem must allow the CPOW to change the price of a charging station.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The CPMS subsystem must allow the CPOW to add or change the current special offer.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The CPMS subsystem must allow the CPOW to change the energy provider of a charging station.\\\hline
+        \stepcounter{RequirementCtr}
+        R\arabic{RequirementCtr}    & The CPMS subsystem must unlock the reserved charging spot if the user doesn't show up.\\\hline
+
     \end{longtable}
 
     \subsubsection{Mapping}
@@ -459,13 +548,20 @@
     \newcounter{goalCtr2}
     %written explanation of how the G,D and R go together
 
+    \underline{User Goals}
     \begin{table}[H]
         \begin{center}
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
-                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} &  help\\\hline
-                \cellcolor{pink!50}D2 &  app\\\hline
-                \cellcolor{pink!50}D3 & used\\\hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} &  Know about the charging stations nearby, including their cost and any special offer they have.\\\hline
+                \cellcolor{pink!50}R1 & Text.\\\hline
+                \cellcolor{pink!50}R2 & Text.\\\hline
+                \cellcolor{pink!50}R3 & Text.\\\hline 
+                \cellcolor{pink!50}R5 & The eMSP subsystem must show the user the nearby charging stations through an interactive map.\\\hline
+                \cellcolor{pink!50}R6 & The eMSP subsystem must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission.\\\hline
+                \cellcolor{pink!50}R8 & The eMSP subsystem must noitify the user about discounted prices.\\\hline
+                \cellcolor{pink!50}R9 & The eMSP subsystem must show the user the prices of the charging stations.\\\hline
+                \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -474,10 +570,15 @@
         \begin{center}
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
-                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} &  TEXT\\\hline
-                \cellcolor{pink!50}D2 & TEXT\\\hline
-                \cellcolor{pink!50}D3 & TEXT\\\hline
-                \cellcolor{pink!50}D8 & TEXT\\\hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Book a charge in a specific charging station for a certain timeframe.\\\hline
+                \cellcolor{pink!50}R1 &  Text.\\\hline
+                \cellcolor{pink!50}R2 &  Text.\\\hline
+                \cellcolor{pink!50}R3 &  Text.\\\hline
+                \cellcolor{pink!50}R13 & TEXT\\\hline
+                \cellcolor{pink!50}R14 & TEXT\\\hline
+                \cellcolor{pink!50}R17 & TEXT\\\hline
+                \cellcolor{pink!50}R31 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -486,9 +587,204 @@
         \begin{center}
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
-                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} &  initiatives\\\hline
-                \cellcolor{pink!50}D2 &  app\\\hline
-                \cellcolor{pink!50}D3 &  used\\\hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Start the charging process at a certain station.\\\hline
+                \cellcolor{pink!50}R1 &  Text.\\\hline
+                \cellcolor{pink!50}R2 &  Text.\\\hline
+                \cellcolor{pink!50}R3 &   Text.\\\hline
+                \cellcolor{pink!50}R4 & TEXT\\\hline
+                \cellcolor{pink!50}R7 & TEXT\\\hline
+                \cellcolor{pink!50}R16 & TEXT\\\hline
+                \cellcolor{pink!50}R26 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Pay for the obtained service.\\\hline
+                \cellcolor{pink!50}R1 &  Text.\\\hline
+                \cellcolor{pink!50}R2 &  Text.\\\hline
+                \cellcolor{pink!50}R3 &   Text.\\\hline
+                \cellcolor{pink!50}R15 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \underline{eMSP Subsystem Goals}
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Be able to communicate with multiple CPMS.\\\hline
+                \cellcolor{pink!50}R4 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Suggest the user convenient charging timeframes based on his upcoming schedule.\\\hline
+                \cellcolor{pink!50}R10 & TEXT\\\hline
+                \cellcolor{pink!50}R11 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Notify the user when the charging process is finished.\\\hline
+                \cellcolor{pink!50}R7 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Be able to communicate with multiple eMSPs.\\\hline
+                \cellcolor{pink!50}R4 & TEXT\\\hline
+                \cellcolor{pink!50}R23 & TEXT\\\hline
+                \cellcolor{pink!50}R25 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+   
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Be able to communicate with at least one DSO.\\\hline
+                \cellcolor{pink!50}R18 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Communicate the location and the "external" status of the charging station.\\\hline
+                \cellcolor{pink!50}R23 & TEXT\\\hline
+                \cellcolor{pink!50}R25 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Know the internal status of a charging station.\\\hline
+                \cellcolor{pink!50}R21 & TEXT\\\hline
+                \cellcolor{pink!50}R24 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Start charging a vehicle according to the amount of power supplied by the socket, and monitor the charging process to infer when the battery is full.\\\hline
+                \cellcolor{pink!50}R26 & TEXT\\\hline
+                \cellcolor{pink!50}R27 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Acquire from the DSOs information about the current price of energy.\\\hline
+                \cellcolor{pink!50}R19 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Decide from which DSO to acquire energy (if more than one is available).\\\hline
+                \cellcolor{pink!50}R20 & TEXT\\\hline
+                \cellcolor{pink!50}R22 & TEXT\\\hline
+                \cellcolor{pink!50}R30 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Dynamically decide where to get energy for charging (station battery, DSO, or a mix according to availability and cost).\\\hline
+                \cellcolor{pink!50}R21 & TEXT\\\hline
+                \cellcolor{pink!50}R22 & TEXT\\\hline
+                \cellcolor{pink!50}R30 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \underline {CPOW goals}
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Change the source of energy between batteries and grid.\\\hline
+                \cellcolor{pink!50}R1 &  Text.\\\hline
+                \cellcolor{pink!50}R2 &  Text.\\\hline
+                \cellcolor{pink!50}R3 &   Text.\\\hline
+                \cellcolor{pink!50}R30 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline 
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Insert special and limited owners.\\\hline
+                \cellcolor{pink!50}R1 &  Text.\\\hline
+                \cellcolor{pink!50}R2 &  Text.\\\hline
+                \cellcolor{pink!50}R3 &  Text.\\\hline
+                \cellcolor{pink!50}R29 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Change the price of a charging station.\\\hline
+                \cellcolor{pink!50}R1 &  Text.\\\hline
+                \cellcolor{pink!50}R2 &  Text.\\\hline
+                \cellcolor{pink!50}R3 &   Text.\\\hline
+                \cellcolor{pink!50}R28 & TEXT\\\hline
+                \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
     \end{table}
