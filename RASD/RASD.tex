@@ -186,6 +186,7 @@
             \item \textbf{UML}: Unified Modeling Language
             \item \textbf{CPOW}: Charging Point Operator Worker
             \item \textbf{BESS}: Battery Energy Storage System
+            \item \textbf{RTC}: Real Time Communication
         \end{itemize}
 
     \newpage
@@ -451,9 +452,9 @@
     To access the application a web browser is required. Additional software like a calendar and GPS is necessary for accessing all the funcionalities of the application. The software will also take advantage of some interfaces to accomplish its requirements. An external API is necessary to visualize on maps the user location and the near charging stations. %frase copiatissima%
     
     \subsubsection{Communication Interfaces}
-    Internet connections will be mandatory since the web application must communicate with the web server and the CPMS APIs.
-    Communication with the CPMS will be ASYNCRONOUS/etc..
-
+    Internet connections will be mandatory since the web application must communicate with the web server and the system APIs.\\
+    Communication between the EMSP and the CPMS will be done through the OCPI protocol that allows the exchange of data in real time (RTC) and supports both peer-to-peer (P2P) and roaming hub connections. In P2P roaming, CPOs and EMSPs have direct bilateral connections via which they exchange data. Meanwhile, in hub-based roaming, a charge point operator or mobility service provider can access many roaming partners via a single, standardised connection.
+    
     \newpage
     \subsection{Functional Requirements}
 
@@ -897,21 +898,44 @@
 
 
     \subsection{Performance Requirements}
-    text
-    \subsection{Design Constraints}
+    The vast majority of the user base will be represented by electric car owners, while the number CPO's human operators will be negligible.\\
+    According to the European Environment Agency, 2021 saw a significant increase in the number of newly registered electric vehicles:
+    electric car registrations for the year were close to 1.7 milions, with a 17.8\% increase in the share in just 1 year.
+    For Italy the trend is also positive with 32 thousand electric cars registered in 2021, and 67 thousand in 2020.\\
+    This means that we are expected to have thousands of registrations in the first year of the system, and a significant increase in the following years that could reach milions of users.\\
+    For this reason we should consider as our mid-term goal to have a scalable, reliable and efficient system to guarantee a good user experience.\\
+    The workload is also expected to be high so we need to ensure that the system can handle all the simultaneous requests with a good enough response time (less than 600ms should be enough ).
 
+    \subsubsection{Design Constraints}
     \subsubsection{Standards compliance}
-    text
-    %\subsubsection{Any other constraint}
+    eMall's user data must be compliant with the European Union's General Data Protection Regulation (GDPR). \\
+    The system must be able to store and process user data in a secure way, and must be able to provide the user with a way to access, modify or delete their data at any time.
+    It should also ask the user for the permission to activate the GPS tracking feature and the permission to access the user's calendar to schedule the charging sessions, and must be able to revoke these permissions at any time.
+    
+    \subsubsection{Hardware limitations}
+    The software must be able to run on any device with a modern web browser (Chrome, Firefox, Edge, Safari, Opera, etc.).\\
+    Given the geographical context of the project, the main limitations are related to the internet connection speed.\\
+    Also, in order to fully use the system, the user must have a smartphone with a GPS sensor and a calendar app installed.
+
 
     \subsection{Software System Attributes}
     \subsubsection{Reliability}
-    text
+    The system must have a backup infrastructure to ensure that the data is always available and that the system can be restored in case of a failure.\\
+    It must be characterized by an high MTTF (Mean Time To Failure) and a low MTTR (Mean Time To Repair).\\
+    All the needed components must be redundant and parallelized as much as possibile to ensure an high reliablity of the overall system in case of a single component failure (as shown in Fig. \ref{fig: components of eMall }).
+
+    %insert image
+    \begin{figure}[H]
+        \includegraphics[scale=0.70, center]{assets/componentDiag.png}
+        \caption{eMall - Components}
+        \label{fig: components of eMall }
+    \end{figure}
 
     \subsubsection{Availability}
-    text
+    The system should be accessible 24/7, with a downtime of less than 1 hour per year.
+    The peak hours are expected to be during the working hours, especially during lunch-breaks, so the system should be able to handle the workload during these hours.
+    For this reason it would be better to do all the manteinance activities during the night, when the system is not used.
 
-    
 
     \begin{table}[H]
         \begin{center}
@@ -919,20 +943,31 @@
         \begin{tabular}{l|c|r}
             \textbf{Component} & \textbf{Availability} & \textbf{Downtime}\\
             \hline
-            cell here & cell here & cell here\\
-            
+            Main System & 99.99\% & 52 min/y\\
+            Calendar API & 99.999\% & 5 min/y\\
+            GPS API & 99.999\% & 5 min/y\\
+            CPMS & 99.99\% & 52 min/y\\
+            EMSP & 99.99\% & 52 min/y\\
             \hline
-            cell here & cell here & cell here
+            Entire System & 99.99\% & 52 min/y
+
         \end{tabular}
         \end{center}
     \end{table}
 
     \subsubsection{Security}
-    %text here%
+    All the user data must be stored in a secure way, and must be hashed and encrypted using approved hash algorithms like SHA-256 and strong encryption algorithm like AES-256.
+    The communication between the client and the server must be encrypted using TLS 1.3 and powered HTTPS.
+    All stored data must be compliant with the GDPR.
+
     \subsubsection{Maintainability}
-    %text here%
+    The system must be easy to maintain and to update, and must be able to be extended with new features in the future.
+    For this reason the system must be designed with a modular architecture, and must be developed using modern design patterns and best practices to guarantee high reusability.\\
+    The code should also be well documented and easy to understand, and must be tested using unit tests and integration tests.
+
     \subsubsection{Portability}
-    %text here%
+    The system will be designed to work with most of the modern web browsers (Chrome, Firefox, Edge, Safari, Opera, and possible other Chromium based web browsers) and most of the modern operating systems (Windows, Linux, MacOS, Android, iOS).
+
     \newpage
     \section{Formal Analysis using Alloy}
     \subsection{Formal Analysis Purpose}
