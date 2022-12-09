@@ -334,8 +334,8 @@
     \newpage
     \subsection{Product functions}
     \label{product_functions}
-    
-        \subsubsection{Sign-up}
+   
+        \subsubsection{Shared}
         \begin{itemize}
             \item \textbf{Sign-up:} let the user sign-up thorugh an email and a password.
         
@@ -348,10 +348,11 @@
             \end{center}
         \end{itemize}
         
-        \newpage
-        \subsubsection{Check nearby stations}
+    \newpage
+
+        \subsubsection{EMSP functions}
         \begin{itemize}                                 
-            \item \textbf{Check aera:} let the user check the nearby charging stations through an inter map and the GPS position.
+            \item \textbf{Check nearby stations:} let the user check the nearby charging stations through an inter map and the GPS position.
         
             \begin{center}
                 \begin{figure}[!h]
@@ -362,24 +363,32 @@
             \end{center}
         \end{itemize}
         
-        
-        \subsubsection{Smart suggestions}
+        \newpage
         \begin{itemize}                                 
-            \item \textbf{Suggestions:} notify the user about the best charging stations to use based on the user's schedule and the current price.
+            \item \textbf{User's schedule suggestions:} notify the user about the best charging stations to visit based on the user's schedule and their current price.\\
+            The check would be done at least once a day based on the events planned for the next day.
             
             \begin{center}
                 \begin{figure}[!h]
-                    \includegraphics[scale=0.60, center]{assets/bpmn/Suggestions.png}
+                    \includegraphics[scale=0.60, center]{assets/bpmn/suggestion_calendar.png}
                     \caption{User's schedule suggestions}
                     \label{fig: User's schedule suggestions}
+                \end{figure}
+            \end{center}
+        \newpage
+            \item \textbf{Battery and navigation system suggestions:} notify the user about the best charging stations to use based on the car's battery level and the current route.\\            
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[scale=0.60, center]{assets/bpmn/suggestion_battery_nav.png}
+                    \caption{Battery and navigation suggestions}
+                    \label{fig: Battery and navigation suggestions}
                 \end{figure}
             \end{center}
         \end{itemize}
 
         \newpage
-        \subsubsection{Booking a charging spot}
         \begin{itemize}                                 
-            \item \textbf{Booking:} let the user book a charging spot for a specific timeframe. The user can also see the available charging spots and the price for each one.
+            \item \textbf{Booking a charging spot:} let the user book a charging spot for a specific timeframe. The user can also see the available charging spots and the price for each one.
             
             \begin{center}
                 \begin{figure}[!h]
@@ -391,7 +400,6 @@
         \end{itemize}
 
         \newpage
-        \subsubsection{Charging Process}
         \begin{itemize}                                 
             \item \textbf{Charging Process:} let the user start the charging process and pay for the service.
         
@@ -403,14 +411,80 @@
                 \end{figure}
             \end{center}
         \end{itemize}
+    
+    \newpage
+        \subsubsection{CPMS functions}
+        \begin{itemize}                                 
+            \item \textbf{Retrieve Station's status:} the CPMS queries the charging stations through the OCPP protocol and sends back the desired information to the emsp through the OCPI.
+        \end{itemize}
+
+        \begin{itemize}                                 
+            \item \textbf{Retrieve DSO's status:} the CPMS queries the available DSOs through their communication interface about their current price.
+        \end{itemize}
+
+        \begin{itemize}                                 
+            \item \textbf{Charging Process:} the CPMS manages the charging process by communicating with the socket and the EMSP.
         
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[width=\textwidth]{assets/bpmn/CPMS_Charging_Process.png}
+                    \caption{Charging Process}
+                    \label{fig: CPMS Charging Process}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+    \newpage
+        \begin{itemize}                                 
+            \item \textbf{Dynamic selection of the source of energy:} the CPMS selects the best energy provider based on the price, the availability and the status of the internal battery.
+            It sorts the energy providers by price, then if the internal battery is full, it selects the cheapest energy provider. If the internal battery is not full, it selects a mix of the cheapest energy provider and the internal battery based on the battery level. 
+        
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[width=\textwidth]{assets/bpmn/CPMS_Dynamic_selection.png}
+                    \caption{CPMS Dynamic selection}
+                    \label{fig: CPMS Dynamic selection}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+
+    \newpage
+        \subsubsection{CPOW functions}
+        \begin{itemize}                                 
+            \item \textbf{Manual source of energy selection:} the logged CPOW visits the CPMS webapp and selects the current source of energy (or a mix between the internal battery and the external energy provider).
+        
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[width=\textwidth]{assets/bpmn/CPOW_sel_source.png}
+                    \caption{CPOW manual selection of the source of energy}
+                    \label{fig: CPOW manual selection of the source of energy}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+    \newpage
+        \begin{itemize}                                 
+            \item \textbf{Management of price and special offers:} the logged CPOW visits the CPMS webapp and can decide to change the price or to create, remove or to apply a special offer.
+        
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[width=\textwidth]{assets/bpmn/CPOW_sel_offer.png}
+                    \caption{CPOW management of price and special offers}
+                    \label{fig: CPOW management of price and special offers}
+                \end{figure}
+            \end{center}
+        \end{itemize}
     
     \newpage
     \subsection{User characteristics}
+    \subsubsection{Electric car owner}
     The application has been thought for anybody that owns an electric car and wants to plan his charging process. 
     Because of this, the potential user base comprises of any electric vehicle owner with a device connected to the internet.
-    The user should also be capable of interacting with a webapp
-        
+    The user should also be capable of interacting with a webapp.
+    
+    \subsubsection{CPO's Human Operators (CPOW)}
+    The CPOW is the person that manages the charging stations owned by the CPO.\\
+    He is a spacialized worker that has to be able to interact with the webapp and the CPMS in order to change from which DSO or battery the charging stations are getting the energy from, or to set special offers for the charging stations.
+    He needs a device connected to the internet, a web browser and the company credentials to access the webapp.
+
     \subsection{Assumptions, dependencies and constraints}
     \newcounter{assumptionCtr}
     \begin{itemize}
@@ -528,7 +602,7 @@
         \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the internal status of the sockets through the OCPP standard protocol.\\\hline
         \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPI standard protocol.\\\hline
+        R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols.\\\hline
         \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.\\\hline
         \stepcounter{RequirementCtr}
@@ -543,7 +617,8 @@
         R\arabic{RequirementCtr}    & The CPMS subsystem must unlock the reserved charging spot if the user doesn't show up.\\\hline
 
     \end{longtable}
-
+    
+    \newpage
     \subsubsection{Mapping}
     \rowcolors{1}{white!100}{}
     \newcounter{goalCtr2}
