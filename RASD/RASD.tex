@@ -869,7 +869,7 @@
     \subsubsection{Use Cases}
     \setcounter{secnumdepth}{4}
 
-    \paragraph{Use Cases Diagram}
+      \paragraph{Use Cases Diagram}
     \begin{itemize}
         \item \textbf {Policy Makers}
         \begin{center}
@@ -903,50 +903,421 @@
     \paragraph{Use Cases Description}
 
     For more details \ref{sequencediagram}.
-    
+
         \begin{itemize}
-            \item \textbf {Shared Use Cases}
-            
+            \item \textbf {User use cases}
+
             \begin{table}[H]
                 \item[] \textbf{Sign Up}
-                \item[] 
+                \item[]
                 \centering
                 \begin{tabular}{|c |m{0.69\textwidth}|}
                     \hline
                     \textbf{Use Case} & Sign Up\\ \hline
-                    \textbf{Actor} & U\\ \hline
+                    \textbf{Actor} & User\\ \hline
                     \textbf{Entry condition} & User wants to register in the system\\  \hline
                     \textbf{Flow of events} & \begin{enumerate}
-                                                \item text
-                                                
+                                                \item User opens EMall
+                                                \item User presses the sign up button
+                                                \item User enters his name, email and password
+                                                \item User presses the confirm button
+                                                \item System displays a confirmation message
+                                                \item An email is sent to the user
+
                                             \end{enumerate}\\ \hline
                     \textbf{Exit condition} & User data are saved into the system and registration ends successfully  \\ \hline
                     \textbf{Exceptions} &  \begin{enumerate}
-                        \item text
-                        
+                        \item User email is already taken
+                        \item User presses the cancel button
+                        \item E-Mall is closed
                     \end{enumerate}
-                    An error message is shown and the flow of events starts again from point 3\\ \hline                    
+                    An error message is shown and the flow of events starts again from point 3\\ \hline
                 \end{tabular}
             \end{table}
 
-           
-            \item \textbf {U}
+
+             \begin{table}[H]
+                \item[] \textbf{Log in}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Log in\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & User wants to log into the system\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item User opens E-Mall
+                                                \item User presses the log in button
+                                                \item User enters his email and password
+                                                \item User presses the confirm button
+                                                \item System displays the main page
+
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} & System recognizes the user's password as correct and the main page is displayed  \\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item Email is not in the system
+                        \item The password for the given email is incorrect
+
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 3\\ \hline
+                \end{tabular}
+            \end{table}
+
+
+            \begin{table}[H]
+                \item[] \textbf{View Nearby Stations}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & View Nearby Stations\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & User is logged and wants to view charging stations near him\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item User is in the home page
+                                                \item User clicks the "view charging stations" button
+                                                \item System displays the map with the data
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} & Uses presses the home button  \\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The position isn't available
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+
+            \begin{table}[H]
+                \item[] \textbf{Delete a booking}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Delete a booking\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & User is logged and has at least a booking\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item User is in the home page
+                                                \item User clicks the "view bookings list" button
+                                                \item System displays the list of the bookings
+                                                \item User selects his chosen booking
+                                                \item User clicks on "Delete"
+                                                \item System displays a confirmation message and the booking is removed from the list
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} & The deletion is successfully registered from the system  \\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item User had only one booking
+                    \end{enumerate}
+                    A "no bookings are left!" message is displayed and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+            \begin{table}[H]
+                \item[] \textbf{Make a booking}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Make a booking\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & User is logged and wants make a new booking\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item User is in the home page
+                                                \item User clicks the "make a booking" button
+                                                \item User fills the form with the information about his booking and confirms
+                                                \item System adds the booking to the user's list and displays a confirmation message
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} & All the form information was valid (e.g. the date exists) and the slot is available  \\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item Slot selected by user isn't available
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+             \begin{table}[H]
+                \item[] \textbf{Book from map}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Book from map\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & A logged user is viewing a map and presses on the "Book" button near it \\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item User is viewing the map of the stations
+                                                \item User clicks on the desired station
+                                                \item User clicks on the "Book" button near it
+                                                \item User fills the form with all the necessary data
+                                                \item System adds the booking to the user's list and displays a confirmation message
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  All the form information was valid (e.g. the date exists) and the slot is available\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The specific station is already booked at that time
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+             \begin{table}[H]
+                \item[] \textbf{Start charging process}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Start a charging process\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & User is at the stations and selects the corresponding station on the app \\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item User is viewing the desired socket on the app
+                                                \item User clicks the start "start charging" button
+                                                \item System displays a form to fill with the payment informations
+                                                \item User fills the form and clicks start
+                                                \item System processes and displays a screen containing the information about the ongoing charge
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  System detects an EV at that socket and the payment goes through\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The selected socket is detected as empty by the CPMS
+                        \item The selected socket is already undergoing a charging process
+                        \item The payment doesn't go through correctly
+                    \end{enumerate}
+                    An error message is shown and flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+
+            \item \textbf {CPOW use cases}
+            \begin{table}[H]
+                \item[] \textbf{Log in}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Log in\\ \hline
+                    \textbf{Actor} & CPOW\\ \hline
+                    \textbf{Entry condition} & CPOW wants to log into the system \\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item CPOW opens eMALL
+                                                \item CPOW clicks "log in as CPO"
+                                                \item CPOW fills the form with its name, surname, institutional mail and password
+                                                \item System checks the information and sends a confirmation notification
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  All the fields are valid and the password was correct\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The email given isn't recognized by the system
+                        \item The password for the given email is incorrect
+                        \item The institution isn't recognized
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+            \begin{table}[H]
+                \item[] \textbf{Insert discount}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Insert discount\\ \hline
+                    \textbf{Actor} & CPOW\\ \hline
+                    \textbf{Entry condition} & CPOW is logged and wants insert a new discount \\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item CPOW is logged and in the main screen
+                                                \item CPOW clicks "insert new discount"
+                                                \item system displays a form containing all the information required
+                                                \item CPOW inserts the discount information in the form
+                                                \item System displays a confirmation message
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  The form information is correct \\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item Some of the form information isn't valid
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+            \begin{table}[H]
+                \item[] \textbf{Delete discount}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Delete a discount\\ \hline
+                    \textbf{Actor} & CPOW\\ \hline
+                    \textbf{Entry condition} & CPOW is logged and wants delete one of his discounts \\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item CPOW is logged and in the main screen
+                                                \item CPOW clicks on "view discounts"
+                                                \item System displays a list containing all active discounts and their information
+                                                \item CPOW clicks on "delete" on the specific discount he wants deleted
+                                                \item System returns a confirmation message
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  The company the CPOW is associated with has at least one active discount\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The CPOW doesn't have any active discounts
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+
+             \begin{table}[H]
+                \item[] \textbf{View Stations}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & View stations\\ \hline
+                    \textbf{Actor} & CPOW\\ \hline
+                    \textbf{Entry condition} & CPOW is logged and wants to view his stations\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item CPOW is logged and in the main screen
+                                                \item CPOW clicks on "view stations"
+                                                \item System displays a page containting all the stations available to him with their current status
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  The CPO associated to the CPOW by the system has at least a station linked to it\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The CPO the CPOW is associated with doesn't have a single station linked
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+            \begin{table}[H]
+                \item[] \textbf{Switch to battery}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Switch to battery\\ \hline
+                    \textbf{Actor} & CPOW\\ \hline
+                    \textbf{Entry condition} & CPOW is viewing one of his stations and wants to switch to the internal battery\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item CPOW is viewing his stations list
+                                                \item CPOW (selects a specific socket and) clicks on "switch to internal battery"
+                                                \item System processes the request and displays a confirmation message
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  The operation correctly goes through\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The station's battery has run out
+                        \item The station's battery is not working
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+
+             \begin{table}[H]
+                \item[] \textbf{Switch DSO}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Switch DSO\\ \hline
+                    \textbf{Actor} & CPOW\\ \hline
+                    \textbf{Entry condition} & CPOW is viewing one of his stations and wants to switch to a different DSO\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item CPOW is viewing his stations list
+                                                \item CPOW clicks on the selected one and presses "Switch DSO"
+                                                \item System displays a list of available DSOs
+                                                \item CPOW presses the selected one from the list
+                                                \item System processes the request and sends a confirmation pop-up
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  User doesn't click the cancel button when the list of DSOs is displayed\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The station has only 1 available DSO
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+
+
+
+
 
 
             \newpage
             \item \textbf{text}
-            
-           
+
+
 
 
         \item \textbf{Use Cases to requirement mapping}
         0
         \item[] \begin{longtable}{|p{0.31\textwidth}|p{0.69\textwidth}|}
                     \hline
-                    \cellcolor{SpringGreen!50}\textbf{1)Sign Up}\centering & R3) text
-                                                                     
-                                                                     R2) text\\\hline
-                   
+                    \cellcolor{SpringGreen!50}\textbf{1) User Sign Up}\centering & R1) text
+
+                                                                     R3) text\\\hline
+                    \cellcolor{SpringGreen!50}\textbf{2) User Sign on}\centering & R1) text
+
+                                                                     R3) text\\\hline
+
+                    \cellcolor{SpringGreen!50}\textbf{3)View nearby stations}\centering & R5) text
+                                                                     R6) Aspe andava messo nelle assumptions
+                                                                     R8) The map must display discounted prices
+                                                                     R9)
+                                                                     R12)
+                                                                     R18)
+                                                                     R19)
+                                                                     R23)
+                                                                     R24)
+                                                                     R25)   \\\hline
+
+
+                    \cellcolor{SpringGreen!50}\textbf{4)Delete booking}\centering & R12) Deve comunicare
+                                                                     R14) \\\hline
+
+                    \cellcolor{SpringGreen!50}\textbf{5)Make a booking}\centering & R12) text
+                                                                     R13)
+                                                                     \\\hline
+                    \cellcolor{SpringGreen!50}\textbf{6)Book from map}\centering & R5) text
+                                                                     R6) Aspe andava messo nelle assumptions
+                                                                     R8) The map must display discounted prices
+                                                                     R9)
+                                                                     R12)
+                                                                     R13)
+                                                                     R25)
+                                                                     \\\hline
+
+
+                    \cellcolor{SpringGreen!50}\textbf{7)Start charging process}\centering & R7) text
+                                                                     R9) Aspe andava messo nelle assumptions
+                                                                     R15) The map must display discounted prices
+                                                                     R16) text add in giro:
+                                                                     R20)
+                                                                     R22)
+                                                                     R24)
+                                                                     R25) dire che è occupato lol
+                                                                     R26)
+                                                                     eq 23,4,5,6\\\hline
+
+
+
+                      \cellcolor{SpringGreen!50}\textbf{8) CPOW Sign Sup}\centering & R1) text
+
+                                                                     R3) text\\\hline
+                    \cellcolor{SpringGreen!50}\textbf{9) CPOW Sign on}\centering & R1) text
+
+                                                                     R3) text\\\hline
+
+                    \cellcolor{SpringGreen!50}\textbf{10) Insert discount}\centering & R29)   \\\hline
+
+                    \cellcolor{SpringGreen!50}\textbf{11) Delete discount}\centering & R29)  \\\hline
+
+                    \cellcolor{SpringGreen!50}\textbf{12) View stations}\centering & missing  \\\hline
+
+                    \cellcolor{SpringGreen!50}\textbf{13) Switch to battery}\centering & R21)
+                                                                     R12)   \\\hline
+
+                    \cellcolor{SpringGreen!50}\textbf{14) switch DSO}\centering & R30)
+                                                                            R18)\\\hline
+
+
+
+
+
             \end{longtable}
     
     \end{itemize}
