@@ -13,7 +13,32 @@ sig CarOwner extends User{
 	car : set Car,
 	schedule : one DailySchedule,
 	suggestedChargingTimes: set Event,
-	bookings : set Booking
+	suggestedChargingLocations : set Location,
+	bookings : set Booking,
+	nextTrip: lone Route,
+	nearStations: set ChargingStation
+}
+
+sig CPOoperator extends User{
+	company : one string
+}
+
+sig Offer{
+	author : one CPOoperator,
+	value : one Value,
+	startingDate: one Date,
+	endingDate: one Date,
+}{
+	startingDate != endingDate
+}
+
+sig Value{
+	tens : one Int,
+	units : one Int
+}{
+	tens>=0
+	units >=0
+	tens + units > 0 //offer cannot be 0% discount 
 }
 
 sig ChargingStation{
@@ -30,10 +55,6 @@ sig SmartDevice{
 	currentLocation : one Location
 }
 
-sig CPOoperator extends User{
-	company : one string
-}
-
 sig Location{
 	coordinates : one Coordinates
 }
@@ -41,6 +62,10 @@ sig Location{
 sig Coordinates{
 	longitude : one Int,
 	latitude : one Int
+}
+
+sig Route{
+	stops: some Location
 }
 
 sig Email{}
@@ -78,7 +103,12 @@ sig Date{}
 
 sig CPMS{
 	CPOowner : one string,
+	operators : set CPOoperator,
 	chargingStations : disj some ChargingStation,
+	allOffers : disj set Offer,
+	offers: allOffers-> some chargingStations
+}{
+	#operators>0
 }
 
 one sig System{
@@ -91,9 +121,18 @@ fact socketHasOneChargingStation{
 	all s: Socket | no disj cs1, cs2 : ChargingStation | s in cs1.sockets and s in cs2.sockets
 }
 
+//CPO operators are registered only in CPMSs owned by their company
+fact correctOperators{
+	all cpow : CPOoperator, cpms : CPMS | cpow in cpms.operators iff cpow.company = cpms.CPOowner
+}
+
 //there are no sockets without charging stations
 fact socketIsInCS{
 	all s: Socket | one cs : ChargingStation | s in cs.sockets
+}
+
+fact nearbyStationsConditions{
+	all cs:ChargingStation, u:CarOwner | cs in u.nearStations iff cs.location=u.device.currentLocation
 }
 
 //all charging stations are owned by a CPO
@@ -127,8 +166,12 @@ fact DifferentMails{
 	no disj u1, u2: User | u1.email=u2.email
 }
 
+fact allOperatorsWorkForCompanies{
+	all o:CPOoperator, cpms:CPMS | o.company = cpms.CPOowner implies o in cpms.operators
+}
+
 //all bookings belongs to users
-fact {
+fact trueBookings{
 	all b: Booking | all u : User | b.user=u.email iff b in u.bookings
 }
 
@@ -174,6 +217,10 @@ fact allLocationsAreDifferent{
 		l1.coordinates.longitude=l2.coordinates.longitude
 }
 
+fact allOffersAreLegitimate{
+	all cpms:CPMS, offer: Offer | offer in cpms.allOffers iff offer.author in cpms.operators
+}
+
 fact noOverlappingEventsForUser{
 	all ds: DailySchedule | no disj e1, e2: Event | e1 in ds.events and e2 in ds.events and e1.time = e2.time
 }
@@ -182,6 +229,11 @@ fact SuggestCorrectly{
 	all c: CarOwner, e: Event | one cs :ChargingStation | e.location=cs.location 
 		and e in c.schedule.events 
 			and e in c.suggestedChargingTimes
+}
+
+fact SuggestLocationsCorrectly{
+	all c:CarOwner, place:Location | one cs:ChargingStation | 
+	place in c.suggestedChargingLocations iff (place in c.nextTrip.stops and place = cs.location)
 }
 
 fact noWildSchedules{
@@ -201,7 +253,14 @@ fact allBookingsAreRegistered{
 }
 
 
-
+assert OfferValidity{
+	all offer:Offer, cpms:CPMS, cs:ChargingStation, sys:System |
+	(offer->cs) in cpms.offers implies 
+		(offer.author in sys.users 
+		and offer.author.company=cpms.CPOowner 
+		and cpms.CPOowner = cs.owner and offer in cpms.allOffers 
+		and cs in cpms.chargingStations)
+}
 
 //verify that all the bookings made are registered to the right user, and location and socket of the charging station matches correctly
 assert BookingsAreRegistered{
@@ -213,6 +272,31 @@ assert BookingsAreRegistered{
 						and b.socket in cs.sockets )
 }
 
+assert CorrectNearby{
+ all disj co:CarOwner, cs:ChargingStation | cs in ChargingStationIsNearby[co, cs] iff co.device.location=cs.location
+}
+
+//verify that only correct suggestions are made
+assert SuggestionWorksCorrectly{
+	all c: CarOwner, e: Event | some cs:ChargingStation | 
+		e in c.suggestedChargingTimes iff 
+		e.location in cs.location 
+		and e in c.schedule.events 
+}
+
+assert LocationSuggestionWorksCorrectly{
+	all c:CarOwner, place:Location | some cs: ChargingStation|
+	place in c.suggestedChargingLocations iff
+	(
+		place in c.nextTrip.stops and cs.location=place
+	)
+}
+
+fun ChargingStationIsNearby[co:CarOwner, cs:ChargingStation]: lone ChargingStation{
+	{return: ChargingStation | (return=cs iff co.device.location=cs.location)
+	}
+}
+
 pred bookingRequest[b:Booking, co:CarOwner, cs:ChargingStation]{
 	(b in co.bookings) implies
 		(b.user=co.email) 
@@ -221,40 +305,35 @@ pred bookingRequest[b:Booking, co:CarOwner, cs:ChargingStation]{
 		and b.socket in cs.sockets)
 }
 
-//verify that only correct suggestions are made
-assert SuggestionWorksCorrectly{
-	all c: CarOwner, e: Event | some cs:ChargingStation | 
-		e in c.suggestedChargingTimes iff 
-		e.location in cs.location 
-		and e in c.schedule.events
-}
-
-fun ChargingStationIsNearby[co:CarOwner, cs:ChargingStation]: lone ChargingStation{
-	{return: ChargingStation | (return=cs iff co.device.location=cs.location)
-	}
-}
-
-assert CorrectNearby{
- all disj co:CarOwner, cs:ChargingStation | cs in ChargingStationIsNearby[co, cs] iff co.device.location=cs.location
-}
-
 pred ChargingProcess[co: CarOwner, cs: ChargingStation, s: Socket, b:Booking]{
 	co.device.currentLocation = cs.location and s in cs.sockets and s.occupied.isTrue and b in co.bookings and b in s.bookings
 }
 
+pred NearbyStation[u:CarOwner]{
+	#u.nearStations>0
+}
+
+check OfferValidity for 10
 check CorrectNearby for 10
-
 check SuggestionWorksCorrectly for 10
-
+check LocationSuggestionWorksCorrectly for 10
 check BookingsAreRegistered for 10 
 
-pred show{}
+pred show{
+	
+}
 
+run NearbyStation for 10
 run ChargingProcess for 10
-run bookingRequest
+run bookingRequest for 10
+
+
 run show{
+#offers>1
+#CPOoperator>3	
+#CPMS > 1
+#Offer > 1
 #CarOwner > 1
 #ChargingStation >1
 #Socket>2
-#Event>2
-} for 4
+} for 15
