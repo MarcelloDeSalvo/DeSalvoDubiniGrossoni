@@ -1419,9 +1419,15 @@
     \subsection{Formal Analysis Purpose}
     The following analysis aims to formally prove the correctness of the system model by exploiting Alloy verification tool. To achieve so, we test the model by checking if some of the previous defined goals are met. 
 
-    Specifically, we stress:
+    in particular, we will focus on this goals:
     \begin{itemize}
-        \item \textbf{(G3) }: 
+        \item \textbf{(G1) Know about the charging stations nearby }: For this goal an assertion checks if the system correctly matched each user with the charging stations near them. 
+        \item \textbf{(G2) Book a charge in a specific charging station for a certain timeframe }: Using an assertion we verify that each user can make a reservation as long as he is registered in the system, while also making sure that the booking is valid and the booking information is registered in the correct charging station via its CPMS.
+        \item \textbf{(G3) Start the Charging process at a specific station }: for this goal we show an istance where a user who has booked a socket is currently charging his car at that socket. This also covers the goal \textbf{(G12)}.
+        \item \textbf{(G6) Suggest the user convenient charging timeframes based on his upcoming schedule or on his planned trip. }: With two assertions we verify that the system correctly suggest to each user specific timeframes taken from their schedule where they can charge their car based on the proximity to a charging station. We also check that the system also correctly suggest, based on the user's next trip, some charging stations along the route.
+        \item \textbf{(G12) Start charging a vehicle according to the amount of power supplied by the socket, and monitor the charging process to infer when the battery is full. } Thanks to the predicate we show that if a user booked a socket they can start charging their car. We also show that the system knows the status of the socket and the currently charging car.
+        \item \textbf{(G17) Insert special and limited offers. }: through an assertion we verify that only operators from a company can apply offers to charging stations belonging to that company, and we check that only registered users can apply those offers.
+ 
         
     \end{itemize}
 
