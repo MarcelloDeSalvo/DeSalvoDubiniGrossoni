@@ -1085,6 +1085,57 @@
                 \end{tabular}
             \end{table}
 
+            \begin{table}[H]
+                \item[] \textbf{Battery suggestion}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Battery suggestion\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & User's car battery is running low \\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item Systems detects user's battery is low
+                                                \item System sends a notification to the user with the stations near him
+                                                \item User opens notification and clicks one of the suggested stations
+                                                \item System offers the user the possibility to book the location
+                                                \item User accepts and fills the form
+                                                \item System sends a confirmation message
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  All the form information was valid (e.g. the date exists) and the slot is available\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The specific station has been booked in the meanwhile
+                        \item Booking information is wrong
+                    \end{enumerate}
+                    An error message is shown and the user is returned to the main page\\ \hline
+                \end{tabular}
+            \end{table}
+
+            \begin{table}[H]
+                \item[] \textbf{Calendar Suggestion}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Calendar Suggestion\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & User has at least an event in next day's calendar \\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item Systems retrieves user schedule and finds an appropriate time and place for charging
+                                                \item System sends a notification to the user with the times and places he can charge his car
+                                                \item User opens notification and clicks one of the suggested stations
+                                                \item System offers the user the possibility to book the location
+                                                \item User accepts and fills the form
+                                                \item System sends a confirmation message
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  All the form information was valid (e.g. the date exists) and the slot is available\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The specific station has been booked in the meanwhile
+                        \item Booking information is wrong
+                    \end{enumerate}
+                    An error message is shown and the user is returned to the main page\\ \hline
+                \end{tabular}
+            \end{table}
 
             \item \textbf {CPOW use cases}
             \begin{table}[H]
