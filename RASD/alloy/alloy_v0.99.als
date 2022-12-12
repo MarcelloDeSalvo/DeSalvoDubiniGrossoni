@@ -2,7 +2,7 @@ module projectSE2
 open util/boolean
 
 abstract sig User{
-	device : one SmartDevice,
+	device : disj one SmartDevice,
 	email : one Email,
 	password : one string,
 	name : one string,
@@ -437,9 +437,14 @@ run ChargingProcess for 10
 run bookingRequest for 10
 run multipleCPMS for 10
 
+run show{
+	#CPMS >1
+	#Location > 4
+	#User<5
+	#Car <4
+	#Offer<3
+	#DSO>1
+} for 15
 
 run show{
-
-#CPMS >1
-
 } for 10
