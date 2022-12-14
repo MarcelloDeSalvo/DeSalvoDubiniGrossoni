@@ -339,9 +339,6 @@ pred NearbyStation[u:CarOwner]{
 }
 
 
-
-
-
 //G2. Book a charge in a specific charging station for a certain timeframe
 assert BookingsAreRegistered{
 	all b: Booking, cs : ChargingStation, c : CarOwner, sys:System | 
