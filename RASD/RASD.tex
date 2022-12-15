@@ -470,7 +470,7 @@
         \end{itemize}
     \newpage
         \begin{itemize}                                 
-            \item \textbf{Management of price and special offers:} the logged CPOW visits the CPMS webapp and can decide to change the price or to create, remove or to apply a special offer.
+            \item \textbf{Management of price and special offers:} the logged CPOW visits the CPMS webapp and can decide to create or remove a special offer.
         
             \begin{center}
                 \begin{figure}[!h]
@@ -533,10 +533,21 @@
     \label{software_interfaces}
     To access the application a web browser is required. Additional software like a calendar and GPS is necessary for accessing all the funcionalities of the application. The software will also take advantage of some interfaces to accomplish its requirements. An external API is necessary to visualize on maps the user location and the near charging stations. %frase copiatissima%
     
+    \newpage
     \subsubsection{Communication Interfaces}
     Internet connections will be mandatory since the web application must communicate with the web server and the system APIs.\\
-    Communication between the EMSP and the CPMS will be done through the OCPI protocol that allows the exchange of data in real time (RTC) and supports both peer-to-peer (P2P) and roaming hub connections. In P2P roaming, CPOs and EMSPs have direct bilateral connections via which they exchange data. Meanwhile, in hub-based roaming, a charge point operator or mobility service provider can access many roaming partners via a single, standardised connection.
-    
+    \begin{itemize}
+        \item \textbf{Communication between the EMSP and the CPMS:}\\
+              Will be done through the OCPI protocol that allows the exchange of data in real time (synchronous RTC) and supports both peer-to-peer (P2P) and roaming hub connections.\\
+              In P2P roaming, CPOs and EMSPs have direct bilateral connections via which they exchange data. Meanwhile, in hub-based roaming, a charge point operator or mobility service provider can access many roaming partners via a single, standardised connection.\\
+        \item \textbf{Communication between the CPMS and the Charging stations:}\\
+              Will be done through the asynchronous OCPP protocol that allows charging stations to communicate with a central management system (CPMS) in order to exchange information.
+              The OCPP is based on REST (Representational State Transfer) and uses JSON (JavaScript Object Notation) as the format for its messages. It uses a client-server model, where the charging stations act as clients and the CPMS acts as the server.
+        \item \textbf{Communication between the CPMS and the DSOs:}\\
+              Will be done through a specialized proprietary API that allows the coordination of their activities and the exchange of data.
+        \end{itemize}
+
+    Both the OCPI and the OCPP protocols are open source and available on the internet, and for this reason they could be extended to meet the needs of our system.
     \newpage
     \subsection{Functional Requirements}
 
@@ -1181,7 +1192,7 @@
                     \textbf{Flow of events} & \begin{enumerate}
                                                 \item CPOW is logged and in the main screen
                                                 \item CPOW clicks "insert new discount"
-                                                \item system displays a form containing all the information required
+                                                \item system displays a form containing all the information required (including a list of all the stations to which the discount will be applied)
                                                 \item CPOW inserts the discount information in the form
                                                 \item System displays a confirmation message
                                             \end{enumerate}\\ \hline
