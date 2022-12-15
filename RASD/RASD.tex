@@ -102,7 +102,7 @@
             absorbed and time left to the end of the charge.
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Start charging a vehicle according to the amount of power supplied by the socket, and monitor the charging process to infer when the battery is full.}
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Acquire from the DSOs information about the current price of energy.}
-            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Decide from which DSO to acquire energy (if more than one is available).}
+            %\item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Decide from which DSO to acquire energy (if more than one is available).}
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Dynamically decide where to get energy for charging (station battery, DSO, or a mix according to availability and cost).}
         \end{itemize}
 
@@ -111,7 +111,7 @@
         \begin{itemize}
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Change the source of energy between batteries and grid.}
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Insert special and limited offers.}
-            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Change the price of a charging station.}
+            %\item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Change the price of a charging station.}
         \end{itemize}
 
     \newpage
@@ -552,9 +552,9 @@
         \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The system must respect the GDPR and the user's privacy.\\\hline
         \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The system must allow registered users to log-in using their e-mail\\\hline
+        R\arabic{RequirementCtr}    & The system must allow registered users to log-in using their e-mail.\\\hline
         \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol \\\hline
+        R\arabic{RequirementCtr}    & Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol. \\\hline
     \end{longtable}  
     \rowcolors{1}{white!100}{} 
     \rowcolors{2}{}{PineGreen!25}
@@ -616,8 +616,6 @@
         \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the battery status of the car through the DIN/ISO specifications.\\\hline
         \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The CPMS subsystem must allow the CPOW to change the price of a charging station.\\\hline
-        \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The CPMS subsystem must allow the CPOW to add or change the current special offer.\\\hline
         \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The CPMS subsystem must allow the CPOW to change the energy provider of a charging station.\\\hline
@@ -638,9 +636,9 @@
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} &  Know about the charging stations nearby, including their cost and any special offer they have.\\\hline
-                \cellcolor{pink!50}R1 & Text.\\\hline
-                \cellcolor{pink!50}R2 & Text.\\\hline
-                \cellcolor{pink!50}R3 & Text.\\\hline 
+                \cellcolor{pink!50}R1 & The system must allow registered and logged-in users to use the app.\\\hline
+                \cellcolor{pink!50}R2 & The system must respect the GDPR and the user's privacy.\\\hline
+                \cellcolor{pink!50}R3 & The system must allow registered users to log-in using their e-mail.\\\hline 
                 \cellcolor{pink!50}R5 & The eMSP subsystem must show the user the nearby charging stations through an interactive map.\\\hline
                 \cellcolor{pink!50}R6 & The eMSP subsystem must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission.\\\hline
                 \cellcolor{pink!50}R8 & The eMSP subsystem must noitify the user about discounted prices.\\\hline
@@ -655,13 +653,13 @@
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Book a charge in a specific charging station for a certain timeframe.\\\hline
-                \cellcolor{pink!50}R1 &  Text.\\\hline
-                \cellcolor{pink!50}R2 &  Text.\\\hline
-                \cellcolor{pink!50}R3 &  Text.\\\hline
-                \cellcolor{pink!50}R13 & TEXT\\\hline
-                \cellcolor{pink!50}R14 & TEXT\\\hline
-                \cellcolor{pink!50}R17 & TEXT\\\hline
-                \cellcolor{pink!50}R31 & TEXT\\\hline
+                \cellcolor{pink!50}R1 &  The system must allow registered and logged-in users to use the app.\\\hline
+                \cellcolor{pink!50}R2 &  The system must respect the GDPR and the user's privacy.\\\hline
+                \cellcolor{pink!50}R3 &  The system must allow registered users to log-in using their e-mail.\\\hline
+                \cellcolor{pink!50}R13 & The eMSP subsystem must allow the user to book a charging spot for a future date.\\\hline
+                \cellcolor{pink!50}R14 & The eMSP subsystem must allow the user to cancel a future reservation for a charging spot.\\\hline
+                \cellcolor{pink!50}R17 & The eMSP subsystem must notify the user of the upcoming booked sessions.\\\hline
+                \cellcolor{pink!50}R30 & The CPMS subsystem must unlock the reserved charging spot if the user doesn't show up.\\\hline
                 \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
@@ -672,13 +670,13 @@
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Start the charging process at a certain station.\\\hline
-                \cellcolor{pink!50}R1 &  Text.\\\hline
-                \cellcolor{pink!50}R2 &  Text.\\\hline
-                \cellcolor{pink!50}R3 &   Text.\\\hline
-                \cellcolor{pink!50}R4 & TEXT\\\hline
-                \cellcolor{pink!50}R7 & TEXT\\\hline
-                \cellcolor{pink!50}R16 & TEXT\\\hline
-                \cellcolor{pink!50}R26 & TEXT\\\hline
+                \cellcolor{pink!50}R1 &  The system must allow registered and logged-in users to use the app.\\\hline
+                \cellcolor{pink!50}R2 &  The system must respect the GDPR and the user's privacy.\\\hline
+                \cellcolor{pink!50}R3 &  The system must allow registered users to log-in using their e-mail.\\\hline
+                \cellcolor{pink!50}R4 &  Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol.\\\hline
+                \cellcolor{pink!50}R7 &  The eMSP subsystem must notify the user when the charge has finished.\\\hline
+                \cellcolor{pink!50}R16 & The eMSP subsystem must allow the user to start or stop the charge via the application.\\\hline
+                \cellcolor{pink!50}R26 & The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.\\\hline
                 \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
@@ -689,10 +687,10 @@
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Pay for the obtained service.\\\hline
-                \cellcolor{pink!50}R1 &  Text.\\\hline
-                \cellcolor{pink!50}R2 &  Text.\\\hline
-                \cellcolor{pink!50}R3 &   Text.\\\hline
-                \cellcolor{pink!50}R15 & TEXT\\\hline
+                \cellcolor{pink!50}R1 &  The system must allow registered and logged-in users to use the app.\\\hline
+                \cellcolor{pink!50}R2 &  The system must respect the GDPR and the user's privacy.\\\hline
+                \cellcolor{pink!50}R3 &  The system must allow registered users to log-in using their e-mail.\\\hline
+                \cellcolor{pink!50}R15 & The eMSP subsystem must allow the user to pay for the charge through an external payment service.\\\hline
                 \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
@@ -704,7 +702,7 @@
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Be able to communicate with multiple CPMS.\\\hline
-                \cellcolor{pink!50}R4 & TEXT\\\hline
+                \cellcolor{pink!50}R4 & Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol.\\\hline
                 \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
@@ -715,8 +713,8 @@
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Suggest the user convenient charging timeframes based on his upcoming schedule.\\\hline
-                \cellcolor{pink!50}R10 & TEXT\\\hline
-                \cellcolor{pink!50}R11 & TEXT\\\hline
+                \cellcolor{pink!50}R10 & The eMSP subsystem must access the User calendar schedule in order to suggest the best charging timeframes, if given permission.\\\hline
+                \cellcolor{pink!50}R11 & The eMSP subsystem must suggest the user on which charging stations to go based on the car battery and his daily schedule.\\\hline
                 \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
@@ -727,7 +725,7 @@
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Notify the user when the charging process is finished.\\\hline
-                \cellcolor{pink!50}R7 & TEXT\\\hline
+                \cellcolor{pink!50}R7 & The eMSP subsystem must notify the user when the charge has finished.\\\hline
                 \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
@@ -738,9 +736,9 @@
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Be able to communicate with multiple eMSPs.\\\hline
-                \cellcolor{pink!50}R4 & TEXT\\\hline
-                \cellcolor{pink!50}R23 & TEXT\\\hline
-                \cellcolor{pink!50}R25 & TEXT\\\hline
+                \cellcolor{pink!50}R4 & Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol.\\\hline
+                \cellcolor{pink!50}R23 & The CPMS subsystem must communicate the location of the charging stations to all connected eMSPs.\\\hline
+                \cellcolor{pink!50}R25 & The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols.\\\hline
                 \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
@@ -751,7 +749,7 @@
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Be able to communicate with at least one DSO.\\\hline
-                \cellcolor{pink!50}R18 & TEXT\\\hline
+                \cellcolor{pink!50}R18 & The CPMS subsystem must communicate with the DSO according to a standard protocol.\\\hline
                 \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
@@ -762,8 +760,8 @@
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Communicate the location and the "external" status of the charging station.\\\hline
-                \cellcolor{pink!50}R23 & TEXT\\\hline
-                \cellcolor{pink!50}R25 & TEXT\\\hline
+                \cellcolor{pink!50}R23 & The CPMS subsystem must communicate the location of the charging stations to all connected eMSPs.\\\hline
+                \cellcolor{pink!50}R25 & The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols.\\\hline
                 \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
@@ -774,8 +772,8 @@
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Know the internal status of a charging station.\\\hline
-                \cellcolor{pink!50}R21 & TEXT\\\hline
-                \cellcolor{pink!50}R24 & TEXT\\\hline
+                \cellcolor{pink!50}R21 & The CPMS subsystem must retrieve the charging station's battery status.\\\hline
+                \cellcolor{pink!50}R24 & The CPMS subsystem must retrieve the internal status of the sockets through the OCPP standard protocol.\\\hline
                 \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
@@ -786,8 +784,8 @@
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Start charging a vehicle according to the amount of power supplied by the socket, and monitor the charging process to infer when the battery is full.\\\hline
-                \cellcolor{pink!50}R26 & TEXT\\\hline
-                \cellcolor{pink!50}R27 & TEXT\\\hline
+                \cellcolor{pink!50}R26 & The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.\\\hline
+                \cellcolor{pink!50}R27 & The CPMS subsystem must retrieve the battery status of the car through the DIN/ISO specifications.\\\hline
                 \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
@@ -798,33 +796,33 @@
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Acquire from the DSOs information about the current price of energy.\\\hline
-                \cellcolor{pink!50}R19 & TEXT\\\hline
+                \cellcolor{pink!50}R19 & The CPMS subsystem must retrieve the DSO current energy price.\\\hline
                 \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
     \end{table}
 
-    \begin{table}[H]
-        \begin{center}
-            \begin{tabular}{|c | p{0.69\textwidth}|}
-                \hline
-                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Decide from which DSO to acquire energy (if more than one is available).\\\hline
-                \cellcolor{pink!50}R20 & TEXT\\\hline
-                \cellcolor{pink!50}R22 & TEXT\\\hline
-                \cellcolor{pink!50}R30 & TEXT\\\hline
-                \cellcolor{green!50}D & .\\\hline
-            \end{tabular}
-        \end{center}
-    \end{table}
+    %\begin{table}[H]
+    %    \begin{center}
+    %        \begin{tabular}{|c | p{0.69\textwidth}|}
+    %            \hline
+    %            \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Decide from which DSO to acquire energy (if more than one is available).\\\hline
+    %            \cellcolor{pink!50}R20 & TEXT\\\hline
+    %            \cellcolor{pink!50}R22 & TEXT\\\hline
+    %            \cellcolor{pink!50}R29 & TEXT\\\hline
+    %            \cellcolor{green!50}D & .\\\hline
+    %        \end{tabular}
+    %    \end{center}
+    %\end{table}
 
     \begin{table}[H]
         \begin{center}
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Dynamically decide where to get energy for charging (station battery, DSO, or a mix according to availability and cost).\\\hline
-                \cellcolor{pink!50}R21 & TEXT\\\hline
-                \cellcolor{pink!50}R22 & TEXT\\\hline
-                \cellcolor{pink!50}R30 & TEXT\\\hline
+                \cellcolor{pink!50}R21 & The CPMS subsystem must retrieve the charging station's battery status.\\\hline
+                \cellcolor{pink!50}R22 & The CPMS subsystem must dynamically change the energy source depending on the internal station's battery status and the available DSOs' prices.\\\hline
+                \cellcolor{pink!50}R29 & The CPMS subsystem must allow the CPOW to change the energy provider of a charging station.\\\hline
                 \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
@@ -836,10 +834,10 @@
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Change the source of energy between batteries and grid.\\\hline
-                \cellcolor{pink!50}R1 &  Text.\\\hline
-                \cellcolor{pink!50}R2 &  Text.\\\hline
-                \cellcolor{pink!50}R3 &   Text.\\\hline
-                \cellcolor{pink!50}R30 & TEXT\\\hline
+                \cellcolor{pink!50}R1 &  The system must allow registered and logged-in users to use the app.\\\hline
+                \cellcolor{pink!50}R2 &  The system must respect the GDPR and the user's privacy.\\\hline
+                \cellcolor{pink!50}R3 &  The system must allow registered users to log-in using their e-mail.\\\hline
+                \cellcolor{pink!50}R29 &  The CPMS subsystem must allow the CPOW to change the energy provider of a charging station.\\\hline
                 \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
@@ -850,28 +848,27 @@
             \begin{tabular}{|c | p{0.69\textwidth}|}
                 \hline 
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Insert special and limited owners.\\\hline
-                \cellcolor{pink!50}R1 &  Text.\\\hline
-                \cellcolor{pink!50}R2 &  Text.\\\hline
-                \cellcolor{pink!50}R3 &  Text.\\\hline
-                \cellcolor{pink!50}R29 & TEXT\\\hline
+                \cellcolor{pink!50}R1 &  The system must allow registered and logged-in users to use the app.\\\hline
+                \cellcolor{pink!50}R2 &  The system must respect the GDPR and the user's privacy.\\\hline
+                \cellcolor{pink!50}R3 &  The system must allow registered users to log-in using their e-mail.\\\hline
+                \cellcolor{pink!50}R28 & The CPMS subsystem must allow the CPOW to add or change the current special offer.\\\hline
                 \cellcolor{green!50}D & .\\\hline
             \end{tabular}
         \end{center}
     \end{table}
 
-    \begin{table}[H]
-        \begin{center}
-            \begin{tabular}{|c | p{0.69\textwidth}|}
-                \hline
-                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Change the price of a charging station.\\\hline
-                \cellcolor{pink!50}R1 &  Text.\\\hline
-                \cellcolor{pink!50}R2 &  Text.\\\hline
-                \cellcolor{pink!50}R3 &   Text.\\\hline
-                \cellcolor{pink!50}R28 & TEXT\\\hline
-                \cellcolor{green!50}D & .\\\hline
-            \end{tabular}
-        \end{center}
-    \end{table}
+    %%\begin{table}[H]
+    %    \begin{center}
+    %        \begin{tabular}{|c | p{0.69\textwidth}|}
+    %            \hline
+    %            \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Change the price of a charging station.\\\hline
+    %            \cellcolor{pink!50}R1 &  Text.\\\hline
+    %            \cellcolor{pink!50}R2 &  Text.\\\hline
+    %            \cellcolor{pink!50}R3 &   Text.\\\hline
+    %            \cellcolor{green!50}D & .\\\hline
+    %        \end{tabular}
+    %    \end{center}
+    %\end{table}
 
     \newpage
     \subsubsection{Use Cases}
