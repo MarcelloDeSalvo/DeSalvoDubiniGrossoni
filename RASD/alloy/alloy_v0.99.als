@@ -436,9 +436,9 @@ run multipleCPMS for 10
 
 run show{
 	#CPMS >1
-	#Location > 4
-	#User<5
+	#Location > 3
 	#Car <4
+	#ChargingStation<4
 	#Offer<3
 	#DSO>1
 } for 15
