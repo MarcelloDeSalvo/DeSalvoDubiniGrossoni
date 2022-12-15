@@ -75,7 +75,7 @@
         \underline{User goals}
         \begin{itemize}
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Know about the charging stations nearby, including their cost and any special offer they have.}
-            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Book a charge in a specific charging station for a certain timeframe.}\\ description
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Book a charge in a specific charging station for a certain timeframe.}
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Start the charging process at a certain station.}
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Pay for the obtained service.}
         \end{itemize}
@@ -92,14 +92,21 @@
         \begin{itemize}
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Be able to communicate with multiple eMSPs.}
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Be able to communicate with at least one DSO.}
-            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Communicate the location and “external” status of a charging station.}
-            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Know the “internal” status of a charging station .}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Communicate the location and “external” status of a charging station.}\\ 
+            e.g. the number of charging sockets
+            available, their type, their cost, if all sockets of a certain type are
+            occupied or the estimated amount of time until the first socket of that type is freed.
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Know the “internal” status of a charging station .}\\
+            e.g. the amount of energy available in its batteries, if 
+            any, number of vehicles being charged and, for each charging vehicle, amount of power 
+            absorbed and time left to the end of the charge.
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Start charging a vehicle according to the amount of power supplied by the socket, and monitor the charging process to infer when the battery is full.}
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Acquire from the DSOs information about the current price of energy.}
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Decide from which DSO to acquire energy (if more than one is available).}
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Dynamically decide where to get energy for charging (station battery, DSO, or a mix according to availability and cost).}
         \end{itemize}
 
+        \newpage
         \underline{CPOW goals}
         \begin{itemize}
             \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Change the source of energy between batteries and grid.}
@@ -1383,14 +1390,137 @@
             \textbf{Sign Up}
             \begin{center}
                 \begin{figure}[H]
-                    \includegraphics[scale=0.55, center]{assets/placeholder.png}
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Sign up sequence.png}
                     \caption{Shared Sequence Diagram - Sign Up Sequence Diagram}
                     \label{fig: sequence_signup}
                 \end{figure}
             \end{center}
 
-            \item \textbf{Farmers}\\
+            \newpage
+            \textbf{Log in}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Log in sequence.png}
+                    \caption{Shared Sequence Diagram - Login Sequence Diagram}
+                    \label{fig: sequence_login}
+                \end{figure}
+            \end{center}
 
+            \newpage
+            \item \textbf{Users}\\
+            \textbf{View nearby stations}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/View Stations.png}
+                    \caption{User Sequence Diagram - View nearby stations Diagram}
+                    \label{fig: View nearby stations}
+                \end{figure}
+            \end{center}
+
+            \textbf{Delete a booking}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Booking deletion sequence.png}
+                    \caption{User Sequence Diagram - Delete a booking Diagram}
+                    \label{fig: Delete a booking}
+                \end{figure}
+            \end{center}
+
+            \textbf{Make a booking}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Make a booking.png}
+                    \caption{User Sequence Diagram - Make a booking Diagram}
+                    \label{fig: Make a booking}
+                \end{figure}
+            \end{center}
+
+            \newpage
+            \textbf{Book from map}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Book from map.png}
+                    \caption{User Sequence Diagram - Book from map Diagram}
+                    \label{fig: Book from map}
+                \end{figure}
+            \end{center}
+
+            \newpage
+            \textbf{Start charging process}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Start charging process.png}
+                    \caption{User Sequence Diagram - Start charging process Diagram}
+                    \label{fig: Start charging process}
+                \end{figure}
+            \end{center}
+
+            \newpage
+            \textbf{Battery suggestion}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Battery Suggestion.png}
+                    \caption{User Sequence Diagram - Battery suggestion Diagram}
+                    \label{fig: Battery suggestion process}
+                \end{figure}
+            \end{center}
+
+            \newpage
+            \textbf{Calendar suggestion}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Calendar Suggestion.png}
+                    \caption{User Sequence Diagram - Calendar suggestion Diagram}
+                    \label{fig: Calendar suggestion process}
+                \end{figure}
+            \end{center}
+
+            \newpage
+            \item \textbf{CPOW}\\
+            \textbf{Insert a discount}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Insert Discount.png}
+                    \caption{CPOW Sequence Diagram - Insert Discount Diagram}
+                    \label{fig: Insert Discount}
+                \end{figure}
+            \end{center}
+
+            \textbf{Delete a discount}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Delete Discount.png}
+                    \caption{CPOW Sequence Diagram - Delete a discount Diagram}
+                    \label{fig: Delete a discount}
+                \end{figure}
+            \end{center}
+
+            \textbf{View Stations}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/View Stations.png}
+                    \caption{CPOW Sequence Diagram - View Stations Diagram}
+                    \label{fig: View Stations}
+                \end{figure}
+            \end{center}
+
+            \textbf{Switch to battery}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Switch to Battery.png}
+                    \caption{CPOW Sequence Diagram - Switch to battery Diagram}
+                    \label{fig: Switch to battery}
+                \end{figure}
+            \end{center}
+
+            \textbf{Switch to DSO}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Switch DSO.png}
+                    \caption{CPOW Sequence Diagram - Switch to DSO Diagram}
+                    \label{fig: Switch to DSO}
+                \end{figure}
+            \end{center}
            
         \end{itemize}
         \newpage
@@ -1489,6 +1619,7 @@
 
     Plus, we runned some empty predicates \texttt{show} to generate some more general instances of the app system.
 
+    \newpage
     \subsection{Alloy Code}
     \lstinputlisting[language=alloy]{alloy/alloy_v0.99.als}
 
@@ -1518,7 +1649,31 @@
             \includegraphics[scale=0.33, center]{assets/alloy/pred_switchSources.png}
             \caption{Predicate switchSource}
             \label{fig: switchSources_alloy}
-        \end{sidewaysfigure}
+    \end{sidewaysfigure}
     
+    \newpage
+    \section{Effort Spent}
+        \begin{tabular}{| c || c | c| c| c |}
+            \hline
+            Student & Time for S.1 & S.2 & S.3 & S.4 \\ \hline
+            Francesco Dubini & 2.5h & 5h & 11h & 10h \\
+            Riccardo Grossoni & 3h & 6h & 15h & 2h \\
+            Marcello De Salvo & 3h & 6h & 15h & 2h \\
+            \hline
+        \end{tabular}
+    \section{References}
 
-    \end{document} % This is the end of the document
+    \begin{thebibliography}{9}
+        \bibitem{specification}
+        Software Engineering 2,
+        \emph{Requirement Engineering and Design Project: goal, schedule and rules}, A.Y. 2021-2022.
+
+        \bibitem{esempio}
+        \url{https://www.google.com}
+
+
+    \end{thebibliography}
+\end{document} % This is the end of the document
+
+
+
