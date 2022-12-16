@@ -504,10 +504,11 @@
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Information about the user's schedule is correct and meaningful
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Users own an IT device to connect to the application
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Each user registers only once, and always feeds correct information to the app     
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The data supplied by the user's devices are correct (battery charge, current position)
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The data supplied by the user's devices are correct (such as current position)
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Special offers regarding the charging stations are correct and reliable
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Special offers provided by one CPO concern all the charging stations owned by that CPO
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Car battery status can be accessed by the app through the API
        \end{itemize}
 
 
@@ -632,7 +633,7 @@
         R\arabic{RequirementCtr}    & The CPMS subsystem must allow the CPOW to change the energy provider of a charging station.\\\hline
         \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The CPMS subsystem must unlock the reserved charging spot if the user doesn't show up.\\\hline
-
+        
     \end{longtable}
     
     \newpage
@@ -654,7 +655,14 @@
                 \cellcolor{pink!50}R6 & The eMSP subsystem must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission.\\\hline
                 \cellcolor{pink!50}R8 & The eMSP subsystem must noitify the user about discounted prices.\\\hline
                 \cellcolor{pink!50}R9 & The eMSP subsystem must show the user the prices of the charging stations.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
+                \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability).\\\hline
+                \cellcolor{green!50}D7 & Users own an IT device to connect to the application.\\\hline
+                \cellcolor{green!50}D8 & Each user registers only once, and always feeds correct information to the app.\\\hline
+                \cellcolor{green!50}D9 & The data supplied by the user's devices are correct (such as current position).\\\hline
+                \cellcolor{green!50}D10 & Special offers regarding the charging stations are correct and reliable.\\\hline
+                
             \end{tabular}
         \end{center}
     \end{table}
@@ -671,7 +679,12 @@
                 \cellcolor{pink!50}R14 & The eMSP subsystem must allow the user to cancel a future reservation for a charging spot.\\\hline
                 \cellcolor{pink!50}R17 & The eMSP subsystem must notify the user of the upcoming booked sessions.\\\hline
                 \cellcolor{pink!50}R30 & The CPMS subsystem must unlock the reserved charging spot if the user doesn't show up.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
+                \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability).\\\hline
+                \cellcolor{green!50}D7 & Users own an IT device to connect to the application.\\\hline
+                \cellcolor{green!50}D8 & Each user registers only once, and always feeds correct information to the app.\\\hline
+                \cellcolor{green!50}D12 & The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -688,7 +701,12 @@
                 \cellcolor{pink!50}R7 &  The eMSP subsystem must notify the user when the charge has finished.\\\hline
                 \cellcolor{pink!50}R16 & The eMSP subsystem must allow the user to start or stop the charge via the application.\\\hline
                 \cellcolor{pink!50}R26 & The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
+                \cellcolor{green!50}D3 & User's car works properly while charging.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
+                \cellcolor{green!50}D5 & The DSO's infrastructure is working and their data is reliable.\\\hline
+                \cellcolor{green!50}D12 & The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol.\\\hline
+                \cellcolor{green!50}D13 & Car battery status can be accessed by the app through the API.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -702,7 +720,8 @@
                 \cellcolor{pink!50}R2 &  The system must respect the GDPR and the user's privacy.\\\hline
                 \cellcolor{pink!50}R3 &  The system must allow registered users to log-in using their e-mail.\\\hline
                 \cellcolor{pink!50}R15 & The eMSP subsystem must allow the user to pay for the charge through an external payment service.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
+                \cellcolor{green!50}D7 & Users own an IT device to connect to the applicationg.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -714,7 +733,7 @@
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Be able to communicate with multiple CPMS.\\\hline
                 \cellcolor{pink!50}R4 & Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D12 & The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -726,7 +745,10 @@
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Suggest the user convenient charging timeframes based on his upcoming schedule.\\\hline
                 \cellcolor{pink!50}R10 & The eMSP subsystem must access the User calendar schedule in order to suggest the best charging timeframes, if given permission.\\\hline
                 \cellcolor{pink!50}R11 & The eMSP subsystem must suggest the user on which charging stations to go based on the car battery and his daily schedule.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
+                \cellcolor{green!50}D6 & Information about the user's schedule is correct and meaningful.\\\hline
+                \cellcolor{green!50}D9 & The data supplied by the user's devices are correct (such as current position).\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -737,7 +759,10 @@
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Notify the user when the charging process is finished.\\\hline
                 \cellcolor{pink!50}R7 & The eMSP subsystem must notify the user when the charge has finished.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
+                \cellcolor{green!50}D3 & User's car works properly while charging.\\\hline
+                \cellcolor{green!50}D7 & Users own an IT device to connect to the application.\\\hline
+                \cellcolor{green!50}D13 & Car battery status can be accessed by the app through the API.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -750,7 +775,7 @@
                 \cellcolor{pink!50}R4 & Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol.\\\hline
                 \cellcolor{pink!50}R23 & The CPMS subsystem must communicate the location of the charging stations to all connected eMSPs.\\\hline
                 \cellcolor{pink!50}R25 & The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D12 & The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -761,7 +786,7 @@
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Be able to communicate with at least one DSO.\\\hline
                 \cellcolor{pink!50}R18 & The CPMS subsystem must communicate with the DSO according to a standard protocol.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D5 & The DSO's infrastructure is working and their data is reliable.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -773,7 +798,9 @@
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Communicate the location and the "external" status of the charging station.\\\hline
                 \cellcolor{pink!50}R23 & The CPMS subsystem must communicate the location of the charging stations to all connected eMSPs.\\\hline
                 \cellcolor{pink!50}R25 & The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
+                \cellcolor{green!50}D12 & The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -785,7 +812,9 @@
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Know the internal status of a charging station.\\\hline
                 \cellcolor{pink!50}R21 & The CPMS subsystem must retrieve the charging station's battery status.\\\hline
                 \cellcolor{pink!50}R24 & The CPMS subsystem must retrieve the internal status of the sockets through the OCPP standard protocol.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
+                \cellcolor{green!50}D12 & The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -797,7 +826,9 @@
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Start charging a vehicle according to the amount of power supplied by the socket, and monitor the charging process to infer when the battery is full.\\\hline
                 \cellcolor{pink!50}R26 & The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.\\\hline
                 \cellcolor{pink!50}R27 & The CPMS subsystem must retrieve the battery status of the car through the DIN/ISO specifications.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D3 & User's car works properly while charging.\\\hline
+                \cellcolor{green!50}D5 & The DSO's infrastructure is working and their data is reliable .\\\hline
+                \cellcolor{green!50}D13 & Car battery status can be accessed by the app through the API.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -808,7 +839,7 @@
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Acquire from the DSOs information about the current price of energy.\\\hline
                 \cellcolor{pink!50}R19 & The CPMS subsystem must retrieve the DSO current energy price.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D5 & The DSO's infrastructure is working and their data is reliable.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -834,7 +865,10 @@
                 \cellcolor{pink!50}R21 & The CPMS subsystem must retrieve the charging station's battery status.\\\hline
                 \cellcolor{pink!50}R22 & The CPMS subsystem must dynamically change the energy source depending on the internal station's battery status and the available DSOs' prices.\\\hline
                 \cellcolor{pink!50}R29 & The CPMS subsystem must allow the CPOW to change the energy provider of a charging station.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
+                \cellcolor{green!50}D3 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
+                \cellcolor{green!50}D4 & The DSO's infrastructure is working and their data is reliable.\\\hline
+
             \end{tabular}
         \end{center}
     \end{table}
@@ -849,7 +883,12 @@
                 \cellcolor{pink!50}R2 &  The system must respect the GDPR and the user's privacy.\\\hline
                 \cellcolor{pink!50}R3 &  The system must allow registered users to log-in using their e-mail.\\\hline
                 \cellcolor{pink!50}R29 &  The CPMS subsystem must allow the CPOW to change the energy provider of a charging station.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
+                \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
+                \cellcolor{green!50}D5 & The DSO's infrastructure is working and their data is reliable.\\\hline
+                \cellcolor{green!50}D7 & Each user registers only once, and always feeds correct information to the app.\\\hline
+                \cellcolor{green!50}D8 & Users have access to the internet while using the web application.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -863,7 +902,11 @@
                 \cellcolor{pink!50}R2 &  The system must respect the GDPR and the user's privacy.\\\hline
                 \cellcolor{pink!50}R3 &  The system must allow registered users to log-in using their e-mail.\\\hline
                 \cellcolor{pink!50}R28 & The CPMS subsystem must allow the CPOW to add or change the current special offer.\\\hline
-                \cellcolor{green!50}D & .\\\hline
+                \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
+                \cellcolor{green!50}D7 & Users own an IT device to connect to the application.\\\hline
+                \cellcolor{green!50}D10 & Special offers regarding the charging stations are correct and reliable.\\\hline
+                \cellcolor{green!50}D11 & Special offers provided by one CPO concern all the charging stations owned by that CPO.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
