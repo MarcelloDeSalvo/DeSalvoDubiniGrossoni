@@ -60,8 +60,7 @@
 
         %One of the biggest drawbacks of electric vehicles is the toll the charging process takes in terms of time. So on and so forth
          
-        In the last 3 years the number of electric vehicles has doubled and, with the proposed european legislation on banning diesel fuel by 2035, the future seems to be full-electric. This rapid change requires a better and more efficient infrastructure to serve this ever increasing demand.
-
+        In the last 3 years the number of electric vehicles has doubled and, with the proposed european legislation on banning diesel fuel by 2035, the future seems to be full-electric. This rapid change requires a better and more efficient infrastructure to serve this ever increasing demand \cite{EV stock}. 
         %In these years the number of electric vehicles has been on the rise and, as it is expcted to be quadrupled by 2050, a better working infrastructure for them is needed.
         
         %Electric vehicles will quadruple in the next 5 years. As of now, having to charge your car in the middle of the day can prove to be a very daunting task
@@ -581,7 +580,7 @@
         \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The eMSP subsystem must notify the user when the charge has finished.\\\hline
         \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The eMSP subsystem must noitify the user about discounted prices.\\\hline
+        R\arabic{RequirementCtr}    & The eMSP subsystem must show the user the discounted prices.\\\hline
         \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The eMSP subsystem must show the user the prices of the charging stations.\\\hline
         \stepcounter{RequirementCtr}
@@ -589,7 +588,7 @@
         \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The eMSP subsystem must suggest the user on which charging stations to go based on the car battery and his daily schedule.\\\hline
         \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The eMSP subsystem must communicate with the CPMSs in order to retrieve all needed information about the charging stations.\\\hline
+        R\arabic{RequirementCtr}    & The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.\\\hline
         \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The eMSP subsystem must allow the user to book a charging spot for a future date.\\\hline
         \stepcounter{RequirementCtr}
@@ -653,7 +652,7 @@
                 \cellcolor{pink!50}R3 & The system must allow registered users to log-in using their e-mail.\\\hline 
                 \cellcolor{pink!50}R5 & The eMSP subsystem must show the user the nearby charging stations through an interactive map.\\\hline
                 \cellcolor{pink!50}R6 & The eMSP subsystem must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission.\\\hline
-                \cellcolor{pink!50}R8 & The eMSP subsystem must noitify the user about discounted prices.\\\hline
+                \cellcolor{pink!50}R8 & The eMSP subsystem must show the user the discounted prices.\\\hline
                 \cellcolor{pink!50}R9 & The eMSP subsystem must show the user the prices of the charging stations.\\\hline
                 \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
                 \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
@@ -733,6 +732,7 @@
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Be able to communicate with multiple CPMS.\\\hline
                 \cellcolor{pink!50}R4 & Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol.\\\hline
+                \cellcolor{pink!50}R4 & The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.\\\hline
                 \cellcolor{green!50}D12 & The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol.\\\hline
             \end{tabular}
         \end{center}
@@ -872,7 +872,7 @@
             \end{tabular}
         \end{center}
     \end{table}
-
+    \newpage
     \underline {CPOW goals}
     \begin{table}[H]
         \begin{center}
@@ -1355,80 +1355,142 @@
 
 
         \item \textbf{Use Cases to requirement mapping}
-        0
+    
         \item[] \begin{longtable}{|p{0.31\textwidth}|p{0.69\textwidth}|}
                     \hline
-                    \cellcolor{SpringGreen!50}\textbf{1) User Sign Up}\centering & R1) text
+                    \cellcolor{SpringGreen!50}\textbf{1) User Sign Up}\centering & 
+                    R1) The system must allow registered and logged-in users to use the app.
 
-                                                                     R3) text\\\hline
-                    \cellcolor{SpringGreen!50}\textbf{2) User Sign on}\centering & R1) text
+                    R2) The system must respect the GDPR and the user's privacy.
 
-                                                                     R3) text\\\hline
+                    R3) The system must allow registered users to log-in using their e-mail.
+                    \\\hline
 
-                    \cellcolor{SpringGreen!50}\textbf{3)View nearby stations}\centering & R5) text
-                                                                     R6) Aspe andava messo nelle assumptions
-                                                                     R8) The map must display discounted prices
-                                                                     R9)
-                                                                     R12)
-                                                                     R18)
-                                                                     R19)
-                                                                     R23)
-                                                                     R24)
-                                                                     R25)   \\\hline
+                    \cellcolor{SpringGreen!50}\textbf{2) User Log in}\centering & 
+                    R1) The system must allow registered and logged-in users to use the app.
 
+                    R3) The system must allow registered users to log-in using their e-mail.
+                    \\\hline
 
-                    \cellcolor{SpringGreen!50}\textbf{4)Delete booking}\centering & R12) Deve comunicare
-                                                                     R14) \\\hline
+                    \cellcolor{SpringGreen!50}\textbf{3)View nearby stations}\centering & 
+                    R5) The eMSP subsystem must show the user the nearby charging stations through an interactive map.
 
-                    \cellcolor{SpringGreen!50}\textbf{5)Make a booking}\centering & R12) text
-                                                                     R13)
-                                                                     \\\hline
-                    \cellcolor{SpringGreen!50}\textbf{6)Book from map}\centering & R5) text
-                                                                     R6) Aspe andava messo nelle assumptions
-                                                                     R8) The map must display discounted prices
-                                                                     R9)
-                                                                     R12)
-                                                                     R13)
-                                                                     R25)
-                                                                     \\\hline
+                    R6) The eMSP subsystem must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission.
+
+                    R8) The eMSP subsystem must show the user the discounted prices.
+
+                    R9) The eMSP subsystem must show the user the prices of the charging stations.
+
+                    R12) The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.
+
+                    R23) The CPMS subsystem must communicate the location of the charging stations to all connected eMSPs.
+                    \\\hline
 
 
-                    \cellcolor{SpringGreen!50}\textbf{7)Start charging process}\centering & R7) text
-                                                                     R9) Aspe andava messo nelle assumptions
-                                                                     R15) The map must display discounted prices
-                                                                     R16) text add in giro:
-                                                                     R20)
-                                                                     R22)
-                                                                     R24)
-                                                                     R25) dire che è occupato lol
-                                                                     R26)
-                                                                     eq 23,4,5,6\\\hline
+                    \cellcolor{SpringGreen!50}\textbf{4)Delete booking}\centering & 
+                    R12) The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.
+
+                    R14) The eMSP subsystem must allow the user to cancel a future reservation for a charging spot.
+
+                    R25) The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols.
+                    \\\hline
+                    
+                    \cellcolor{SpringGreen!50}\textbf{5)Make a booking}\centering & 
+                    R12) The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.
+
+                    R13) The eMSP subsystem must allow the user to book a charging spot for a future date.
+
+                    R17) The eMSP subsystem must notify the user of the upcoming booked sessions.
+                    
+                    R25) The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols.
+                    
+                    R30) The CPMS subsystem must unlock the reserved charging spot if the user doesn't show up.
+                    \\\hline
+
+
+                    \cellcolor{SpringGreen!50}\textbf{6)Book from map}\centering & 
+                    R5) The eMSP subsystem must show the user the nearby charging stations through an interactive map.
+
+                    R6) The eMSP subsystem must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission.
+
+                    R8) The eMSP subsystem must show the user the discounted prices.
+
+                    R9) The eMSP subsystem must show the user the prices of the charging stations.
+
+                    R12) The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.
+
+                    R13) The eMSP subsystem must allow the user to book a charging spot for a future date.
+
+                    R25) The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocol.
+                    
+                    R30) The CPMS subsystem must unlock the reserved charging spot if the user doesn't show up.
+                    \\\hline
+
+
+                    \cellcolor{SpringGreen!50}\textbf{7)Start charging process}\centering & 
+                    R7) The eMSP subsystem must notify the user when the charge has finished.
+
+                    R9) The eMSP subsystem must show the user the prices of the charging stations.
+
+                    R15) The eMSP subsystem must allow the user to pay for the charge through an external payment service.
+
+                    R16) The eMSP subsystem must allow the user to start or stop the charge via the application.
+
+                    R19) The CPMS subsystem must retrieve the DSO current energy price.
+
+                    R21) The CPMS subsystem must retrieve the charging station's battery status.
+
+                    R24) The CPMS subsystem must retrieve the internal status of the sockets through the OCPP standard protocol.
+
+                    R25) The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols.
+
+                    R26) The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.
+                    
+                    R27) The CPMS subsystem must retrieve the battery status of the car through the DIN/ISO specications.
+                    \\\hline
 
 
 
-                      \cellcolor{SpringGreen!50}\textbf{8) CPOW Sign Sup}\centering & R1) text
+                    \cellcolor{SpringGreen!50}\textbf{8) CPOW Sign Sup}\centering & 
+                    R1) The system must allow registered and logged-in users to use the app
 
-                                                                     R3) text\\\hline
-                    \cellcolor{SpringGreen!50}\textbf{9) CPOW Sign on}\centering & R1) text
+                    R2) The system must respect the GDPR and the user's privacy
+R12
+                    R3) The system must allow registered users to log-in using their e-mail.
+                    \\\hline
+                    
+                    \cellcolor{SpringGreen!50}\textbf{9) CPOW Log in}\centering & 
+                    R1) The system must allow registered and logged-in users to use the app
 
-                                                                     R3) text\\\hline
+                    R3) The system must allow registered users to log-in using their e-mail
+                    \\\hline
 
-                    \cellcolor{SpringGreen!50}\textbf{10) Insert discount}\centering & R29)   \\\hline
+                    \cellcolor{SpringGreen!50}\textbf{10) Insert discount}\centering & 
+                    R28) The CPMS subsystem must allow the CPOW to add or change the current special offer.
+                    \\\hline
 
-                    \cellcolor{SpringGreen!50}\textbf{11) Delete discount}\centering & R29)  \\\hline
+                    \cellcolor{SpringGreen!50}\textbf{11) Delete discount}\centering & 
+                    R28) The CPMS subsystem must allow the CPOW to add or change the current special offer.
+                    \\\hline
 
-                    \cellcolor{SpringGreen!50}\textbf{12) View stations}\centering & missing  \\\hline
+                    \cellcolor{SpringGreen!50}\textbf{12) View stations}\centering & 
+                    R12) The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.
+                    
+                    R25) The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of thesockets through the OCPP and the OCPI standard protocols.\\\hline
 
-                    \cellcolor{SpringGreen!50}\textbf{13) Switch to battery}\centering & R21)
-                                                                     R12)   \\\hline
+                    \cellcolor{SpringGreen!50}\textbf{13) Switch to battery}\centering & 
+                    R12) The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.
 
-                    \cellcolor{SpringGreen!50}\textbf{14) switch DSO}\centering & R30)
-                                                                            R18)\\\hline
+                    R21)  The CPMS subsystem must retrieve the charging station's battery status 
+                    \\\hline
 
+                    \cellcolor{SpringGreen!50}\textbf{14) switch DSO}\centering & 
+                    R18) The CPMS subsystem must communicate with the DSO according to a standard protocol.
 
+                    R19) The CPMS subsystem must retrieve the DSO current energy price.
 
-
-
+                    R29) The CPMS subsystem must allow the CPOW to change the energy provider of a charging station.
+                    \\\hline
             \end{longtable}
     
     \end{itemize}
@@ -1581,7 +1643,7 @@
     The vast majority of the user base will be represented by electric car owners, while the number CPO's human operators will be negligible.\\
     According to the European Environment Agency, 2021 saw a significant increase in the number of newly registered electric vehicles:
     electric car registrations for the year were close to 1.7 milions, with a 17.8\% increase in the share in just 1 year.
-    For Italy the trend is also positive with 32 thousand electric cars registered in 2021, and 67 thousand in 2020.\\
+    For Italy the trend is also positive with 32 thousand electric cars registered in 2021, and 67 thousand in 2020 \cite{EV registrations}.\\
     This means that we are expected to have thousands of registrations in the first year of the system, and a significant increase in the following years that could reach milions of users.\\
     For this reason we should consider as our mid-term goal to have a scalable, reliable and efficient system to guarantee a good user experience.\\
     The workload is also expected to be high so we need to ensure that the system can handle all the simultaneous requests with a good enough response time (less than 600ms should be enough ).
@@ -1718,20 +1780,19 @@
         \begin{tabular}{| c || c | c| c| c |}
             \hline
             Student & Time for S.1 & S.2 & S.3 & S.4 \\ \hline
-            Francesco Dubini & 2.5h & 5h & 11h & 10h \\
-            Riccardo Grossoni & 3h & 6h & 15h & 2h \\
-            Marcello De Salvo & 3h & 6h & 15h & 2h \\
+            Riccardo Grossoni & 3h & 8h & 2h & 14h \\
+            Francesco Dubini & 3h & 8h & 15h & 2h \\
+            Marcello De Salvo & 3h & 15h & 8h & 2h \\
             \hline
         \end{tabular}
     \section{References}
 
     \begin{thebibliography}{9}
-        \bibitem{specification}
-        Software Engineering 2,
-        \emph{Requirement Engineering and Design Project: goal, schedule and rules}, A.Y. 2021-2022.
+        \bibitem{EV stock}
+        \url{https://www.iea.org/data-and-statistics/charts/global-electric-car-stock-2010-2021}
 
-        \bibitem{esempio}
-        \url{https://www.google.com}
+        \bibitem{EV registrations}
+        \url{https://www.eea.europa.eu/ims/new-registrations-of-electric-vehicles}
 
 
     \end{thebibliography}
