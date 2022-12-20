@@ -132,7 +132,7 @@
             \stepcounter{sharedP}
             S\arabic{sharedP} & User is suggested by the system to go and charge the vehicle, depending on the status of the battery, his daily schedule and the charging type & Machine \\\hline
             \stepcounter{sharedP}
-            S\arabic{sharedP} & User is presented with special offers made available by some CPOs & Machine\\\hline
+            S\arabic{sharedP} & User is shown special offers made available by some CPOs & Machine\\\hline
             \stepcounter{sharedP}
             S\arabic{sharedP} & The system shows the availability of nearby charging stations &  Machine \\\hline%User checks the availability of charging slots at nearby stations%
             \stepcounter{sharedP}
@@ -156,11 +156,11 @@
             \stepcounter{worldP}
             W\arabic{worldP} & Physical problem in the charging station\\\hline
             \stepcounter{worldP}
-            W\arabic{worldP} & Physical problem in the electric vehicle\\\hline
+            W\arabic{worldP} & User EV's battery runs low\\\hline
             \stepcounter{worldP}
-            W\arabic{worldP} & Unexpected changes in the user daily schedule\\\hline
+            W\arabic{worldP} & User schedules an appointment\\\hline
             \stepcounter{worldP}
-            W\arabic{worldP} & Person other than the user is driving the car\\\hline
+            W\arabic{worldP} & User drives somewhere in his EV\\\hline
             \hline
         \end{tabular}
     \end{center}
@@ -169,7 +169,7 @@
     \subsection{Definitions, acronyms, abbreviations}
     \subsubsection*{Definitions}
         \begin{itemize}
-            \item \textbf{User}: any electric car owner.
+            \item \textbf{User}: anyone using the eMSP part of the system.
             \item \textbf{e-Mobility Service Providers}: company offering an electric vehicle charging service to drivers by providing access to multiple charging points around a geographic area.
             \item \textbf{Charging Point Operator}: charging point stations owner.
             \item \textbf{Charge Point Management System}: charging Point Operator's IT infrastructure. Handles the acquisition of energy from external Distribution System Operators and distributes it to the connected vehicles. It can also makes automatic decisions, such as the amount of energy to be used for each connected vehicle.
@@ -242,7 +242,7 @@
         \label{scenarios}
             \begin{enumerate}
             
-            \item Mister Fontana has just bought an electric vehicle and wants to create an account for the application.  
+            \item Mister Fontana has just bought an EV and wants to create an account for the application.  
             \begin{itemize}
                 \item He opens the web app and clicks the "Sign Up" button
                 \item He inserts all the required information in the mandatory fields and presses the "Confirm" button
@@ -250,14 +250,12 @@
                 \item He checks his mailbox to see if he received the confimation e-mail
             \end{itemize}
                 
-            \item Mister Brambilla is about to finish a meeting and is about to have a 2 hour break. eMall detects that he's about to go on break, and it sends him an e-mail suggesting him to charge his car
+            \item Mister Brambilla is about to go to bed. He opens his schedule and he notices that the following day he has a 3 hour break. He opens his email and opens a list of possible charging stations in which he can charge his EV during his break and books one.
             \begin{itemize}
-                \item He receives an e-mail suggesting him to charge his car 
-                \item He logs on the eMall webapp
-                \item The eMall webapp suggests the closest chargers and the ones with eventual discounts
-                \item Brambilla selects his preferred charging station and books it
-                \item eMall prompts a link to help Brambilla get there
-                \item Brambilla opens the link and heads there
+                \item He receives an e-mail suggesting where and when to charge his EV 
+                \item He opens the mail and selects the station of his liking
+                \item Brambilla clicks the link and logs in eMall
+                \item Inside eMall, Brambilla books the station for the following day
             \end{itemize}
 
             \item Mister Fontana is on vacation and since he's new to the area he wants to know which charging stations are nearby
@@ -273,7 +271,7 @@
             \item Miss Sala will go to the hairdresser next sunday. She knows that in the parking lot near the hairdresser there's a charging station and she wants to make sure that a spot will be available that day, so she decides to book a spot for that charging station
             \begin{itemize}
                 \item She opens the web application and logs-In
-                \item She selects the "Book a spot" option
+                \item She selects the "Make a booking" option
                 \item She compiles the requested fields with date, time of arrival and location and selects confirm
                 \item The system checks if a charging spot for that date and time is still available, in that case a confirmation message is shown and the booking is saved. If no spot is still available an "unsuccesful booking" message is shown and the booking is aborted
                 \item After successfully booking a spot the system sends a mail with a recap of the booking 
@@ -321,12 +319,12 @@
 
         \subsubsection{Class diagram}
         \label{class_diagram}
-            In the UML diagram there are described all the main entities in the system.
+            In the UML diagram are described all the main entities in the system.
             We can see that the system is composed by 2 main actors: the \textit{User} and the \textit{CPO}.\\
             The user owns an \textit{E-car} and can book a charging spot, while the charging station is the entity that provides the charging service.\\
-            Data regarding the charging stations and the sockets are provided by the CPMS \textit{OCPI API} which is used by the \textit{Booking}, \textit{Charging Process} and \textit{Charging station} entities to retrive or send all the needed information, and that is implemented inside the CPMS subsystem.\\
+            Data regarding the charging stations and the sockets are provided by the CPMS \textit{OCPI API} which is used by the \textit{Booking}, \textit{Charging Process} and \textit{Charging station} entities to retrieve or send all the needed information, and that is implemented inside the CPMS subsystem.\\
             There's also an entity for the \textit{Socket} in order to store the information about the socket's status and his price, and another one for the \textit{Offer} that can be applied to all the charging stations owned by the same CPO.\\
-            Information about the Users' daily schedule are represented inside the \textit{Calendar Schedule} and the the \textit{Event} entity, that use the \textit{Calendar API} to retrive the user's appointments.\\
+            Information about the Users' daily schedule are represented inside the \textit{Calendar Schedule} and the the \textit{Event} entity, that use the \textit{Calendar API} to retrieve the user's appointments.\\
             There's also an interface for the \textit{Payment} that can be implemented by different payment methods.
             
             \begin{center}
@@ -390,7 +388,7 @@
                 \end{figure}
             \end{center}
         \newpage
-            \item \textbf{Battery and navigation system suggestions:} notify the user about the best charging stations to use based on the car's battery level and the current route.\\            
+            \item \textbf{Battery and navigation system suggestions:} notify the user about the best charging stations to use based on the EV's battery level and the current route.\\            
             \begin{center}
                 \begin{figure}[!h]
                     \includegraphics[scale=0.60, center]{assets/bpmn/suggestion_battery_nav.png}
@@ -489,9 +487,9 @@
     
     \newpage
     \subsection{User characteristics}
-    \subsubsection{Electric car owner}
-    The application has been thought for anybody that owns an electric car and wants to plan his charging process. 
-    Because of this, the potential user base comprises of any electric vehicle owner with a device connected to the internet.
+    \subsubsection{EV owner}
+    The application has been thought for anybody that owns an EV and wants to plan his charging process. 
+    Because of this, the potential user base comprises of any EV owner with a device connected to the internet.
     The user should also be capable of interacting with a webapp.
     
     \subsubsection{CPO's Human Operators (CPOW)}
@@ -504,7 +502,7 @@
     \begin{itemize}
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Users have access to the internet while using the web application
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The infrastructure of the charging stations is reliable and works 99\% of the time
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: User's car works properly while charging
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: User's EV works properly while charging
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Information about the charging stations offered by the CPMS are accurate (such as position, state and availability )
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The DSO's infrastructure is working and their data is reliable 
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Information about the user's schedule is correct and meaningful
@@ -514,7 +512,7 @@
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Special offers regarding the charging stations are correct and reliable
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Special offers provided by one CPO concern all the charging stations owned by that CPO
         \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol
-        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Car battery status can be accessed by the app through the API
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: EV battery status can be accessed by the app through the API
        \end{itemize}
 
 
@@ -533,12 +531,12 @@
 
     \subsubsection{Hardware Interfaces}
     \label{hardware_interfaces}
-    Since the system provides a web application, there's not an hardware interface. 
+    Since the system provides a web application, there's not a hardware interface. 
     In order to give a complete experience, the system should be given the access/permission to the user's GPS position or navigation system.  
 
     \subsubsection{Software Interfaces}
     \label{software_interfaces}
-    To access the application a web browser is required. Additional software like a calendar and GPS is necessary for accessing all the funcionalities of the application. The software will also take advantage of some interfaces to accomplish its requirements. An external API is necessary to visualize on maps the user location and the near charging stations. %frase copiatissima%
+    To access the application a web browser is required. Additional software like a calendar and GPS is necessary for accessing all the functionalities of the application. The software will also take advantage of some interfaces to accomplish its requirements. An external API is necessary to visualize on maps the user location and the near charging stations. %frase copiatissima%
     
     \newpage
     \subsubsection{Communication Interfaces}
@@ -593,7 +591,7 @@
         \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The eMSP subsystem must access the User calendar schedule in order to suggest the best charging timeframes, if given permission.\\\hline
         \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The eMSP subsystem must suggest the user on which charging stations to go based on the car battery and his daily schedule.\\\hline
+        R\arabic{RequirementCtr}    & The eMSP subsystem must suggest the user on which charging stations to go based on the EV battery and his daily schedule.\\\hline
         \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.\\\hline
         \stepcounter{RequirementCtr}
@@ -632,7 +630,7 @@
         \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.\\\hline
         \stepcounter{RequirementCtr}
-        R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the battery status of the car through the DIN/ISO specifications.\\\hline
+        R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the battery status of the EV through the DIN/ISO specifications.\\\hline
         \stepcounter{RequirementCtr}
         R\arabic{RequirementCtr}    & The CPMS subsystem must allow the CPOW to add or change the current special offer.\\\hline
         \stepcounter{RequirementCtr}
@@ -708,11 +706,11 @@
                 \cellcolor{pink!50}R16 & The eMSP subsystem must allow the user to start or stop the charge via the application.\\\hline
                 \cellcolor{pink!50}R26 & The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.\\\hline
                 \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
-                \cellcolor{green!50}D3 & User's car works properly while charging.\\\hline
+                \cellcolor{green!50}D3 & User's EV works properly while charging.\\\hline
                 \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
                 \cellcolor{green!50}D5 & The DSO's infrastructure is working and their data is reliable.\\\hline
                 \cellcolor{green!50}D12 & The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol.\\\hline
-                \cellcolor{green!50}D13 & Car battery status can be accessed by the app through the API.\\\hline
+                \cellcolor{green!50}D13 & EV battery status can be accessed by the app through the API.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -751,7 +749,7 @@
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Suggest the user convenient charging timeframes based on his upcoming schedule.\\\hline
                 \cellcolor{pink!50}R10 & The eMSP subsystem must access the User calendar schedule in order to suggest the best charging timeframes, if given permission.\\\hline
-                \cellcolor{pink!50}R11 & The eMSP subsystem must suggest the user on which charging stations to go based on the car battery and his daily schedule.\\\hline
+                \cellcolor{pink!50}R11 & The eMSP subsystem must suggest the user on which charging stations to go based on the EV's battery and his daily schedule.\\\hline
                 \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
                 \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
                 \cellcolor{green!50}D6 & Information about the user's schedule is correct and meaningful.\\\hline
@@ -767,9 +765,9 @@
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Notify the user when the charging process is finished.\\\hline
                 \cellcolor{pink!50}R7 & The eMSP subsystem must notify the user when the charge has finished.\\\hline
                 \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
-                \cellcolor{green!50}D3 & User's car works properly while charging.\\\hline
+                \cellcolor{green!50}D3 & User's EV works properly while charging.\\\hline
                 \cellcolor{green!50}D7 & Users own an IT device to connect to the application.\\\hline
-                \cellcolor{green!50}D13 & Car battery status can be accessed by the app through the API.\\\hline
+                \cellcolor{green!50}D13 & EV's battery status can be accessed by the app through the API.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -832,10 +830,10 @@
                 \hline
                 \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Start charging a vehicle according to the amount of power supplied by the socket, and monitor the charging process to infer when the battery is full.\\\hline
                 \cellcolor{pink!50}R26 & The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.\\\hline
-                \cellcolor{pink!50}R27 & The CPMS subsystem must retrieve the battery status of the car through the DIN/ISO specifications.\\\hline
-                \cellcolor{green!50}D3 & User's car works properly while charging.\\\hline
+                \cellcolor{pink!50}R27 & The CPMS subsystem must retrieve the battery status of the EV through the DIN/ISO specifications.\\\hline
+                \cellcolor{green!50}D3 & User's  EV works properly while charging.\\\hline
                 \cellcolor{green!50}D5 & The DSO's infrastructure is working and their data is reliable .\\\hline
-                \cellcolor{green!50}D13 & Car battery status can be accessed by the app through the API.\\\hline
+                \cellcolor{green!50}D13 & EV battery status can be accessed by the app through the API.\\\hline
             \end{tabular}
         \end{center}
     \end{table}
@@ -974,7 +972,7 @@
                     \textbf{Actor} & User\\ \hline
                     \textbf{Entry condition} & User wants to register in the system\\  \hline
                     \textbf{Flow of events} & \begin{enumerate}
-                                                \item User opens EMall
+                                                \item User opens eMall
                                                 \item User presses the sign up button
                                                 \item User enters his name, email and password
                                                 \item User presses the confirm button
@@ -1037,7 +1035,7 @@
                                             \end{enumerate}\\ \hline
                     \textbf{Exit condition} & Uses presses the home button  \\ \hline
                     \textbf{Exceptions} &  \begin{enumerate}
-                        \item The position isn't available
+                        \item The command goes through
                     \end{enumerate}
                     An error message is shown and the flow of events starts again from point 1\\ \hline
                 \end{tabular}
@@ -1151,7 +1149,7 @@
                     \hline
                     \textbf{Use Case} & Battery suggestion\\ \hline
                     \textbf{Actor} & User\\ \hline
-                    \textbf{Entry condition} & User's car battery is running low \\  \hline
+                    \textbf{Entry condition} & User EV's battery is running low \\  \hline
                     \textbf{Flow of events} & \begin{enumerate}
                                                 \item Systems detects user's battery is low
                                                 \item System sends a notification to the user with the stations near him
@@ -1180,7 +1178,7 @@
                     \textbf{Entry condition} & User has at least an event in next day's calendar \\  \hline
                     \textbf{Flow of events} & \begin{enumerate}
                                                 \item Systems retrieves user schedule and finds an appropriate time and place for charging
-                                                \item System sends a notification to the user with the times and places he can charge his car
+                                                \item System sends a notification to the user with the times and places he can charge his EV
                                                 \item User opens notification and clicks one of the suggested stations
                                                 \item System offers the user the possibility to book the location
                                                 \item User accepts and fills the form
@@ -1194,7 +1192,7 @@
                     An error message is shown and the user is returned to the main page\\ \hline
                 \end{tabular}
             \end{table}
-
+            \pagebreak
             \item \textbf {CPOW use cases}
             \begin{table}[H]
                 \item[] \textbf{Log in}
@@ -1206,7 +1204,7 @@
                     \textbf{Actor} & CPOW\\ \hline
                     \textbf{Entry condition} & CPOW wants to log into the system \\  \hline
                     \textbf{Flow of events} & \begin{enumerate}
-                                                \item CPOW opens eMALL
+                                                \item CPOW opens eMall
                                                 \item CPOW clicks "log in as CPO"
                                                 \item CPOW fills the form with its name, surname, institutional mail and password
                                                 \item System checks the information and sends a confirmation notification
@@ -1347,12 +1345,7 @@
 
 
             \newpage
-            \item \textbf{text}
-
-
-
-
-        \item \textbf{Use Cases to requirement mapping}
+        
     
         \item[] \begin{longtable}{|p{0.31\textwidth}|p{0.69\textwidth}|}
                     \hline
@@ -1444,7 +1437,7 @@
 
                     R26) The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.
                     
-                    R27) The CPMS subsystem must retrieve the battery status of the car through the DIN/ISO specications.
+                    R27) The CPMS subsystem must retrieve the battery status of the EV through the DIN/ISO specications.
                     \\\hline
 
 
@@ -1638,8 +1631,8 @@ R12
 
 
     \subsection{Performance Requirements}
-    The vast majority of the user base will be represented by electric car owners, while the number CPO's human operators will be negligible.\\
-    According to the European Environment Agency, 2021 saw a significant increase in the number of newly registered electric vehicles:
+    The vast majority of the user base will be represented by electric car owners, while the number s will be negligible.\\
+    According to the European Environment Agency, 2021 saw a significant increase in the number of newly registered EVs:
     electric car registrations for the year were close to 1.7 milions, with a 17.8\% increase in the share in just 1 year.
     For Italy the trend is also positive with 32 thousand electric cars registered in 2021, and 67 thousand in 2020 \cite{EV registrations}.\\
     This means that we are expected to have thousands of registrations in the first year of the system, and a significant increase in the following years that could reach milions of users.\\
@@ -1717,11 +1710,11 @@ R12
     \begin{itemize}
         \item \textbf{(G1) Know about the charging stations nearby }: For this goal an assertion checks if the system correctly matched each user with the charging stations near them. 
         \item \textbf{(G2) Book a charge in a specific charging station for a certain timeframe }: Using an assertion we verify that each user can make a reservation as long as he is registered in the system, while also making sure that the booking is valid and the booking information is registered in the correct charging station via its CPMS.
-        \item \textbf{(G3) Start the Charging process at a specific station }: for this goal we show an istance where a user who has booked a socket is currently charging his car at that socket. This also covers the goal \textbf{(G12)}.
-        \item \textbf{(G5) Be able to communicate with multiple CPMS }: Using a predicate we show that the mododel is able to communicate with different CPMSs.
-        \item \textbf{(G6) Suggest the user convenient charging timeframes based on his upcoming schedule or on his planned trip. }: With two assertions we verify that the system correctly suggest to each user specific timeframes taken from their schedule where they can charge their car based on the proximity to a charging station. We also check that the system also correctly suggest, based on the user's next trip, some charging stations along the route.
+        \item \textbf{(G3) Start the Charging process at a specific station }: for this goal we show an istance where a user who has booked a socket is currently charging his EV at that socket. This also covers the goal \textbf{(G12)}.
+        \item \textbf{(G5) Be able to communicate with multiple CPMS }: Using a predicate we show that the model is able to communicate with different CPMSs.
+        \item \textbf{(G6) Suggest the user convenient charging timeframes based on his upcoming schedule or on his planned trip. }: With two assertions we verify that the system correctly suggests to each user specific timeframes taken from their schedule where they can charge their EV based on the proximity to a charging station. We also check that the system also correctly suggest, based on the user's next trip, some charging stations along the route.
         \item \textbf{(G9) Be able to communicate with at least one DSO }: With an assertion we verify that for each CPMS in the system at least one DSO is connected to its stations. 
-        \item \textbf{(G12) Start charging a vehicle according to the amount of power supplied by the socket, and monitor the charging process to infer when the battery is full. } Thanks to the predicate we show that if a user booked a socket they can start charging their car. We also show that the system knows the status of the socket and the currently charging car.
+        \item \textbf{(G12) Start charging a vehicle according to the amount of power supplied by the socket, and monitor the charging process to infer when the battery is full. } Thanks to the predicate we show that if a user booked a socket they can start charging their EV. We also show that the system knows the status of the socket and the currently charging car.
         \item \textbf{(G15) Dynamically decide where to get energy for a charging station (battery or DSO ) }: For this goal we show that in the system there can be stations that are currently running with their batteries and stations that are currently charging through the electrical grid 
         \item \textbf{(G17) Insert special and limited offers. }: through an assertion we verify that only operators from a company can apply offers to charging stations belonging to that company, and we check that only registered users can apply those offers.
  
