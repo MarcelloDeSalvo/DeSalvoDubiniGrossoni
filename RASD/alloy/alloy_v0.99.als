@@ -383,14 +383,7 @@ assert SuggestionWorksCorrectly{
 		and e in c.schedule.events 
 }
 
-//G6. Suggest the user convenient charging timeframes based on his next trip.
-assert LocationSuggestionWorksCorrectly{
-	all c:CarOwner, place:Location | some cs: ChargingStation|
-	place in c.suggestedChargingLocations iff
-	(
-		place in c.nextTrip.stops and cs.location=place
-	)
-}
+
 
 //G9. Be able to communicate with at least one DSO
 assert CommunicateWithSomeDSO{
@@ -423,7 +416,6 @@ pred show{}
 check OfferValidity for 10
 check CorrectNearby for 10
 check SuggestionWorksCorrectly for 10
-check LocationSuggestionWorksCorrectly for 10
 check BookingsAreRegistered for 10 
 check CommunicateWithSomeDSO for 10
 
