@@ -86,15 +86,23 @@
 \section{Introduction}
 
 \subsection{Purpose}
-The purpose of this document is to provide a full technical description of the system described in the RASD document.
-In this design document we discuss about both hardware and software architectures in terms of interaction among the components that represent the system.
-Moreover, there are mentions about the implementation, testing and integration process.
-This document will include technical language so it is primarily addressed to programmers, but stakeholders are also invited to read it in order to understand the characteristics of the development.
+%The purpose of this document is to provide a full technical description of the system described in the RASD document.
+%In this design document we discuss about both hardware and software architectures in terms of interaction among the components that represent the system.
+%Moreover, there are mentions about the implementation, testing and integration process.
+%This document will include technical language so it is primarily addressed to programmers, but stakeholders are also invited to read it in order to understand the characteristics of the development.
+
+The objective of this document is the realization of a full technical description of the system presented in the RASD document.
+Here we will analyze both hardware and software architectures, focussing on the interaction between components that constitute the system.
+Additionally, we will also delve into the implementation, testing and integration process.
+This document will use technical language as it's focussed to programmers, but stakeholders are also invited to read as it can be useful to understand the characteristics of the development.
 
 \subsection{Scope}
-The scope of this design document lays in the definition of the system behavior, in both general and critical cases, and in the design of the system architecture by describing the
-logical allocation of the components and the interaction between them.
-This document also extends in part to the implementation and testing plan, where one possible course of action is explained, user interface design of user applications and requirements traceability relating to the RASD.
+%The scope of this design document lays in the definition of the system behavior, in both general and critical cases, and in the design of the system architecture by describing the
+%logical allocation of the components and the interaction between them.
+%This document also extends in part to the implementation and testing plan, where one possible course of action is explained, user interface design of user applications and requirements traceability relating to the RASD.
+
+The scope of this design document sets down the definition of the behavior of the system, for general and critical cases, and in the design of the system architecture by analyzing the logical designation of the components and their interactions.
+As stated before, this document will also delve into the implementation, the testing plan and a possible mock-up for the user interface.
 
 \subsection{Definitions, acronyms, abbreviations}
 \subsubsection*{Definitions}
@@ -109,6 +117,8 @@ This document also extends in part to the implementation and testing plan, where
     \item \textbf{ITD}: Implementation Document
     \item \textbf{API}: Application Programming Interface
     \item \textbf{DBMS}: Database Management System
+    \item \textbf{DMZ}: Demilitarized Zone
+    \item \textbf{OCPP}: Open Charge Point Protocol
     \item \textbf{UML}: Unified Modeling Language
     \item \textbf{GPS}: Global Positioning System
     \item \textbf{IT}: Information Technology
@@ -152,27 +162,35 @@ This document also extends in part to the implementation and testing plan, where
 \subsection{Overview}
 \begin{center}
     \begin{figure}[H]
-        \includegraphics[scale=0.55, center]{assets/placeholder.png}
-        \caption{*type of architecture here*}
-        \label{fig: *example of architecture*}
+        \includegraphics[scale=0.80, center]{assets/3-tier-architecture.png}
+        \caption{Three Tier Architecture}
+        \label{fig: three_tier_architecture}
     \end{figure}
 \end{center}
 
-The system is a distributed application that follows the common client-server paradigm.
-The architecture of the application is structured in three logic layers:
+The system is an application distributed across multiple devices and follows the common client-server paradigm.
+The architecture is organized in three logical layers:
+
 \begin{itemize}
-    \item \textbf{*description of layers here*}: text.
+    \item \textbf{Presentation Layer (P)}: It's responsible for rendering the application's user interface to the client through the Web Server. It's expressed by a GUI designed to enable the user to interact with the application efficiently.
+    \item \textbf{Application Layer (A)}: It's responsible for the business logic of the application. It receives requests from the Presentation Layer, processes them, and then sends back the results to be displayed.
+    \item \textbf{Data Layer(D)}: It's in charge of the access to data sources, it provides data through the database and direct it to the other layers. It's also necessary in order to grant a high level of abstraction from the database for an easy to use model.
 \end{itemize}
 
+\newpage
 \begin{center}
     \begin{figure}[H]
-        \includegraphics[scale=0.70, center]{assets/placeholder.png}
+        \includegraphics[scale=0.53, center]{assets/high-level-architecture.png}
         \caption{High Level Architecture}
         \label{fig: high_level_architecture}
     \end{figure}
 \end{center}
 
-*description of system (e.g. 4-tier architecture)*
+The system's architecture, as shown in \ref{fig:high_level_architecture}, is composed by a DMZ, that includes the Web and the Mail Server in order to prevent a direct access to the internal system and improve the overall security, and firewalls that divide each newtwork segment.
+To reduce computation client side a thin client is used, which allows all the heavy operations to be performed at server side. The Web Server handles the HTTP requests by the users and directs them to the Application Server, while also managing the GoogleMaps API. 
+The Application Server communicates with the Database Server and elaborates data following its business logic. The Application server also handles external APIs and services, such as GoogleCalendarAPI, CarAPI, and the exetrnal CPMSs and eMSPs systems.
+The Apllication Server's CPMS subsystem will also communicate with its Charging Stations and their relative sockets through the OCPP API, and with the external DSOs through their proprietary API.
+The Email Server will manage all the e-mail notification by communicating with the Application Server, The database server is responsible for storing and managing the data that is used by the application. It receives requests for data from the application logic tier, retrieves the requested data from the database, and returns the data to the application logic tier.
 
 \subsection{Component view}
 \subsubsection*{General Component View}
@@ -198,6 +216,7 @@ This image gives a high level representation of the components of the system.
 
 The following component diagram gives a detailed view of the Application Server. It shows the internal structure and the interaction between the components.
 External elements in the diagram are represented in a simplified way.
+
 \begin{itemize}
     \item \textbf{first component}: description of compontent.
 \end{itemize}
