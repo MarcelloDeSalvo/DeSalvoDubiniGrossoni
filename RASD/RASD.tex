@@ -1634,7 +1634,7 @@ R12
     The vast majority of the user base will be represented by electric car owners, while the number s will be negligible.\\
     According to the European Environment Agency, 2021 saw a significant increase in the number of newly registered EVs:
     electric car registrations for the year were close to 1.7 milions, with a 17.8\% increase in the share in just 1 year.
-    For Italy the trend is also positive with 32 thousand electric cars registered in 2021, and 67 thousand in 2020 \cite{EV registrations}.\\
+    For Italy the trend is also positive with 32 thousand electric cars registered in 2020, and 67 thousand in 2021 \cite{EV registrations}.\\
     This means that we are expected to have thousands of registrations in the first year of the system, and a significant increase in the following years that could reach milions of users.\\
     For this reason we should consider as our mid-term goal to have a scalable, reliable and efficient system to guarantee a good user experience.\\
     The workload is also expected to be high so we need to ensure that the system can handle all the simultaneous requests with a good enough response time (less than 600ms should be enough ).
@@ -1710,13 +1710,13 @@ R12
     \begin{itemize}
         \item \textbf{(G1) Know about the charging stations nearby }: For this goal an assertion checks if the system correctly matched each user with the charging stations near them. 
         \item \textbf{(G2) Book a charge in a specific charging station for a certain timeframe }: Using an assertion we verify that each user can make a reservation as long as he is registered in the system, while also making sure that the booking is valid and the booking information is registered in the correct charging station via its CPMS.
-        \item \textbf{(G3) Start the Charging process at a specific station }: for this goal we show an istance where a user who has booked a socket is currently charging his EV at that socket. This also covers the goal \textbf{(G12)}.
+        \item \textbf{(G3) Start the Charging process at a specific station }: For this goal we show an istance where a user who has booked a socket is currently charging his EV at that socket. This also covers the goal \textbf{(G12)}.
         \item \textbf{(G5) Be able to communicate with multiple CPMS }: Using a predicate we show that the model is able to communicate with different CPMSs.
-        \item \textbf{(G6) Suggest the user convenient charging timeframes based on his upcoming schedule or on his planned trip. }: With two assertions we verify that the system correctly suggests to each user specific timeframes taken from their schedule where they can charge their EV based on the proximity to a charging station. We also check that the system also correctly suggest, based on the user's next trip, some charging stations along the route.
+        \item \textbf{(G6) Suggest the user convenient charging timeframes based on his upcoming schedule }: With one assertiona we verify that the system correctly suggests to each user specific timeframes taken from their schedule where they can charge their EV based on the proximity to a charging station.
         \item \textbf{(G9) Be able to communicate with at least one DSO }: With an assertion we verify that for each CPMS in the system at least one DSO is connected to its stations. 
-        \item \textbf{(G12) Start charging a vehicle according to the amount of power supplied by the socket, and monitor the charging process to infer when the battery is full. } Thanks to the predicate we show that if a user booked a socket they can start charging their EV. We also show that the system knows the status of the socket and the currently charging car.
-        \item \textbf{(G15) Dynamically decide where to get energy for a charging station (battery or DSO ) }: For this goal we show that in the system there can be stations that are currently running with their batteries and stations that are currently charging through the electrical grid 
-        \item \textbf{(G17) Insert special and limited offers. }: through an assertion we verify that only operators from a company can apply offers to charging stations belonging to that company, and we check that only registered users can apply those offers.
+        \item \textbf{(G12) Start charging a vehicle according to the amount of power supplied by the socket, and monitor the charging process to infer when the battery is full }: Thanks to the predicate we show that if a user booked a socket they can start charging their EV. We also show that the system knows the status of the socket and the currently charging car.
+        \item \textbf{(G15) Dynamically decide where to get energy for a charging station (battery or DSO) }: For this goal we show that in the system there can be stations that are currently running with their batteries and stations that are currently charging through the electrical grid.
+        \item \textbf{(G17) Insert special and limited offers }: Through an assertion we verify that only operators from a company can apply offers to charging stations belonging to that company, and we check that only registered users can apply those offers.
  
         
     \end{itemize}
