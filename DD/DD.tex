@@ -203,7 +203,7 @@ The Email Server will manage all the e-mail notification by communicating with t
 \end{center}
 
 This image gives a high level representation of the components of the system.
-*description*
+In the scheme the application server is represented by an empty box, since a complete description will be provided in the next section. On the left the interfaces between the web server and the application server are shown; these basically represent the main functionalities requested by the client applications. On the opposite site the external interfaces are presented, among which there are the interfaces to other CPMSs and to the charging stations. Additionally, there's also the DBMS iterface, which manages the DBMS service and handles all communications between the Applicantion server and the Database server. 
 
 \subsubsection*{Application Server Component View}
 \begin{center}
@@ -216,9 +216,18 @@ This image gives a high level representation of the components of the system.
 
 The following component diagram gives a detailed view of the Application Server. It shows the internal structure and the interaction between the components.
 External elements in the diagram are represented in a simplified way.
-
+\\
+\textbf{eMSP subsystem}
 \begin{itemize}
-    \item \textbf{first component}: description of compontent.
+    \item \textbf{AccountManager}: Handles all the basic requests that a client can make. Among those the \textit{AuthenticationService} manages the authentication process (log in, log out, sign up). All the specific functionalities are then provided once the user logs in.
+    \item \textbf{eMSP\_UserManager}: It manages all the services available to the eSMP subsystem's users. Various services are then handled by other components, for example the \textit{BookingService} is handled by the \textit{BookingManager}, which communicates through the OCPI component with the CPMSs. Most services also communicate with the Database through an interface.
+    \item \textbf{BookingManager}: It handles all the booking requests made by the clients and is responsible for sending the requests to the CPMS through the OCPI component.
+    \item \textbf{ChargingProcessManager}: This component manages the charging process service of the user's car, in particular it provides updated informations about the charging status while interacting with the OCPI component to retrive informations and also managing the start and stop charging functions.
+    \item \textbf{ChargingStationManager}: This component  handles the Charging Stations general informations and status to be displayed through the \textit{InteractiveMapService}. To do so it interacts with the OCPI component to retrive all the info from the CPMSs.
+    \item \textbf{PaymentManager}: It manages the paymentService. It interacts with the external component \textit{Payment}.
+    \item \textbf{SuggestionManager}: It handles the service that generates suggestions for the users on when to charge the car. In order to do that it communicates with the \textit{EVmanager} and with the \textit{CalendarManager} to get all the informations needed to formulate suggestions, in particular the user's schedule and the car battery status.
+    \item \textbf{CalendarManager}: This component manages the information relative to the user's schedule for the \textit{SuggestionService}. To do so it interfaces with the external component \textit{Calendar}.
+    \item \textbf{EVManager}: This component handles the information relative to the user cars' battery status for the \textit{SuggestionService}. To do so it interfaces with the external component \textit{CarAPI}.
 \end{itemize}
 
 \subsubsection*{Web Server Component View}
