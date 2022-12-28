@@ -395,18 +395,18 @@ This diagram above describes in detail the interfaces and the corresponding meth
 \subsection{Selected architectural styles and patterns}
 
     \begin{itemize}
-        \item \textbf{type of architecture} \newline
-             description and reasoning
-        \item \textbf{Type of client} \newline
-              description and reasoning
+        \item \textbf{Three tier architecture} \newline
+        The selected architecture for this system is a three tier architecture, which consists of a presentation tier, a logic tier, and a data tier. The presentation tier is responsible for displaying information to the user and accepting input, the logic tier is responsible for processing the input and performing any necessary calculations or operations and lastly the data tier is responsible for storing and retrieving data from a database.
+        \item \textbf{Thin client} \newline
+              The thin client approach increases security, since sensitive data will not be stored locally, and scalability, because it allows for an easier deployment of new clients, while also granting a more centralized management.
         \item \textbf{Scalability} \newline
-              how can the architecture manage help scalability
-        \item \textbf{MVC?} \newline
-              general description
+              A three tier architecture allows for a more modular design, meaning that it's easier to scale individual components of the system as changes to one component do not necessarily require changes to the other components.
+        \item \textbf{Model View Controller} \newline
+        The Model-View-Controller (MVC) design pattern is a software design pattern that separates an application into three main components: the model, the view, and the controller. The model represents the data and business logic of the application, the view represents the user interface, and the controller mediates communication between the model and the view. In particular:
               \begin{itemize}
-                  \item Model: the central component of the pattern. It is the application's dynamic data structure, independent of the user interface. It directly manages the data, logic and rules of the application.
-                  \item View: The view defines how the app's data should be displayed.
-                  \item Controller: it contains logic that updates the model and/or view in response to input from the users of the app. 
+                  \item Model: The central component of the pattern, it's the dynamic data stracture of the application, meaning that it changes as data is added modified and deleted, it's indipendent of the user interface as it's not concerned with how the data is displayed and how the user interacts with the application and it directly manages the data, logic, and rules of the application.
+                  \item View: It represents the user interface of the application. It responsible for displaying information and accepting imput from the user. It defines how the application data should be presented.
+                  \item Controller: It's responsible for the mediation between the model and view components, as it receives input from the user through the view and performs the necessary actions on the model based on that, then it updates the view to reflect the modified model. As a mediatior it's indipendend from both the components.
               \end{itemize}
     \end{itemize}
 
@@ -415,38 +415,19 @@ This diagram above describes in detail the interfaces and the corresponding meth
 
 \subsection{Other design decisions}
 \label{other_design_decisions}
-\subsubsection{Servers availability and response time} 
-\label{server_availability}
-text
-\subsubsection{exaple of design decision} 
-description of example
 
-\begin{equation}
-    possible\  equation \ to \ be \  included 
-\end{equation}
-
-development of said equation 
-
-\begin{align}  
-    description\ of\ development\ pt1\
-    description\ of\ development\ pt2
-\end{align}
-
-other development and various considerations
-
-%\begin{testexample}
-%example of an application of our design decision (with data)
-%\end{testexample}
-
- conclusion of design decision
-
- \subsubsection{design decision 2} 
-    \begin{itemize}
-        \item text
-    \end{itemize}
-
-\subsubsection{design decision 3} text
-
+\subsubsection{Charging Stations Offers} 
+All the offers have a standardized structure: a starting date, an ending date and a value, which represents the percentage of discount on the current price. This structure will be used on all the offers shown in the eMSP-side of the application. Additional options, for example the application of different offers to different sockets of a charging station, will not be available, but different offers can be applied to different charging stations simultaneously. 
+\subsubsection{Automatically change DSO or Station Battery}
+The CPMS subsystem will be able to dynamically change The source of energy for the charging stations. This operation can be overwritten by a human operator, and will take in consideration different aspects in order to decide which energy source and provider is currently the best. Among these aspects there are the current price of energy for each DSO, the median price of the energy used by the station in the previous period, the current charge of the battery station (if there's any) and the availability of the DSO. If a certain threshold is met the CPMS will start the change process with the best option.
+\subsubsection{Car position for suggestions} 
+Most brands of EVs already offer the possibility of seeing the battery status of the car and the position of the car. Our application will use that information to make suggestions on near charging locations when the battery is low based on the Car location, which will be given through the car's specific API.
+\subsubsection{Schedule based Suggestions} 
+Each day at a specific time the user will be notified, if at least one event is present, with suggestions on charging locations located near the event, ranked by price (also considering current active offers). This means that if the user changes the schedule a new suggestion cannot be granted. 
+\subsubsection{Startining a booked charging session}
+If a user reserved a socket for a specific time, during that time only that user will be able to start a charging session. Other users might still be able to physically connect their car to the socket, depending on how the booking is handled by the specific CPO system, but a charging session will not be able to be started by different users. 
+\subsubsection{Automatically cancelling a booking}
+If enough time passes from the start of the booked time where the user does not start a charging session, the reservation will be cancelled and any user will be able to start a session with that socket.
 \newpage
 
 \section{User Interface Design}
