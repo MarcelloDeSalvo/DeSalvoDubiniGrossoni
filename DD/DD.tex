@@ -256,54 +256,128 @@ The devices shown in the diagram are:
 
 \subsection{Runtime view}
 
-Here the runtime views of some relevant use cases of the system are represented through sequence diagrams. 
-In the diagrams, the part regarding the user is omitted because it has been deemed as redundant to the understanding of the interaction.
-In later diagrams, some parts, like the login phase or returning to home page, were omitted for the the same motivations.
+In this section we list some relevant use cases of the system, represented through sequence diagrams. 
+In some diagrams, interactions like the login phase, returning to home page or retrieve the same kind of data were omitted for the sake of clarity.
 
 \newpage
-
-\textbf{Sign Up}
+\underline{\textbf{Shared diagrams}}\\
+%\textbf{Sign Up}
 \begin{center}
     \begin{figure}[H]
-        \includegraphics[scale=0.67, center]{assets/placeholder.png}
+        \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/shared signup.png}
         \caption{Sign Up}
         \label{fig:signup}
     \end{figure}
 \end{center}
-*description of sign up as seen of the app by the user, with actions and final result*
+The Sign-up phase consists in the user action of inserting their personal data in the sign-up fields, then the system checks if the email (unique key in the database) is already present in the database.
+If it's not, the user can sign up and use the system functionalities available for that particular type of account depending if he's registering through the eMSP or the CPMS.
 
 \newpage
 
-\textbf{Log In}
+%\textbf{Log In}
 \begin{center}
     \begin{figure}[H]
-        \includegraphics[scale=0.8, center]{assets/placeholder.png}
+        \includegraphics[scale=0.2, center]{assets/sequenceDiagrams/shared login.png}
         \caption{Log In}
         \label{fig: login}
     \end{figure}
 \end{center}
 
-The Log In phase simply consists in the user action of inserting their email (unique key in the database) and password in the login fields, then the system checks if the pair corresponds to a user entry in the database.
-In case of success, the user can log in the system and use its functionalities available for that particular type of account chosen during the Sign Up phase.
+The Log In phase consists in the user action of inserting their email (unique key in the database) and password in the login fields, then the system checks if the pair corresponds to a user entry in the database.
+In case of success, the user can log-in and use the system functionalities available for that particular type of account depending if he's logging in through the eMSP or the CPMS.
 
 \newpage
+\underline{\textbf{User diagrams}}\\
+% TO-DO: DUBINO 
 
-%the structure is the same for all these sections, just copy and paste
+%\textbf{Booking}
 
-\textbf{*in app action 3*}
+%\textbf{Chargin process} etc.. Il titolo l'ho commentato perchè c'è già nell'immagine
+
+%\textbf{Schedule suggestions}
 \begin{center}
     \begin{figure}[H]
-        \includegraphics[scale=0.70, center]{assets/placeholder.png}
-        \caption{*in app action 3*}
-        \label{fig: *in app action 3*}
+        \includegraphics[scale=0.20, center]{assets/sequenceDiagrams/schedule suggestions.png}
+        \caption{Schedule suggestions}
+        \label{Schedule suggestions}
     \end{figure}
 \end{center}
-description of the "app" action 3.
-
+\newpage
+The user's schedule suggestion service triggers a check every day at 00:00 to see if the user has planned some events for the next day.
+When it triggers, the SuggestionManager calls the CalendarManager in order to retrieve the user's schedule for the next day by using the Google Calendar API.
+Then the SuggestionManager checks all the new events: if there is at least one event it retrieves a list of charging stations information that are nearby the event's location by communicating with the OCPI component, and then sends an eMail with a list of charging stations based on their distance, cost and special offers.
+The email will contain a link for each station that will redirect the user to a pre-filled booking form, in order to easily book a socket.
 \newpage
 
-%potrebbero esserci altre 6/7 sezioni come queste 3 sopra
-%le immagini sono di sequence diagrams
+%\textbf{Battery suggestion}
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[scale=0.20, center]{assets/sequenceDiagrams/battery suggestions.png}
+        \caption{Battery suggestion}
+        \label{Battery suggestion}
+    \end{figure}
+\end{center}
+\newpage
+The battery suggestion service triggers a check every 30 minutes to see if the user'EV has battery status below a certain threshold.
+When it triggers, the SuggestionManager calls the EVManager in order to retrieve the user's car battery status and location by using the CarAPI.
+Then the SuggestionManager checks the battery status: if it's below a certain threshold it retrieves a list of charging stations information that are nearby the user's home or the car location by communicating with the OCPI component, and then sends an eMail with a list of charging stations based on their distance, cost and special offers.
+Note that this service is available only for the users that have a car registered in the system and that have a brand that supports this features with their API.
+\newpage
+
+\underline{\textbf{CPOW diagrams}}\\
+%\textbf{Insert discount}
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[scale=0.12, center]{assets/sequenceDiagrams/CPOW insert discount.png}
+        \caption{CPOW - Insert discount}
+        \label{CPOW - Insert discount}
+    \end{figure}
+\end{center}
+The insert discount interaction triggers when a CPOW wants to insert a new discount for a list of charging stations.
+After receiving the form information, the CPOW Manager calls the Discount Manager in order to check if the stations are valid and if the discount is valid.
+Then the discount is inserted in the database and the Discount Manager calls the OCPI component in order to notify all EMSPs that are connected to the CPMS about the new discount.
+Note that in this diagram it is not showed the interaction with the OCPP component because it will apply the discount to the charging stations only when the discount's start date is reached.
+\newpage
+
+%\textbf{Delete discount}
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/CPOW delete discount.png}
+        \caption{CPOW - Delete discount}
+        \label{CPOW - Delete discount}
+    \end{figure}
+\end{center}
+The delete discount interaction triggers when a CPOW wants to delete a discount for all the charging stations to which it was applied.
+After receiving the discountID, the system will check if the discount exists. If it is, it will delete it from the database and notify all EMSPs that are connected to the CPMS.
+\newpage
+
+%\textbf{View charging stations}
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[scale=0.25, center]{assets/sequenceDiagrams/CPOW view stations.png}
+        \caption{CPOW - View charging stations}
+        \label{CPOW - View charging stations}
+    \end{figure}
+\end{center}
+This diagram describes the data fetching interaction between the Web Server and the Applicantion Server in order to retrieve the list of charging stations that are connected to the CPMS.
+The list will contain all the stations details, such as the ID, the location, the energy provider, the status and the socket details and a button to change the energy provider.
+\newpage
+
+%\textbf{Change energy provider}
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/CPOW change energy.png}
+        \caption{CPOW - Change energy provider}
+        \label{CPOW - Change energy provider}
+    \end{figure}
+\end{center}
+\newpage
+This diagram describes the interaction between the CPOW and the Applicantion Server in order to change the energy provider of a charging station.\\
+It starts by the CPOW sending a request with the charging station ID and the new energy provider (after retrieving a list with all the stations details, described in Figure \ref*{CPOW - View charging stations}).
+Then, the Charging Station Manager will check if the station exists and if the energy provider is valid by communicating with the OCPP or the DSP-API component, depending if the selected provider is a DSO or an internal battery.
+If the selected provider is available, the Charging Station Manager will ask the Provider to start supplying the energy, notify the station through OCPP, notify the connected eMSPs through OCPI, and update the station's current energy provider in the database.
+\newpage
+
 
 \subsection{Component interfaces}
 
