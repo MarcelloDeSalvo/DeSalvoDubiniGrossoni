@@ -261,7 +261,7 @@ In some diagrams, interactions like the login phase, returning to home page or r
 
 \newpage
 \underline{\textbf{Shared diagrams}}\\
-%\textbf{Sign Up}
+\textbf{Sign Up}
 \begin{center}
     \begin{figure}[H]
         \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/shared signup.png}
@@ -274,7 +274,7 @@ If it's not, the user can sign up and use the system functionalities available f
 
 \newpage
 
-%\textbf{Log In}
+\textbf{Log In}
 \begin{center}
     \begin{figure}[H]
         \includegraphics[scale=0.2, center]{assets/sequenceDiagrams/shared login.png}
@@ -288,16 +288,74 @@ In case of success, the user can log-in and use the system functionalities avail
 
 \newpage
 \underline{\textbf{User diagrams}}\\
-% TO-DO: DUBINO 
 
-%\textbf{Booking}
-
-%\textbf{Chargin process} etc.. Il titolo l'ho commentato perchè c'è già nell'immagine
-
-%\textbf{Schedule suggestions}
+\textbf{View Nearby Stations}
 \begin{center}
     \begin{figure}[H]
-        \includegraphics[scale=0.20, center]{assets/sequenceDiagrams/schedule suggestions.png}
+        \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/User View Nearby Stations.png}
+        \caption{Sign Up}
+        \label{View Nearby Stations}
+    \end{figure}
+\end{center}
+The view nearby stations is the process through which the interactive map is updated when the user is inside the webapp. In this diagram it is assumed the user is already on the interactive map part.
+Upon detecting the user's movement on the map, the server retrieves the new stations that must be loaded caused by the movement. This process is repeated while the user is navigating on the map, and ends only when the user exits it.
+
+\newpage
+
+\textbf{Delete a Booking}
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/User delete bookings.png}
+        \caption{Sign Up}
+        \label{Delete Booking}
+    \end{figure}
+\end{center}
+In the first part of the sequence the user is viewing his bookings list and clicks on "Delete" on one of them. The id of said selected booking is then sent to process the deletion request.
+Firstly, a check by the Booking Manager is done to assure the bookingID sent is actually present on the database of that user's bookings. If present, the Booking Manager proceeds to firstly delete the booking from the 
+interested station(communicating with OCPI) then deleting it from the user's bookings on the database (communicating with eMSP Data Manager again).
+ For the sake of readability, all errors are pushed to the end and will be furhter explained here by text. The first error that can happen is caused by the user not having any active bookings.
+ The second possible error is caused by the first check in case the bookingID that has to be deleted doesn't exist in the database.
+ Lastly, an error could be caused by the requested booking not existing on the OCPI. 
+
+\newpage
+\textbf{Make a Booking}
+ \begin{center}
+    \begin{figure}[H]
+        \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/User Make Booking.png}
+        \caption{Sign Up}
+        \label{Make Booking}
+    \end{figure}
+\end{center}
+This sequence displays how a user is able to insert a new booking from a form. The form is firstly sent to the Booking Manager, where a check for the validity of all the information is done. If it is all valid, the info is extrapolated and the 
+booking is communicated to the OCPI. The booking info is later saved on the database through the eMSP Data Manager. For the sake of readability, all errors are collapsed in the end and explained here.
+The first possible error is caused by checkInfo(), if the data inserted by the user is invalid. Lastly, an error could be raised by the OCPI if the booking doesn't go through for any reason. We assume the addition of the booking to the database doesn't cause errors.
+\newline
+
+\textbf{Book a map}\newline
+We decided not to show book from map as it is basically the same as Make a Booking: it is still a form that has some fields precompiled when the button is pressed on the map.
+\newpage
+
+\textbf{Charging process}
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[scale=0.10, center]{assets/sequenceDiagrams/User Start Charging Process.png}
+        \caption{Schedule suggestions}
+        \label{Start Charging Process}
+    \end{figure}
+\end{center}
+This sequence explains what happens after a User plugs his EV to a charging point and presses "Start charging" on the button of the respective socket. For the sake of readability, throughout the first part of the alt it is assumed all interactions end with success. Errors will be explained later.\newline
+Firstly a socketID is sent to the Charging Stations Manager, to check whether the requested socket is available as it could be booked or unavailable. If the request is positive, the user is shown
+a form for the payment that will be compiled and sent back to the Payment Manager. The Payment Manager will proceed to send the information to the Payment API that will actuate the actual payment.
+When the payment goes through, the User Manager will communicate to the OCPI through the Charging Stations Manager that the charge can start. The OCPI will then send data regarding the status back to the User.
+The errors will be now explained more thorougly. Firstly, an error could be raised by the OCPI in case the requested socket is not currently available.
+Secondly, an error could be caused by the Payment Manager in the case the payment Form contains invalid data. The third error could be raised by the Payment API in case the payment process doesn't end successfully.
+It is important to note that we assume that once the user has payed the OCPI cannot fail in starting the charge, as its availability was checked beforehand. If this wasn't the case, there could be instances where the User pays and the charge doesn't actually start.
+
+\newpage
+\textbf{Schedule suggestions}
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[scale=0.20, center]{assets/sequenceDiagrams/User schedule suggestions.png}
         \caption{Schedule suggestions}
         \label{Schedule suggestions}
     \end{figure}
@@ -309,7 +367,7 @@ Then the SuggestionManager checks all the new events: if there is at least one e
 The email will contain a link for each station that will redirect the user to a pre-filled booking form, in order to easily book a socket.
 \newpage
 
-%\textbf{Battery suggestion}
+\textbf{Battery suggestion}
 \begin{center}
     \begin{figure}[H]
         \includegraphics[scale=0.20, center]{assets/sequenceDiagrams/battery suggestions.png}
@@ -325,7 +383,7 @@ Note that this service is available only for the users that have a car registere
 \newpage
 
 \underline{\textbf{CPOW diagrams}}\\
-%\textbf{Insert discount}
+\textbf{Insert discount}
 \begin{center}
     \begin{figure}[H]
         \includegraphics[scale=0.12, center]{assets/sequenceDiagrams/CPOW insert discount.png}
@@ -339,7 +397,7 @@ Then the discount is inserted in the database and the Discount Manager calls the
 Note that in this diagram it is not showed the interaction with the OCPP component because it will apply the discount to the charging stations only when the discount's start date is reached.
 \newpage
 
-%\textbf{Delete discount}
+\textbf{Delete discount}
 \begin{center}
     \begin{figure}[H]
         \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/CPOW delete discount.png}
@@ -351,7 +409,7 @@ The delete discount interaction triggers when a CPOW wants to delete a discount 
 After receiving the discountID, the system will check if the discount exists. If it is, it will delete it from the database and notify all EMSPs that are connected to the CPMS.
 \newpage
 
-%\textbf{View charging stations}
+\textbf{View charging stations}
 \begin{center}
     \begin{figure}[H]
         \includegraphics[scale=0.25, center]{assets/sequenceDiagrams/CPOW view stations.png}
@@ -363,7 +421,7 @@ This diagram describes the data fetching interaction between the Web Server and 
 The list will contain all the stations details, such as the ID, the location, the energy provider, the status and the socket details and a button to change the energy provider.
 \newpage
 
-%\textbf{Change energy provider}
+\textbf{Change energy provider}
 \begin{center}
     \begin{figure}[H]
         \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/CPOW change energy.png}
