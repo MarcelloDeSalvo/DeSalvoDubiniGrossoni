@@ -789,112 +789,216 @@ Here, we present a summary of the table above for a more immediate visualization
 
 \section{Implementation, Integration and Test Plan}
 \subsection{Implementation Plan}
-Multiple components will be implemented at the same time, in order to parallelize the development when possible. The general plan is to follow a bottom-up approach, so that core and basic functionalities with very few dependencies can be tested as soon as their incapsulating component is done. By doing so, the application will be built up with solid and tested foundations that will ease the further testing of bigger and complex components. In any case, unit testing will be performed on each component on the go, in order to find flaws out in advance. This will positevely impact the necessary actions to fix the faults since they will be done in an earlier stage.
+To speed up the development, parallelization of multiple components must be a priority. The ideal way to do this is following a bottom-up approach that gives priority to the basic components to which there are more dependencies and testing them.
+By implementing unit testing while developing, the application will be built upon solid foundations and later revision of past work will be avoided. Unit testing further helps identifying bugs and errors early in the development process, avoiding situations in which errors would
+cause the whole implementation to change (possible problem if top-down is followed). Since the eMSP and CPMS subsystems are independent from each order, the order of implementation of the two is indiffirent. They could be parallelized as well, but we chose to fully develop the eMSP first and the CPMS second.
 
-The implementation's order of the component will be as follow:
+\textbf{eMSP Subsystem}\newline
+This is the order in which the eMSP components will be developed in:
 \begin{enumerate}
-    \item list, of, components
-    \item list, of, components, 2
-    \item list, of, components, 3
+    \item eMSP Data Manager 
+    \item Calendar Manager, EV Manager, OCPI, Payment Manager
+    \item Charging Stations Manager, Charging Process Manager, Booking Manager, Suggestions Manager
+    \item Authentication Service, EV Service, Suggestion Service, Booking Service, Charging Process Service, Interactive Map Service, Payment Service
 \end{enumerate}
-Each group is composed by independent modules so they can be easily developed in parallel.
-Furthermore, it is expected that external services (e.g. GoogleMapsAPI, *others* and DBMS Service) work properly since they're not a responsibility of the *name* app.
+Each group is composed of independent modules so they can be easily developed in parallel.
+Furthermore, it is expected that external services (e.g. Google Calendar API, Payment API and DBMS Service) work properly since they're not a responsibility of eMall.
+The \emph{eMSP Data Manager} must be developed as the very first, as many components must rely on him. Right after him should be developed the the other components that act
+as interfaces with the APIs:\emph{Calendar Manager, EV Manager, OCPI, Payment Manager}. Just as the database, since many components will rely on them, it is important to have them running and tested as soon as possible.
+Next come the components that aren't directly part of either User Manager or the authentication process: \emph{Charging Stations Manager, Charging Process Manager, Booking Manager, Suggestions Manager}. Lastly, all the components that will communicate directly to the 
+the user, and will thus heavily depend on the ones developed before:\emph{Authentication Service, EV Service, Suggestion Service, Booking Service, Charging Process Service, Interactive Map Service, Payment Service}.
+It is worth noting that components like \emph{Suggestions Manager} and \emph{Suggestions Service} are indipendent if taken as a pair, so the development of Suggestion Service could be anticipated to have a better view of the whole function while developing.
+\newpage
+\textbf{CPMS Subsystem}
+This is the order in which the CPMS components will be developed in:
+\begin{enumerate}
+    \item CPMS Data Manager, OCPI, OCPP, DSO Manager
+    \item Discount Manager, Charging Stations Manager
+    \item Authentication Service, Discount Service, Change Source Service, Charging Stations Service
+\end{enumerate}
+Just like the eMSP, all parts are composed of independent components that can be parallelized to speed development. The first to be developed is still \emph{CPMS Data Manager} as it should be the top priority,
+but in this subsystem all the API connectors are indepent to it so they could be also developed in parallel. These components are: \emph{OCPI, OCPP, DSO Manager}.
+Next to be developed are those components that interact directly with these API managers: \emph{Discount Manager} and \emph{Charging Stations Manager}. 
+Lastly are all the components that interact directly with the CPOW and that are most dependent from others: \emph{Authentication Service, Discount Service, Change Source Service, Charging Stations Service}.
 
-*explanation of the implementation plan component order*
+
 \subsection{Integration Strategy}
-Considering both the overall system's architecture and the implementation
-plan, the chosen integration strategy is the bottom-up approach. System
-integration begins with the integration of the lowest level modules and uses
-test drivers to drive and pass appropriate data to the lower-level modules. As
-and when the code for the other module gets ready, these drivers are replaced
-with the actual module.
-
-This approach allows to start the integration and testing without necessarily
-waiting for the completion of the development and the unit testing of each
-system's component. Being the low-level modules and their combined functions
-often invoked by other modules, it is more useful to test them first so that
-meaningful effective integration of other modules can be done. Moreover,
-starting at the bottom of the hierarchy means that the critical modules are built
-and tested first and therefore any errors in these modules are identified early in
-the process.
-
-Each integration in the same level (defined by the groups of the previous
-section) is independent and there is no specific order in which to complete them.
-In this way, the integration process and its testing are more flexible.
+Given our system's structure and the Implementation plan, the most logical integration approach is bottom-up. Bottom-up overall allows for more comprehensive testing at each level and detects any issues before
+they become too widespread. Furthermore bottom-up encourages modularity and reusability, two properties that we'll need since we have to implement both the CPMS and eMSP, two similar subsystems. Thanks to bottom-up 
+it is also easier to expand the subsystem with any possible future feature.
 
 \subsubsection{Integration and Testing}
-In this section it is defined the order of the integration between components. Test drivers will be used to simulate higher components not yet implemented.
-*order of the components shown in the next figures, with references*
+In this section the order of the integration between components is defined. Components not yet implemented are simulated via test drivers that will be later replaced by the actual component.
+Let's start from the eMSP subsystem:
+\newpage
+\textbf{eMSP Subsystem}
 
 \begin{figure}[H]
-    \includegraphics[scale=0.6, center]{assets/placeholder.png}
-    \caption{Integration of first component}
-    \label{fig: integration_DataManager}
+    \includegraphics[scale=0.6, center]{assets/Integration Diagrams/eMSP-Data Manager.png}
+    \caption{Integration of eMSP-Data Manager}
+    \label{fig:eMSP-Data Manager}
 \end{figure}
+As it was explained before, the Data Manager must be the first one to be implemented as it is the foundation of many other components. For this component, and the following ones of the second and third 
+group, drivers emulating components that are not yet implemented are used. The following images represent the implementations of the components of the first group that directly communicate to APIs:
+\emph{ Calendar Manager, EV Manager, OCPI, Payment Manager} (Figures 23-26):
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.6]{assets/placeholder.png} 
-    \caption{Integration of second component}%
-    \label{fig: integration_MapServiceManager_WeatherManager}%
+    \includegraphics[scale=0.6, center]{assets/Integration Diagrams/eMSP-Calendar Manager.png}
+    \caption{Integration of eMSP-Calendar Manager}
+    \label{fig:eMSP-Calendar Manager}
 \end{figure}
-
-\begin{figure}[H]
-    \centering
-    \subfloat[\centering component 3a]{{\includegraphics[scale=0.5]{assets/placeholder.png}}}%
-    \qquad\qquad
-    \subfloat[\centering component 3b]{{\includegraphics[scale=0.5]{assets/placeholder.png}}}%
-    \caption{Integration of 3a and 3b components}%
-    \label{fig: integration_SensorDataManager_NewsManager}%
-\end{figure}
-
-*order of components for the middle tier, with references*
-\begin{figure}[H]
-    \centering
-    \subfloat[\centering component middle1-a]{{\includegraphics[scale=0.5]{assets/placeholder.png}}}%
-    \qquad\qquad
-    \subfloat[\centering component middle1-b]{{\includegraphics[scale=0.5]{assets/placeholder.png}}}%
-    \qquad\qquad
-    \subfloat[\centering component middle1-c]{{\includegraphics[scale=0.7]{assets/placeholder.png}}}%
-    \caption{Integration of middle1-a,b,c components}%
-    \label{fig: integration_RankingManager_HelpRequestManager}%
-\end{figure}
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.55]{assets/placeholder.png}%
-    \caption{Integration of middle2 component}%
-    \label{fig: integration_ForumManager_LocationModule}%
-\end{figure}
-
-*order of last group components, with references to the images*
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.6, center]{assets/placeholder.png}
-    \caption{Integration of carOwnerManager components}
-    \label{fig: integration_PolicyMakerManager}
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/eMSP-EV Manager.png} 
+    \caption{Integration of eMSP-EV Manager}%
+    \label{fig: eMSP-EV Manager}%
 \end{figure}
+
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.6, center]{assets/placeholder.png}
-    \caption{Integration CPOWmanager components}
-    \label{fig: integration_AgronomistManager}
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/eMSP-OCPI.png} 
+    \caption{Integration of eMSP-OCPI}%
+    \label{fig: eMSP-OCPI Manager}%
 \end{figure}
+
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.6, center]{assets/placeholder.png}
-    \caption{Integration of otherManager components}
-    \label{fig: integration_FarmerManager}
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/eMSP-Payment Manager.png} 
+    \caption{Integration of eMSP-Payment Manager}%
+    \label{fig: eMSP-Payment Manager}%
 \end{figure}
+
+Following these are the components of the third group, Composed mainly of the Managers that don't interact directly with the APIs but work as a middleman between the service and the data. 
+Here are implemented: \emph{ Charging Stations Manager, Charging Process Manager, Booking Manager, Suggestions Manager} (Figures 27-30):
+
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7, center]{assets/placeholder.png}
-    \caption{Integration of AccountManager components}
-    \label{fig: integration_AccountManager}
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/eMSP-Charging stations manager.png} 
+    \caption{Integration of eMSP-Charging Stations manager}%
+    \label{fig: eMSP-Charging Stations manager}%
 \end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/eMSP-Charging Process Manager.png} 
+    \caption{Integration of eMSP-Charging Process Manager}%
+    \label{fig: eMSP-Charging Process Manager}%
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/eMSP-Booking Manager.png} 
+    \caption{Integration of eMSP-Booking manager}%
+    \label{fig: eMSP-Booking manager}%
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/eMSP-Suggestions Manager.png} 
+    \caption{Integration of eMSP-Suggestion manager}%
+    \label{fig: eMSP-Suggestion manager}%
+\end{figure}
+
+Lastly are the Integrations of the most external devices, the services. At this point of the integration no drivers are needed anymore.
+Here are represented \emph{Account Manager} and \emph{User Manager}, considering that they both encapsulate services.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/eMSP-Account Manager.png} 
+    \caption{Integration of eMSP-Account Manager}%
+    \label{fig: eMSP-Account Manager}%
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/eMSP-User Manager.png} 
+    \caption{Integration of eMSP-User manager}%
+    \label{fig: eMSP-User manager}%
+\end{figure}
+
+\newpage
+\textbf{CPMS Subsystem} \newline
+In the same way we dealt with the eMSP, we will now present the various integration of the components. As already stated, the order in which the whole subsystems are implemented is 
+completely up to preference, as they are independent. \newline
+In the case of the CPMS we have a further independence between the \emph{Data Manager} and the other API managers, so they all could parallelize, hence why they are all within that first group.
+Here they are all represented:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/CPMS-Data Manager.png} 
+    \caption{Integration of CPMS-Data Manager}%
+    \label{fig: CPMS-Data manager}%
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/CPMS-OCPI.png} 
+    \caption{Integration of CPMS-OCPI}%
+    \label{fig: CPMS-OCPI}%
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/CPMS-OCPP.png} 
+    \caption{Integration of CPMS-OCPP}%
+    \label{fig: CPMS-OCPP}%
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/CPMS-DSO Manager.png} 
+    \caption{Integration of CPMS-DSO Manager}%
+    \label{fig: CPMS-DSO Manager}%
+\end{figure}
+
+In the second group, we have \emph{Discount Manager} and \emph{Charging Station Manager}, the components that act as a middlemen between the services and the APIs.
+Here they are represented:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/CPMS-Discount Manager.png} 
+    \caption{Integration of CPMS-Discount Manager}%
+    \label{fig: CPMS-Discount Manager}%
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/CPMS-Charging Station Manager.png} 
+    \caption{Integration of CPMS-Charging Station Manager}%
+    \label{fig: CPMS-Charging Station Manager}%
+\end{figure}
+
+Lastly, are \emph{Account Manager} and \emph{CPOW Manager}, the two components that contain services. Note that at this point of development, drivers are no longer needed:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/CPMS-Account Manager.png} 
+    \caption{Integration of CPMS-Account Manager}%
+    \label{fig: CPMS-Account Manager}%
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{assets/Integration Diagrams/CPMS-CPOW Manager.png} 
+    \caption{Integration of CPMS-CPOW Manager}%
+    \label{fig: CPMS-CPOW Manager}%
+\end{figure}
+
+
 
 \subsection{System testing}
-*text for sys testing*
+Once specific testing for each component is done, and everything works, it is time to test the system as a whole. It is fundamental to thoroughly test a system before it is deployed, as this can help to identify and fix any issues that may impact the system's functionality or user experience.
+For these reasons, some tests must be run to evaluate the system's performance, stability, security, and usability. Among these an important step would be testing the system's performance; especially in conditions
+of high workload, to see if it is able to handle many requests at once. For example, it is important to check whether at midnight, when checks for user schedules are being done, other parts of the system suffer from a drop in performance.
+Given the potentially large user base, usability testing would also be required. For example the application could be submitted to a number of candidates to check whether the application is intuitive and 
+the use feels natural. In case of bad reception, an UI revamp might be done and some form of onboarding may be added.
+
+
+
+
+
+
 \newpage
 \section{Effort Spent}
     \begin{tabular}{|c||c|c|c|c|c|}
