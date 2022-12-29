@@ -250,16 +250,21 @@ Regarding the Web Server the main components are:
 \subsection{Deployment view}
 \begin{center}
     \begin{figure}[H]
-        \includegraphics[scale=0.45, center]{assets/placeholder.png}
+        \includegraphics[scale=0.35, center]{assets/archimate.png}
         \caption{Deployment Diagram}
         \label{fig: deployment_diagram}
     \end{figure}
 \end{center}
 
-The deployment diagram in \textit{Figure (\ref{fig: deployment_diagram})} shows the most important components necessary for the correct behaviour of the system.
-The devices shown in the diagram are:
+The deployment diagram in \textit{Figure (\ref{fig: deployment_diagram})} shows how the various components of the web application are deployed across the network, including the web server, application server, and database server. It also shows the relationships and the flow of data between them.
+The devices shown are:
 \begin{itemize}
-    \item \textbf{first device/component}: description of device (e.g. pc or Smartphone, firewall, load balancer, web server, app server, database server...).
+    \item \textbf{PC/Smartphone}: The user's device, where the web application is displayed. They can be used to access the web application and to interact with it through the web browser and the HTTPS protocol.
+    \item \textbf{Firewall}: Protects the network from unauthorized access. It is used to filter the incoming and outgoing traffic.
+    \item \textbf{Load Balancer}: It is used to distribute the incoming traffic to the web servers and it guarantees the availability of the web application and the scalability of the system. Since the project will be hosted on Vercel it will use thier provided load balancer.
+    \item \textbf{Web Server}: Hosts the web application and provides the rendered HTML and CSS web pages to the user's device. It is also responsible for the HTTPS protocol by routing the traffic to the application server, and the Google Maps API, which is used to display the interactive map.\\In order to provide the best performance, the web server will be hosted on Vercel, which is a cloud platform that provides serverless deployment and global distribution of the web application.
+    \item \textbf{Application Server}: It is responsible for the business logic of the web application by managing all the requests coming from the web server. It also interacts with the database server, to retrieve and store data, and all the external services such as the Google Calendar API, the Car API, the Payment API, the OCPI and the OCPP.\\ The applicaiton server will host both the eMSP and the CPMS subsystems.
+    \item \textbf{Database Server}: It runs the database that stores all the data of the web application. We will use a PostgreSQL database in order to easily manage the relations between the tables and the incoming queries.
 \end{itemize}
 \newpage
 
