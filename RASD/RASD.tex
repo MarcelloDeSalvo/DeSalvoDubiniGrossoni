@@ -563,13 +563,13 @@
     \begin{longtable}{|c|p{0.69\textwidth}|}
         \hline
         \textbf{ID} & \textbf{Requirement}\\ \hline\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R1
         R\arabic{RequirementCtr}    & The system must allow registered and logged-in users to use the app.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R2
         R\arabic{RequirementCtr}    & The system must respect the GDPR and the user's privacy.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R3
         R\arabic{RequirementCtr}    & The system must allow registered users to log-in using their e-mail.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R4
         R\arabic{RequirementCtr}    & Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol. \\\hline
     \end{longtable}  
     \rowcolors{1}{white!100}{} 
@@ -578,31 +578,31 @@
     \begin{longtable}{|c|p{0.69\textwidth}|}
         \hline
         \textbf{ID} & \textbf{Requirement}\\ \hline\hline       
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R5
         R\arabic{RequirementCtr}    & The eMSP subsystem must show the user the nearby charging stations through an interactive map.\\\hline  
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R6
         R\arabic{RequirementCtr}    & The eMSP subsystem must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission.\\\hline  
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R7
         R\arabic{RequirementCtr}    & The eMSP subsystem must notify the user when the charge has finished.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R8
         R\arabic{RequirementCtr}    & The eMSP subsystem must show the user the discounted prices.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R9
         R\arabic{RequirementCtr}    & The eMSP subsystem must show the user the prices of the charging stations.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R10
         R\arabic{RequirementCtr}    & The eMSP subsystem must access the User calendar schedule in order to suggest the best charging timeframes, if given permission.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R11
         R\arabic{RequirementCtr}    & The eMSP subsystem must suggest the user on which charging stations to go based on the EV battery and his daily schedule.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R12
         R\arabic{RequirementCtr}    & The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R13
         R\arabic{RequirementCtr}    & The eMSP subsystem must allow the user to book a charging spot for a future date.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R14
         R\arabic{RequirementCtr}    & The eMSP subsystem must allow the user to cancel a future reservation for a charging spot.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R15
         R\arabic{RequirementCtr}    & The eMSP subsystem must allow the user to pay for the charge through an external payment service.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R16
         R\arabic{RequirementCtr}    & The eMSP subsystem must allow the user to start or stop the charge via the application.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R17
         R\arabic{RequirementCtr}    & The eMSP subsystem must notify the user of the upcoming booked sessions.\\\hline
     \end{longtable}  
     \rowcolors{1}{white!100}{}  
@@ -611,31 +611,31 @@
     \begin{longtable}{|c|p{0.69\textwidth}|}
         \hline
         \textbf{ID} & \textbf{Requirement}\\ \hline\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R18
         R\arabic{RequirementCtr}    & The CPMS subsystem must communicate with the DSO according to a standard protocol.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R19
         R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the DSO current energy price.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R20
         R\arabic{RequirementCtr}    & The CPMS subsystem must automatically decide from which DSO to acquire energy.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R21
         R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the charging station's battery status.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R22
         R\arabic{RequirementCtr}    & The CPMS subsystem must dynamically change the energy source depending on the internal station's battery status and the available DSOs' prices.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R23
         R\arabic{RequirementCtr}    & The CPMS subsystem must communicate the location of the charging stations to all connected eMSPs.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R24
         R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the internal status of the sockets through the OCPP standard protocol.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R25
         R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R26
         R\arabic{RequirementCtr}    & The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R27
         R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the battery status of the EV through the DIN/ISO specifications.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R28
         R\arabic{RequirementCtr}    & The CPMS subsystem must allow the CPOW to add or change the current special offer.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R29
         R\arabic{RequirementCtr}    & The CPMS subsystem must allow the CPOW to change the energy provider of a charging station.\\\hline
-        \stepcounter{RequirementCtr}
+        \stepcounter{RequirementCtr}%R30
         R\arabic{RequirementCtr}    & The CPMS subsystem must unlock the reserved charging spot if the user doesn't show up.\\\hline
         
     \end{longtable}
