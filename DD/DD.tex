@@ -227,9 +227,18 @@ External elements in the diagram are represented in a simplified way.
     \item \textbf{PaymentManager}: It manages the paymentService. It interacts with the external component \textit{Payment}.
     \item \textbf{SuggestionManager}: It handles the service that generates suggestions for the users on when to charge the car. In order to do that it communicates with the \textit{EVmanager} and with the \textit{CalendarManager} to get all the informations needed to formulate suggestions, in particular the user's schedule and the car battery status.
     \item \textbf{CalendarManager}: This component manages the information relative to the user's schedule for the \textit{SuggestionService}. To do so it interfaces with the external component \textit{Calendar}.
-    \item \textbf{EVManager}: This component handles the information relative to the user cars' battery status for the \textit{SuggestionService}. To do so it interfaces with the external component \textit{CarAPI}.
+    \item \textbf{EVManager}: This component handles the information relative to the user EVs' battery status and location for the \textit{SuggestionService}. To do so it interfaces with the external component \textit{CarAPI}. It also manages the registration of new EVs through the \textit{EV Service}.
+    \item \textbf{OCPI}: It handles the interaction with all the CPMSs, it sends and retrives data from them. All the components that require an interaction with the CPMSs are connected to it.
 \end{itemize}
-
+\textbf{CPMS subsystem}
+\begin{itemize}
+    \item \textbf{AccountManager}: This component, similar to the one in the eMSPsubsystem, handles the authentication process. 
+    \item \textbf{DiscountManager}: It handles the addition and deletion of offers and manages the \textit{DiscountService}.
+    \item \textbf{ChargingStation Manager}: This component manages the information about the charging stations and the services related to them, in particular \textit{ChangeSourceService} and \textit{ChargingStationService}.
+    \item \textbf{OCPI}: It manages the connection with eMSPs, sending and receiving data from them. Both the \textit{DiscountManager} and the \textit{Charging Station Manager} are connected to this component in order to send information to the eMSPs.
+    \item \textbf{OCPP}: This component handles the connection with the charging stations, sending data regarding offers, changes in the energy source and charging sessions. It receives data from the charging stations regarding their current status. All the components that need to communicate with the charging stations interact with this component.
+    \item \textbf{DSO Manager}: This component manages the communication with external DSOs. All components and services that require communication with a DSO, for example the \textit{Change Source Service} managed by the \textit{Charging Station Manager}, interact with this component.
+\end{itemize}
 \subsubsection*{Web Server Component View}
 Regarding the Web Server the main components are:
 \begin{itemize}
@@ -522,109 +531,159 @@ If enough time passes from the start of the booked time where the user does not 
     \hline
     \textbf{Requirements} & \textbf{Components} \\\hline\hline
     \begin{itemize}
-        \item[R1)] text.
-        \item[R2)] text.
-        \item[R3)] text.
+        \item[R1)] The system must allow registered and logged-in users to use the app
     \end{itemize}
     & 
     \begin{itemize}
-        \item text.
-        \item text.
-        \item text.
+        \item AccountManager
+        \item UserManager
+        \item CPOWmanager
     \end{itemize}
     \\\hline
 
     \begin{itemize}
-        \item[R4)] text.
+        \item[R2)] The system must respect the GDPR and the user's privacy
     \end{itemize}
     & 
     \begin{itemize}
-        \item text.
+        \item eMSP Data Manager
+        \item CPMS Data Manager
+        \item AccountManager
     \end{itemize}
     \\\hline
 
     \begin{itemize}
-        \item[R5)] text.
-        \item[R6)] text.
-        \item[R7)] text.
+        \item[R3)] The system must allow registered users to log-in using their e-mail
     \end{itemize}
     & 
     \begin{itemize}
-        \item text.
+        \item AccountManager
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R4)] Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol
+    \end{itemize}
+    & 
+    \begin{itemize}
+        \item eMSP's OCPI
+        \item CPMS' OCPI
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R5)] The eMSP subsystem must show the user the nearby charging stations through an interactive map
+    \end{itemize}
+    & 
+    \begin{itemize}
+        \item Charging Station Manager
+        \item UserManager
         \begin{itemize}
             \setlength{\itemindent}{-5px}
-            \item text.
-            \item text.
-            \item text.
+            \item InteractiveMap Service
         \end{itemize}
-        \item text.
-        \item text.
-        \item text.
-        \item text.
     \end{itemize}
     \\\hline
 
     \begin{itemize}
-        \item[R8)] text.
+        \item[R6)] The eMSP subsystem must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission.
     \end{itemize}
     & 
     \begin{itemize}
-        \item text.
+        \item AccountManager %included if maybe there's the option during sign-up to allow or refuse the location tracking
+        \item UserManager
+        \begin{itemize}
+            \setlength{\itemindent}{-5px}
+            \item interactiveMap Service
+        \end{itemize}
     \end{itemize}
     \\\hline
 
     \begin{itemize}
-        \item[R9)] text.
+        \item[R7)] The eMSP subsystem must notify the user when the charge has finished.
     \end{itemize}
-    &
+    & 
     \begin{itemize}
-        \item text.
+        \item Charging Process Manager
+        \item UserManager
         \begin{itemize}
-            \item text.
+            \setlength{\itemindent}{-5px}
+            \item Charging Process Service
         \end{itemize}
-        \item text.
     \end{itemize}
     \\\hline
 
     \begin{itemize}
-        \item[R10)] text.
+        \item[R8)] The eMSP subsystem must show the user the discounted prices.
     \end{itemize}
     &
     \begin{itemize}
-        \item text.
+        \item Charging Station Manager
+        \item SuggestionsManager %present since the suggestions work with a best price/offer ranking
+        \item UserManager
         \begin{itemize}
-            \item text.
+            \setlength{\itemindent}{-5px}
+            \item InteractiveMap Service
+            \item SuggestionService
         \end{itemize}
-        \item text.
-        \item text.
-        \item text.
     \end{itemize}
     \\\hline
 
     \begin{itemize}
-        \item[R11)] text.
+        \item[R9)] The eMSP subsystem must show the user the prices of the charging stations.
     \end{itemize}
     &
     \begin{itemize}
-        \item text.
+        \item Charging Station Manager
+        \item SuggestionsManager %present since the suggestions work with a best price/offer ranking
+        \item UserManager
         \begin{itemize}
-            \item text.
+            \setlength{\itemindent}{-5px}
+            \item InteractiveMap Service
+            \item SuggestionService
         \end{itemize}
-        \item text.
-        \item text.
     \end{itemize}
     \\\hline
 
     \begin{itemize}
-        \item[R12)] text.
+        \item[R10)] The eMSP subsystem must access the User calendar schedule in order to suggest the best charging timeframes, if given permission
     \end{itemize}
     &
     \begin{itemize}
-        \item text.
+        \item CalendarManager
+        \item SuggestionManager
+        \item UserManager
         \begin{itemize}
-            \item text.
+            \setlength{\itemindent}{-5px}
+            \item SuggestionService
         \end{itemize}
-        \item text.
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R11)] The eMSP subsystem must suggest the user on which charging stations to go based on the EV battery and his daily schedule
+    \end{itemize}
+    &
+    \begin{itemize}
+        \item EV Manager
+        \item CalendarManager
+        \item SuggestionManager
+        \item UserManager
+        \begin{itemize}
+            \setlength{\itemindent}{-5px}
+            \item SuggestionService
+        \end{itemize}
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R12)] The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations
+    \end{itemize}
+    &
+    \begin{itemize}
+        \item Charging Station Manager
+        \item eMSP's OCPI
+        \item CPMS' OCPI
     \end{itemize}
     \\\hline
 
