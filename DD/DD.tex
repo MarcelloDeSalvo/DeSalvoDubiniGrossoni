@@ -293,7 +293,7 @@ In case of success, the user can log-in and use the system functionalities avail
 \begin{center}
     \begin{figure}[H]
         \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/User View Nearby Stations.png}
-        \caption{Sign Up}
+        \caption{View Nearby Stations}
         \label{View Nearby Stations}
     \end{figure}
 \end{center}
@@ -306,7 +306,7 @@ Upon detecting the user's movement on the map, the server retrieves the new stat
 \begin{center}
     \begin{figure}[H]
         \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/User delete bookings.png}
-        \caption{Sign Up}
+        \caption{Delete a Booking}
         \label{Delete Booking}
     \end{figure}
 \end{center}
@@ -322,7 +322,7 @@ interested station(communicating with OCPI) then deleting it from the user's boo
  \begin{center}
     \begin{figure}[H]
         \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/User Make Booking.png}
-        \caption{Sign Up}
+        \caption{Make a Booking}
         \label{Make Booking}
     \end{figure}
 \end{center}
@@ -331,7 +331,7 @@ booking is communicated to the OCPI. The booking info is later saved on the data
 The first possible error is caused by checkInfo(), if the data inserted by the user is invalid. Lastly, an error could be raised by the OCPI if the booking doesn't go through for any reason. We assume the addition of the booking to the database doesn't cause errors.
 \newline
 
-\textbf{Book a map}\newline
+\textbf{Book from map}\newline
 We decided not to show book from map as it is basically the same as Make a Booking: it is still a form that has some fields precompiled when the button is pressed on the map.
 \newpage
 
@@ -339,7 +339,7 @@ We decided not to show book from map as it is basically the same as Make a Booki
 \begin{center}
     \begin{figure}[H]
         \includegraphics[scale=0.10, center]{assets/sequenceDiagrams/User Start Charging Process.png}
-        \caption{Schedule suggestions}
+        \caption{Start Charging Process}
         \label{Start Charging Process}
     \end{figure}
 \end{center}
@@ -347,7 +347,7 @@ This sequence explains what happens after a User plugs his EV to a charging poin
 Firstly a socketID is sent to the Charging Stations Manager, to check whether the requested socket is available as it could be booked or unavailable. If the request is positive, the user is shown
 a form for the payment that will be compiled and sent back to the Payment Manager. The Payment Manager will proceed to send the information to the Payment API that will actuate the actual payment.
 When the payment goes through, the User Manager will communicate to the OCPI through the Charging Stations Manager that the charge can start. The OCPI will then send data regarding the status back to the User.
-The errors will be now explained more thorougly. Firstly, an error could be raised by the OCPI in case the requested socket is not currently available.
+The errors will be now explained more thorougly. \newline Firstly, an error could be raised by the OCPI in case the requested socket is not currently available.
 Secondly, an error could be caused by the Payment Manager in the case the payment Form contains invalid data. The third error could be raised by the Payment API in case the payment process doesn't end successfully.
 It is important to note that we assume that once the user has payed the OCPI cannot fail in starting the charge, as its availability was checked beforehand. If this wasn't the case, there could be instances where the User pays and the charge doesn't actually start.
 
@@ -432,7 +432,7 @@ The list will contain all the stations details, such as the ID, the location, th
 \newpage
 This diagram describes the interaction between the CPOW and the Applicantion Server in order to change the energy provider of a charging station.\\
 It starts by the CPOW sending a request with the charging station ID and the new energy provider (after retrieving a list with all the stations details, described in Figure \ref*{CPOW - View charging stations}).
-Then, the Charging Station Manager will check if the station exists and if the energy provider is valid by communicating with the OCPP or the DSP-API component, depending if the selected provider is a DSO or an internal battery.
+Then, the Charging Station Manager will check if the station exists and if the energy provider is valid by communicating with the OCPP or the DSO-API component, depending if the selected provider is a DSO or an internal battery.
 If the selected provider is available, the Charging Station Manager will ask the Provider to start supplying the energy, notify the station through OCPP, notify the connected eMSPs through OCPI, and update the station's current energy provider in the database.
 \newpage
 
