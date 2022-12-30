@@ -250,16 +250,21 @@ Regarding the Web Server the main components are:
 \subsection{Deployment view}
 \begin{center}
     \begin{figure}[H]
-        \includegraphics[scale=0.45, center]{assets/placeholder.png}
+        \includegraphics[scale=0.35, center]{assets/archimate.png}
         \caption{Deployment Diagram}
         \label{fig: deployment_diagram}
     \end{figure}
 \end{center}
 
-The deployment diagram in \textit{Figure (\ref{fig: deployment_diagram})} shows the most important components necessary for the correct behaviour of the system.
-The devices shown in the diagram are:
+The deployment diagram in \textit{Figure (\ref{fig: deployment_diagram})} shows how the various components of the web application are deployed across the network, including the web server, application server, and database server. It also shows the relationships and the flow of data between them.
+The devices shown are:
 \begin{itemize}
-    \item \textbf{first device/component}: description of device (e.g. pc or Smartphone, firewall, load balancer, web server, app server, database server...).
+    \item \textbf{PC/Smartphone}: The user's device, where the web application is displayed. They can be used to access the web application and to interact with it through the web browser and the HTTPS protocol.
+    \item \textbf{Firewall}: Protects the network from unauthorized access. It is used to filter the incoming and outgoing traffic.
+    \item \textbf{Load Balancer}: It is used to distribute the incoming traffic to the web servers and it guarantees the availability of the web application and the scalability of the system. Since the project will be hosted on Vercel it will use thier provided load balancer.
+    \item \textbf{Web Server}: Hosts the web application and provides the rendered HTML and CSS web pages to the user's device. It is also responsible for the HTTPS protocol by routing the traffic to the application server, and the Google Maps API, which is used to display the interactive map.\\In order to provide the best performance, the web server will be hosted on Vercel, which is a cloud platform that provides serverless deployment and global distribution of the web application.
+    \item \textbf{Application Server}: It is responsible for the business logic of the web application by managing all the requests coming from the web server. It also interacts with the database server, to retrieve and store data, and all the external services such as the Google Calendar API, the Car API, the Payment API, the OCPI and the OCPP.\\ The applicaiton server will host both the eMSP and the CPMS subsystems.
+    \item \textbf{Database Server}: It runs the database that stores all the data of the web application. We will use a PostgreSQL database in order to easily manage the relations between the tables and the incoming queries.
 \end{itemize}
 \newpage
 
@@ -447,17 +452,31 @@ If the selected provider is available, the Charging Station Manager will ask the
 
 
 \subsection{Component interfaces}
-
+\underline{\textbf{eMSP}}\\
 \begin{center}
     \begin{figure}[H]
-        \includegraphics[scale=0.60, center]{assets/placeholder.png}
-        \caption{Component Interfaces Diagram}
-        \label{fig: component_interfaces}
+        \includegraphics[scale=0.59, center]{assets/interfacesDiagrams/EMSP interface diagram.png}
+        \caption{EMSP Component Interfaces Diagram}
+        \label{fig: EMSP component_interfaces}
     \end{figure}
 \end{center}
 
-This diagram above describes in detail the interfaces and the corresponding methods offered by each component, it also shows the interaction between them.
-*other text*
+This diagram above describes in detail the interfaces and the corresponding methods offered by each component of the eMSP, it also shows the interaction between them as described in Fig. \ref*{fig: application_server_component_view}.\\
+Please note that the described methods do not represent exactly the final version that will be used during the implementation, they just provide a logical representation.
+\newpage
+
+\underline{\textbf{CPMS}}\\
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[scale=0.55, center]{assets/interfacesDiagrams/CPMS interface diagram.png}
+        \caption{CPMS Component Interfaces Diagram}
+        \label{fig: CPMS component_interfaces}
+    \end{figure}
+\end{center}
+
+This diagram above describes in detail the interfaces and the corresponding methods offered by each component of the CPMS, it also shows the interaction between them as described in Fig. \ref*{fig: application_server_component_view}.\\
+Please note that the described methods do not represent exactly the final version that will be used during the implementation, they just provide a logical representation.
+\newpage
 
 \subsection{Selected architectural styles and patterns}
 
@@ -688,104 +707,271 @@ If enough time passes from the start of the booked time where the user does not 
     \\\hline
 
     \begin{itemize}
-        \item[R13)] text.
-        \item[R14)] text.
-        \item[R15)] text. 
-        \item[R16)] text.
-        \item[R17)] text. 
+        \item[R13)] The eMSP subsystem must allow the user to book a charging spot for a future date
     \end{itemize}
-
     &
     \begin{itemize}
-        \item text. \begin{itemize}
-            \item text.
+        \item  BookingManager
+        \item eMSP's OCPI
+        \item UserManager
+        \begin{itemize}\setlength{\itemindent}{-5px}
+            \item BookingService
         \end{itemize}
     \end{itemize}
     \\\hline
 
     \begin{itemize}
-        \item[R18)] text.
+        \item[R14)] The eMSP subsystem must allow the user to cancel a future reservation for a charging spot
     \end{itemize}
     &
     \begin{itemize}
-        \item text. 
-        \item text.
-        \begin{itemize}
-            \item text.
+        \item  BookingManager
+        \item eMSP's OCPI
+        \item UserManager
+        \begin{itemize}\setlength{\itemindent}{-5px}
+            \item BookingService
         \end{itemize}
     \end{itemize}
     \\\hline
 
     \begin{itemize}
-        \item[R19)] text.
+        \item[R15)] The eMSP subsystem must allow the user to pay for the charge through an external payment service
     \end{itemize}
     &
     \begin{itemize}
-        \item text.
-        \item text.
-        \item text.
+        \item PaymentManager
+        \item UserManager
+        \begin{itemize}\setlength{\itemindent}{-5px}
+            \item PaymentService
+        \end{itemize} 
     \end{itemize}
     \\\hline
 
     \begin{itemize}
-        \item[R20)] text. 
+        \item[R16)] The eMSP subsystem must allow the user to start or stop the charge via the application. 
     \end{itemize}
     &
     \begin{itemize}
-        \item text.
-        \item text.
+        \item Charging Process Manager
+        \item eMSP's OCPI
+        \item UserManager
+        \item \begin{itemize}\setlength{\itemindent}{-5px}
+            \item Charging Process Service
+        \end{itemize}
     \end{itemize}
     \\\hline
+
     \begin{itemize}
-        \item[R21)] text.
+        \item[R17)] The eMSP subsystem must notify the user of the upcoming booked sessions.
     \end{itemize}
     &
     \begin{itemize}
-        \item text.
+        \item BookingManager
+        \item EMSP DataManager
+        \item UserManager
+        \item \begin{itemize}\setlength{\itemindent}{-5px}
+            \item Booking Service
+        \end{itemize}
     \end{itemize}\\\hline
+
+    \begin{itemize}
+        \item[R18)] The CPMS subsystem must communicate with the DSO according to a standard protocol.
+    \end{itemize}
+    & 
+    \begin{itemize}
+        \item DSO Manager
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R19)] The CPMS subsystem must retrieve the DSO current energy price
+    \end{itemize}
+    & 
+    \begin{itemize}
+        \item DSO Manager
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R20)] The CPMS subsystem must automatically decide from which DSO to acquire energy
+    \end{itemize}
+    & 
+    \begin{itemize}
+        \item DSO Manager
+        \item Charging Station Manager
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R21)] The CPMS subsystem must retrieve the charging station's battery status
+    \end{itemize}
+    & 
+    \begin{itemize}
+        \item OCPP
+        \item Charging Station Manager
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R22)] The CPMS subsystem must dynamically change the energy source depending on the internal station's battery status and the available DSOs' prices
+    \end{itemize}
+    & 
+    \begin{itemize}
+        \item OCPP
+        \item Charging Station Manager
+        \item DSO Manager
+        \item OCPI %to inform the eMSPs of the change (in price)
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R23)] The CPMS subsystem must communicate the location of the charging stations to all connected eMSPs
+    \end{itemize}
+    & 
+    \begin{itemize}
+        \item Charging Station Manager
+        \item CPMS' OCPI
+        \item eMSP's OCPI %to retrive the data
+        \item CPMS DataManager
+        \item Charging Station Manager
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R24)] The CPMS subsystem must retrieve the internal status of the sockets through the OCPP standard protocol
+    \end{itemize}
+    & 
+    \begin{itemize}
+        \item OCPP
+        \item Charging Station Manager
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R25)] The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols
+    \end{itemize}
+    & 
+    \begin{itemize}
+        \item OCPP
+        \item CPMS' OCPI
+        \item eMSP's OCPI
+        \item Charging Station Manager
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R26)] The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol
+    \end{itemize}
+    & 
+    \begin{itemize}
+        \item OCPP
+        \item Charging Station Manager
+        \item CPMS' OCPI
+        \item eMSP's OCPI
+        \item UserManager
+        \begin{itemize}\setlength{\itemindent}{-5px}
+            \item Charging Process Service
+        \end{itemize}
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R27)] The CPMS subsystem must retrieve the battery status of the EV through the DIN/ISO specifications
+    \end{itemize}
+        & 
+    \begin{itemize}
+        \item OCPP
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R28)] The CPMS subsystem must allow the CPOW to add or change the current special offer
+    \end{itemize}
+        & 
+    \begin{itemize}
+        \item DiscountManager
+        \item CPMS DataManager
+        \item OCPP
+        \item CPMS' OCPI
+        \item CPOWmanager
+        \item \begin{itemize}\setlength{\itemindent}{-5px}
+            \item DiscountService
+            \item ChargingStation Service
+        \end{itemize}
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R29)] The CPMS subsystem must allow the CPOW to change the energy provider of a charging station
+    \end{itemize}
+    & 
+    \begin{itemize}
+        \item ChargingStation Manager
+        \item DSO Manager
+        \item CPMS DataManager
+        \item OCPP
+        \item CPMS' OCPI
+        \item CPOWmanager
+        \item \begin{itemize}\setlength{\itemindent}{-5px}
+            \item Change Source Service
+            \item ChargingStation Service
+        \end{itemize}
+    \end{itemize}
+    \\\hline
+
+    \begin{itemize}
+        \item[R30)] The CPMS subsystem must unlock the reserved charging spot if the user doesn't show up
+    \end{itemize}
+    & 
+    \begin{itemize}
+        \item OCPP
+        \item CPMS' OCPI
+        \item Charging Station Manager
+    \end{itemize}
+    \\\hline
 \end{longtable}
 
-Here, we present a summary of the table above for a more immediate visualization.
-*component: name associated in the next table*
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|l l|}
-        \hline
-        component 1:& c1\\
-        component 2:& c2\\\hline
-        
-    \end{tabular}
-    \caption{Components' legend}
-\end{table}
-\newpage
-\setlength\LTleft{-2.5cm}
-\begin{longtable}{|c|c|c|}
-
-    \hline
-    & \cellcolor{blue!30}c1 & \cellcolor{blue!30}c2 \\\hline
-    \cellcolor{SpringGreen!50}R1 & x & x \\\hline
-    \cellcolor{SpringGreen!50}R2 & x & x \\\hline
-    \cellcolor{SpringGreen!50}R3 & x & x \\\hline
-    \cellcolor{SpringGreen!50}R4 & x &  \\\hline
-    \cellcolor{SpringGreen!50}R5 &    & \\\hline
-    \cellcolor{SpringGreen!50}R6 &    & \\\hline
-    \cellcolor{SpringGreen!50}R7 &    & \\\hline
-    \cellcolor{SpringGreen!50}R8 &    & \\\hline
-    \cellcolor{SpringGreen!50}R9 &    & \\\hline
-    \cellcolor{SpringGreen!50}R10 &    & \\\hline
-    \cellcolor{SpringGreen!50}R11 &    & \\\hline
-    \cellcolor{SpringGreen!50}R12 &    & \\\hline
-    \cellcolor{SpringGreen!50}R13 &    & \\\hline
-    \cellcolor{SpringGreen!50}R14 &    & \\\hline
-    \cellcolor{SpringGreen!50}R15 &    & \\\hline
-    \cellcolor{SpringGreen!50}R16 &    & \\\hline
-    \cellcolor{SpringGreen!50}R17 &    & \\\hline
-    \cellcolor{SpringGreen!50}R18 &    & \\\hline
-    \cellcolor{SpringGreen!50}R19 &    & \\\hline
-    \cellcolor{SpringGreen!50}R20 &    & \\\hline
-    \cellcolor{SpringGreen!50}R21 & &\\\hline
-    \caption{Component and requirement mapping}\\
-\end{longtable}
+%Here, we present a summary of the table above for a more immediate visualization.
+%*component: name associated in the next table*
+%\begin{table}[H]
+%    \centering
+%    \begin{tabular}{|l l|}
+%        \hline
+%        component 1:& c1\\
+%        component 2:& c2\\\hline
+%        
+%    \end{tabular}
+%    \caption{Components' legend}
+%\end{table}
+%\newpage
+%\setlength\LTleft{-2.5cm}
+%\begin{longtable}{|c|c|c|}
+%
+%    \hline
+%    & \cellcolor{blue!30}c1 & \cellcolor{blue!30}c2 \\\hline
+%    \cellcolor{SpringGreen!50}R1 & x & x \\\hline
+%    \cellcolor{SpringGreen!50}R2 & x & x \\\hline
+%    \cellcolor{SpringGreen!50}R3 & x & x \\\hline
+%    \cellcolor{SpringGreen!50}R4 & x &  \\\hline
+%    \cellcolor{SpringGreen!50}R5 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R6 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R7 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R8 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R9 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R10 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R11 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R12 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R13 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R14 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R15 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R16 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R17 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R18 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R19 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R20 &    & \\\hline
+%    \cellcolor{SpringGreen!50}R21 & &\\\hline
+%    \caption{Component and requirement mapping}\\
+%\end{longtable}
 
 \section{Implementation, Integration and Test Plan}
 \subsection{Implementation Plan}
