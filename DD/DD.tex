@@ -529,6 +529,8 @@ Each day at a specific time the user will be notified, if at least one event is 
 If a user reserved a socket for a specific time, during that time only that user will be able to start a charging session. Other users might still be able to physically connect their car to the socket, depending on how the booking is handled by the specific CPO system, but a charging session will not be able to be started by different users. 
 \subsubsection{Automatically cancelling a booking}
 If enough time passes from the start of the booked time where the user does not start a charging session, the reservation will be cancelled and any user will be able to start a session with that socket.
+\subsubsection{Standard booking time}
+In order to simplify and standardize the booking process we opted to set the reserved time for each booking to 30 minutes. After the 30 minutes the users can still continue charging, if needed, provided that no other bookings have been made for the same socket for the next 30 minutes by other clients.
 \newpage
 
 \section{User Interface Design}
