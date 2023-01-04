@@ -186,7 +186,7 @@ The architecture is organized in three logical layers:
     \end{figure}
 \end{center}
 
-The system's architecture, as shown in \ref{fig:high_level_architecture}, is composed by a DMZ, that includes the Web and the Mail Server in order to prevent a direct access to the internal system and improve the overall security, and firewalls that divide each newtwork segment.
+The system's architecture, as shown in Figure \ref{fig: high_level_architecture}, is composed by a DMZ, that includes the Web and the Mail Server in order to prevent a direct access to the internal system and improve the overall security, and firewalls that divide each newtwork segment.
 To reduce computation client side a thin client is used, which allows all the heavy operations to be performed at server side. The Web Server handles the HTTP requests by the users and directs them to the Application Server, while also managing the GoogleMaps API. 
 The Application Server communicates with the Database Server and elaborates data following its business logic. The Application server also handles external APIs and services, such as GoogleCalendarAPI, CarAPI, and the exetrnal CPMSs and eMSPs systems.
 The Apllication Server's CPMS subsystem will also communicate with its Charging Stations and their relative sockets through the OCPP API, and with the external DSOs through their proprietary API.
@@ -228,7 +228,7 @@ External elements in the diagram are represented in a simplified way.
     \item \textbf{SuggestionManager}: It handles the service that generates suggestions for the users on when to charge the car. In order to do that it communicates with the \textit{EVmanager} and with the \textit{CalendarManager} to get all the informations needed to formulate suggestions, in particular the user's schedule and the car battery status.
     \item \textbf{CalendarManager}: This component manages the information relative to the user's schedule for the \textit{SuggestionService}. To do so it interfaces with the external component \textit{Calendar}.
     \item \textbf{EVManager}: This component handles the information relative to the user EVs' battery status and location for the \textit{SuggestionService}. To do so it interfaces with the external component \textit{CarAPI}. It also manages the registration of new EVs through the \textit{EV Service}.
-    \item \textbf{OCPI}: It handles the interaction with all the CPMSs, it sends and retrives data from them. All the components that require an interaction with the CPMSs are connected to it.
+    \item \textbf{OCPI}: This  handles the interaction with all the CPMSs, it sends and retrives data from them. All the components that require an interaction with the CPMSs are connected to it.
 \end{itemize}
 \textbf{CPMS subsystem}
 \begin{itemize}
@@ -315,23 +315,6 @@ The view nearby stations is the process through which the interactive map is upd
 Upon detecting the user's movement on the map, the server retrieves the new stations that must be loaded caused by the movement. This process is repeated while the user is navigating on the map, and ends only when the user exits it.
 
 \newpage
-
-\textbf{Delete a Booking}
-\begin{center}
-    \begin{figure}[H]
-        \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/User delete bookings.png}
-        \caption{Delete a Booking}
-        \label{Delete Booking}
-    \end{figure}
-\end{center}
-In the first part of the sequence the user is viewing his bookings list and clicks on "Delete" on one of them. The id of said selected booking is then sent to process the deletion request.
-Firstly, a check by the Booking Manager is done to assure the bookingID sent is actually present on the database of that user's bookings. If present, the Booking Manager proceeds to firstly delete the booking from the 
-interested station(communicating with OCPI) then deleting it from the user's bookings on the database (communicating with eMSP Data Manager again).
- For the sake of readability, all errors are pushed to the end and will be furhter explained here by text. The first error that can happen is caused by the user not having any active bookings.
- The second possible error is caused by the first check in case the bookingID that has to be deleted doesn't exist in the database.
- Lastly, an error could be caused by the requested booking not existing on the OCPI. 
-
-\newpage
 \textbf{Make a Booking}
  \begin{center}
     \begin{figure}[H]
@@ -349,6 +332,24 @@ The first possible error is caused by checkInfo(), if the data inserted by the u
 We decided not to show book from map as it is basically the same as Make a Booking: it is still a form that has some fields precompiled when the button is pressed on the map.
 \newpage
 
+\newpage
+
+\textbf{Delete a Booking}
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/User delete bookings.png}
+        \caption{Delete a Booking}
+        \label{Delete Booking}
+    \end{figure}
+\end{center}
+In the first part of the sequence the user is viewing his bookings list and clicks on "Delete" on one of them. The id of said selected booking is then sent to process the deletion request.
+Firstly, a check by the Booking Manager is done to assure the bookingID sent is actually present on the database of that user's bookings. If present, the Booking Manager proceeds to firstly delete the booking from the 
+interested station(communicating with OCPI) then deleting it from the user's bookings on the database (communicating with eMSP Data Manager again).
+ For the sake of readability, all errors are pushed to the end and will be furhter explained here by text. The first error that can happen is caused by the user not having any active bookings.
+ The second possible error is caused by the first check in case the bookingID that has to be deleted doesn't exist in the database.
+ Lastly, an error could be caused by the requested booking not existing on the OCPI. 
+
+\newpage
 \textbf{Charging process}
 \begin{center}
     \begin{figure}[H]
@@ -394,6 +395,20 @@ The battery suggestion service triggers a check every 30 minutes to see if the u
 When it triggers, the SuggestionManager calls the EVManager in order to retrieve the user's car battery status and location by using the CarAPI.
 Then the SuggestionManager checks the battery status: if it's below a certain threshold it retrieves a list of charging stations information that are nearby the user's home or the car location by communicating with the OCPI component, and then sends an eMail with a list of charging stations based on their distance, cost and special offers.
 Note that this service is available only for the users that have a car registered in the system and that have a brand that supports this features with their API.
+\newpage
+
+\textbf{Register EV}
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[scale=0.20, center]{assets/sequenceDiagrams/User register ev.png}
+        \caption{Battery suggestion}
+        \label{Battery suggestion}
+    \end{figure}
+\end{center}
+\newpage
+The register EV interaction triggers when a user wants to register a new car in the system.
+After receiving the form information, the User Manager calls the Car Manager in order to connect to the Car API and the EV.
+If the response is positive, the EV will be available to receive future requests from the system such as battery status and location.
 \newpage
 
 \underline{\textbf{CPOW diagrams}}\\
@@ -514,6 +529,8 @@ Each day at a specific time the user will be notified, if at least one event is 
 If a user reserved a socket for a specific time, during that time only that user will be able to start a charging session. Other users might still be able to physically connect their car to the socket, depending on how the booking is handled by the specific CPO system, but a charging session will not be able to be started by different users. 
 \subsubsection{Automatically cancelling a booking}
 If enough time passes from the start of the booked time where the user does not start a charging session, the reservation will be cancelled and any user will be able to start a session with that socket.
+\subsubsection{Standard booking time}
+In order to simplify and standardize the booking process we opted to set the reserved time for each booking to 30 minutes. After the 30 minutes the users can still continue charging, if needed, provided that no other bookings have been made for the same socket for the next 30 minutes by other clients.
 \newpage
 
 \section{User Interface Design}
