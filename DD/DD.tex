@@ -315,23 +315,6 @@ The view nearby stations is the process through which the interactive map is upd
 Upon detecting the user's movement on the map, the server retrieves the new stations that must be loaded caused by the movement. This process is repeated while the user is navigating on the map, and ends only when the user exits it.
 
 \newpage
-
-\textbf{Delete a Booking}
-\begin{center}
-    \begin{figure}[H]
-        \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/User delete bookings.png}
-        \caption{Delete a Booking}
-        \label{Delete Booking}
-    \end{figure}
-\end{center}
-In the first part of the sequence the user is viewing his bookings list and clicks on "Delete" on one of them. The id of said selected booking is then sent to process the deletion request.
-Firstly, a check by the Booking Manager is done to assure the bookingID sent is actually present on the database of that user's bookings. If present, the Booking Manager proceeds to firstly delete the booking from the 
-interested station(communicating with OCPI) then deleting it from the user's bookings on the database (communicating with eMSP Data Manager again).
- For the sake of readability, all errors are pushed to the end and will be furhter explained here by text. The first error that can happen is caused by the user not having any active bookings.
- The second possible error is caused by the first check in case the bookingID that has to be deleted doesn't exist in the database.
- Lastly, an error could be caused by the requested booking not existing on the OCPI. 
-
-\newpage
 \textbf{Make a Booking}
  \begin{center}
     \begin{figure}[H]
@@ -349,6 +332,24 @@ The first possible error is caused by checkInfo(), if the data inserted by the u
 We decided not to show book from map as it is basically the same as Make a Booking: it is still a form that has some fields precompiled when the button is pressed on the map.
 \newpage
 
+\newpage
+
+\textbf{Delete a Booking}
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/User delete bookings.png}
+        \caption{Delete a Booking}
+        \label{Delete Booking}
+    \end{figure}
+\end{center}
+In the first part of the sequence the user is viewing his bookings list and clicks on "Delete" on one of them. The id of said selected booking is then sent to process the deletion request.
+Firstly, a check by the Booking Manager is done to assure the bookingID sent is actually present on the database of that user's bookings. If present, the Booking Manager proceeds to firstly delete the booking from the 
+interested station(communicating with OCPI) then deleting it from the user's bookings on the database (communicating with eMSP Data Manager again).
+ For the sake of readability, all errors are pushed to the end and will be furhter explained here by text. The first error that can happen is caused by the user not having any active bookings.
+ The second possible error is caused by the first check in case the bookingID that has to be deleted doesn't exist in the database.
+ Lastly, an error could be caused by the requested booking not existing on the OCPI. 
+
+\newpage
 \textbf{Charging process}
 \begin{center}
     \begin{figure}[H]
@@ -394,6 +395,20 @@ The battery suggestion service triggers a check every 30 minutes to see if the u
 When it triggers, the SuggestionManager calls the EVManager in order to retrieve the user's car battery status and location by using the CarAPI.
 Then the SuggestionManager checks the battery status: if it's below a certain threshold it retrieves a list of charging stations information that are nearby the user's home or the car location by communicating with the OCPI component, and then sends an eMail with a list of charging stations based on their distance, cost and special offers.
 Note that this service is available only for the users that have a car registered in the system and that have a brand that supports this features with their API.
+\newpage
+
+\textbf{Register EV}
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[scale=0.20, center]{assets/sequenceDiagrams/User register ev.png}
+        \caption{Battery suggestion}
+        \label{Battery suggestion}
+    \end{figure}
+\end{center}
+\newpage
+The register EV interaction triggers when a user wants to register a new car in the system.
+After receiving the form information, the User Manager calls the Car Manager in order to connect to the Car API and the EV.
+If the response is positive, the EV will be available to receive future requests from the system such as battery status and location.
 \newpage
 
 \underline{\textbf{CPOW diagrams}}\\
