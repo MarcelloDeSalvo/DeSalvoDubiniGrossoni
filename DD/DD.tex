@@ -219,23 +219,23 @@ External elements in the diagram are represented in a simplified way.
 \\
 \textbf{eMSP subsystem}
 \begin{itemize}
-    \item \textbf{AccountManager}: Handles all the basic requests that a client can make. Among those the \textit{AuthenticationService} manages the authentication process (log in, log out, sign up). All the specific functionalities are then provided once the user logs in.
-    \item \textbf{eMSP\_UserManager}: It manages all the services available to the eSMP subsystem's users. Various services are then handled by other components, for example the \textit{BookingService} is handled by the \textit{BookingManager}, which communicates through the OCPI component with the CPMSs. Most services also communicate with the Database through an interface.
-    \item \textbf{BookingManager}: It handles all the booking requests made by the clients and is responsible for sending the requests to the CPMS through the OCPI component.
-    \item \textbf{ChargingProcessManager}: This component manages the charging process service of the user's car, in particular it provides updated informations about the charging status while interacting with the OCPI component to retrive informations and also managing the start and stop charging functions.
-    \item \textbf{ChargingStationManager}: This component  handles the Charging Stations general informations and status to be displayed through the \textit{InteractiveMapService}. To do so it interacts with the OCPI component to retrive all the info from the CPMSs.
-    \item \textbf{PaymentManager}: It manages the paymentService. It interacts with the external component \textit{Payment}.
-    \item \textbf{SuggestionManager}: It handles the service that generates suggestions for the users on when to charge the car. In order to do that it communicates with the \textit{EVmanager} and with the \textit{CalendarManager} to get all the informations needed to formulate suggestions, in particular the user's schedule and the car battery status.
-    \item \textbf{CalendarManager}: This component manages the information relative to the user's schedule for the \textit{SuggestionService}. To do so it interfaces with the external component \textit{Calendar}.
-    \item \textbf{EVManager}: This component handles the information relative to the user EVs' battery status and location for the \textit{SuggestionService}. To do so it interfaces with the external component \textit{CarAPI}. It also manages the registration of new EVs through the \textit{EV Service}.
-    \item \textbf{OCPI}: This  handles the interaction with all the CPMSs, it sends and retrives data from them. All the components that require an interaction with the CPMSs are connected to it.
+    \item \textbf{Account Manager}: Handles all the basic requests that a client can make. Among those the \textit{Authentication Service} manages the authentication process (log in, log out, sign up). All the specific functionalities are then provided once the user logs in.
+    \item \textbf{eMSP User Manager}: It manages all the services available to the eSMP subsystem's users. Various services are then handled by other components, for example the \textit{Booking Service} is handled by the \textit{Booking Manager}, which communicates through the OCPI component with the CPMSs. Most services also communicate with the Database through an interface.
+    \item \textbf{Booking Manager}: It handles all the booking requests made by the clients and is responsible for sending the requests to the CPMS through the OCPI component.
+    \item \textbf{Charging Process Manager}: This component manages the charging process service of the user's car, in particular it provides updated informations about the charging status while interacting with the OCPI component to retrive informations and also managing the start and stop charging functions.
+    \item \textbf{Charging Station Manager}: This component  handles the Charging Stations general informations and status to be displayed through the \textit{Interactive Map Service}. To do so it interacts with the OCPI component to retrive all the info from the CPMSs.
+    \item \textbf{Payment Manager}: It manages the paymentService. It interacts with the external component \textit{Payment}.
+    \item \textbf{Suggestion Manager}: It handles the service that generates suggestions for the users on when to charge the car. In order to do that it communicates with the \textit{EV Manager} and with the \textit{Calendar Manager} to get all the informations needed to formulate suggestions, in particular the user's schedule and the car battery status.
+    \item \textbf{Calendar Manager}: This component manages the information relative to the user's schedule for the \textit{Suggestion Service}. To do so it interfaces with the external component \textit{Calendar}.
+    \item \textbf{EVManager}: This component handles the information relative to the user EVs' battery status and location for the \textit{SuggestionService}. To do so it interfaces with the external component \textit{Car API}. It also manages the registration of new EVs through the \textit{EV Service}.
+    \item \textbf{OCPI}: This component handles the interaction with all the CPMSs, it sends and retrives data from them in the OCPI format. All the components that require an interaction with the CPMSs are connected to it.
 \end{itemize}
 \textbf{CPMS subsystem}
 \begin{itemize}
-    \item \textbf{AccountManager}: This component, similar to the one in the eMSPsubsystem, handles the authentication process. 
-    \item \textbf{DiscountManager}: It handles the addition and deletion of offers and manages the \textit{DiscountService}.
-    \item \textbf{ChargingStation Manager}: This component manages the information about the charging stations and the services related to them, in particular \textit{ChangeSourceService} and \textit{ChargingStationService}.
-    \item \textbf{OCPI}: It manages the connection with eMSPs, sending and receiving data from them. Both the \textit{DiscountManager} and the \textit{Charging Station Manager} are connected to this component in order to send information to the eMSPs.
+    \item \textbf{Account Manager}: This component, similar to the one in the eMSPsubsystem, handles the authentication process. 
+    \item \textbf{Discount Manager}: It handles the addition and deletion of offers and manages the \textit{Discount Service}.
+    \item \textbf{ChargingStation Manager}: This component manages the information about the charging stations and the services related to them, in particular \textit{Change Source Service} and \textit{Charging StationService}.
+    \item \textbf{OCPI}: This component manages the connection with eMSPs, sending and receiving data from them in the OCPI format. Both the \textit{Discount Manager} and the \textit{Charging Station Manager} are connected to this component in order to send information to the eMSPs.
     \item \textbf{OCPP}: This component handles the connection with the charging stations, sending data regarding offers, changes in the energy source and charging sessions. It receives data from the charging stations regarding their current status. All the components that need to communicate with the charging stations interact with this component.
     \item \textbf{DSO Manager}: This component manages the communication with external DSOs. All components and services that require communication with a DSO, for example the \textit{Change Source Service} managed by the \textit{Charging Station Manager}, interact with this component.
 \end{itemize}
@@ -324,17 +324,15 @@ Upon detecting the user's movement on the map, the server retrieves the new stat
     \end{figure}
 \end{center}
 This sequence displays how a user is able to insert a new booking from a form. The form is firstly sent to the Booking Manager, where a check for the validity of all the information is done. If it is all valid, the info is extrapolated and the 
-booking is communicated to the OCPI. The booking info is later saved on the database through the eMSP Data Manager. For the sake of readability, all errors are collapsed in the end and explained here.
-The first possible error is caused by checkInfo(), if the data inserted by the user is invalid. Lastly, an error could be raised by the OCPI if the booking doesn't go through for any reason. We assume the addition of the booking to the database doesn't cause errors.
+booking is communicated to the OCPI. The booking info is later saved on the database through the eMSP Data Manager. All errors are explained here by text for the sake of readability.
+The first possible error is caused by checkInfo(), if the data inserted by the user is invalid. Lastly, an error could be raised by the OCPI if the booking doesn't go through for any reason.
 \newline
 
 \textbf{Book from map}\newline
 We decided not to show book from map as it is basically the same as Make a Booking: it is still a form that has some fields precompiled when the button is pressed on the map.
-\newpage
-
-\newpage
 
 \textbf{Delete a Booking}
+\newpage
 \begin{center}
     \begin{figure}[H]
         \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/User delete bookings.png}
@@ -345,7 +343,7 @@ We decided not to show book from map as it is basically the same as Make a Booki
 In the first part of the sequence the user is viewing his bookings list and clicks on "Delete" on one of them. The id of said selected booking is then sent to process the deletion request.
 Firstly, a check by the Booking Manager is done to assure the bookingID sent is actually present on the database of that user's bookings. If present, the Booking Manager proceeds to firstly delete the booking from the 
 interested station(communicating with OCPI) then deleting it from the user's bookings on the database (communicating with eMSP Data Manager again).
- For the sake of readability, all errors are pushed to the end and will be furhter explained here by text. The first error that can happen is caused by the user not having any active bookings.
+ The explanation of all errors will be explained here by text. The first error that can happen is caused by the user not having any active bookings.
  The second possible error is caused by the first check in case the bookingID that has to be deleted doesn't exist in the database.
  Lastly, an error could be caused by the requested booking not existing on the OCPI. 
 
@@ -358,13 +356,12 @@ interested station(communicating with OCPI) then deleting it from the user's boo
         \label{Start Charging Process}
     \end{figure}
 \end{center}
-This sequence explains what happens after a User plugs his EV to a charging point and presses "Start charging" on the button of the respective socket. For the sake of readability, throughout the first part of the alt it is assumed all interactions end with success. Errors will be explained later.\newline
+This sequence explains what happens after a User plugs his EV to a charging point and presses "Start charging" on the button of the respective socket. For the sake of readability, errors will be explained later.\newline
 Firstly a socketID is sent to the Charging Stations Manager, to check whether the requested socket is available as it could be booked or unavailable. If the request is positive, the user is shown
 a form for the payment that will be compiled and sent back to the Payment Manager. The Payment Manager will proceed to send the information to the Payment API that will actuate the actual payment.
 When the payment goes through, the User Manager will communicate to the OCPI through the Charging Stations Manager that the charge can start. The OCPI will then send data regarding the status back to the User.
 The errors will be now explained more thorougly. \newline Firstly, an error could be raised by the OCPI in case the requested socket is not currently available.
 Secondly, an error could be caused by the Payment Manager in the case the payment Form contains invalid data. The third error could be raised by the Payment API in case the payment process doesn't end successfully.
-It is important to note that we assume that once the user has payed the OCPI cannot fail in starting the charge, as its availability was checked beforehand. If this wasn't the case, there could be instances where the User pays and the charge doesn't actually start.
 
 \newpage
 \textbf{Schedule suggestions}
@@ -1115,7 +1112,7 @@ Here are represented \emph{Account Manager} and \emph{User Manager}, considering
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.6]{assets/Integration Diagrams/eMSP-User Manager.png} 
+    \includegraphics[scale=0.5]{assets/Integration Diagrams/eMSP-User Manager.png} 
     \caption{Integration of eMSP-User manager}%
     \label{fig: eMSP-User manager}%
 \end{figure}
