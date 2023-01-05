@@ -105,11 +105,6 @@ The scope of this design document sets down the definition of the behavior of th
 As stated before, this document will also delve into the implementation, the testing plan and a possible mock-up for the user interface.
 
 \subsection{Definitions, acronyms, abbreviations}
-\subsubsection*{Definitions}
-\begin{itemize}
-    \item \textbf{def1}: text.
-    \item \textbf{def2}: text.
-\end{itemize}
 \subsubsection*{Acronyms}
 \begin{itemize}
     \item \textbf{RASD}: Requirement Analysis and Specification Document
@@ -208,7 +203,7 @@ In the scheme the application server is represented by an empty box, since a com
 \subsubsection*{Application Server Component View}
 \begin{center}
     \begin{figure}[H]
-        \includegraphics[scale=0.33, center]{assets/application-server-component-diagram.png}
+        \includegraphics[scale=0.38, center]{assets/application-server-component-diagram.png}
         \caption{Application Server Component Diagram}
         \label{fig: application_server_component_view}
     \end{figure}
@@ -263,7 +258,7 @@ The devices shown are:
     \item \textbf{Firewall}: Protects the network from unauthorized access. It is used to filter the incoming and outgoing traffic.
     \item \textbf{Load Balancer}: It is used to distribute the incoming traffic to the web servers and it guarantees the availability of the web application and the scalability of the system. Since the project will be hosted on Vercel it will use thier provided load balancer.
     \item \textbf{Web Server}: Hosts the web application and provides the rendered HTML and CSS web pages to the user's device. It is also responsible for the HTTPS protocol by routing the traffic to the application server, and the Google Maps API, which is used to display the interactive map.\\In order to provide the best performance, the web server will be hosted on Vercel, which is a cloud platform that provides serverless deployment and global distribution of the web application.
-    \item \textbf{Application Server}: It is responsible for the business logic of the web application by managing all the requests coming from the web server. It also interacts with the database server, to retrieve and store data, and all the external services such as the Google Calendar API, the Car API, the Payment API, the OCPI and the OCPP.\\ The applicaiton server will host both the eMSP and the CPMS subsystems.
+    \item \textbf{Application Server}: It is responsible for the business logic of the web application by managing all the requests coming from the web server. It also interacts with the database server, to retrieve and store data, and all the external services such as the Google Calendar API, the Car API, the Payment API, the OCPI and the OCPP.\\ The applicaiton server will host both the eMSP and the CPMS subsystems. We will use Digital Ocean as a cloud provider to host the application server, since it provides a simple and easy to use interface to manage the backend and the database server.
     \item \textbf{Database Server}: It runs the database that stores all the data of the web application. We will use a PostgreSQL database in order to easily manage the relations between the tables and the incoming queries.
 \end{itemize}
 \newpage
@@ -531,32 +526,47 @@ In order to simplify and standardize the booking process we opted to set the res
 \newpage
 
 \section{User Interface Design}
+\underline{\textbf{eMSP}}\\
 \begin{center}
     \begin{figure}[H]
-        \includegraphics[scale=0.74, center]{assets/placeholder.png}
-        \caption{Sign Up and Log In}
-        \label{fig: signMockup}
+        \includegraphics[scale=0.3, center]{assets/UI charts/eMSP welcome.png}
+        \caption{eMSP: Sign Up and Log In}
+        \label{fig: eMSPsignMockup}
     \end{figure}
+    \newpage
 \end{center}
 
 \begin{center}
     \begin{figure}[H]
         \vspace{-50px}
-        \includegraphics[scale=0.6, center]{assets/placeholder.png}
-        \caption{carOwner interactions}
-        \label{fig: agroMockup}
+        \includegraphics[scale=0.35, center]{assets/UI charts/eMSP interactions.png}
+        \caption{eMSP: interactions}
+        \label{fig: eMSPinteractions}
     \end{figure}
+    \newpage
 \end{center}
+
+\underline{\textbf{CMPS}}\\
+\begin{center}
+    \begin{figure}[H]
+        \includegraphics[scale=0.35, center]{assets/UI charts/CPMS welcome.png}
+        \caption{CPMS: Sign Up and Log In}
+        \label{fig: CPMSsignMockup}
+    \end{figure}
+    \newpage
+\end{center}
+
 
 \begin{center}
     \begin{figure}[H]
-        \includegraphics[scale=0.6, center]{assets/placeholder.png}
-        \caption{CPOW interactions}
-        \label{fig: farmerInter}
+        \vspace{-50px}
+        \includegraphics[scale=0.35, center]{assets/UI charts/CPMS interactions.png}
+        \caption{CPMS: interactions}
+        \label{fig: CPMSfunctions}
     \end{figure}
+    \newpage
 \end{center}
 
-\newpage
 
 \section{Requirements Traceability}
 
@@ -1009,7 +1019,7 @@ Next come the components that aren't directly part of either User Manager or the
 the user, and will thus heavily depend on the ones developed before:\emph{Authentication Service, EV Service, Suggestion Service, Booking Service, Charging Process Service, Interactive Map Service, Payment Service}.
 It is worth noting that components like \emph{Suggestions Manager} and \emph{Suggestions Service} are indipendent if taken as a pair, so the development of Suggestion Service could be anticipated to have a better view of the whole function while developing.
 \newpage
-\textbf{CPMS Subsystem}
+\textbf{CPMS Subsystem}\newline
 This is the order in which the CPMS components will be developed in:
 \begin{enumerate}
     \item CPMS Data Manager, OCPI, OCPP, DSO Manager
