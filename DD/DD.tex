@@ -237,7 +237,8 @@ External elements in the diagram are represented in a simplified way.
 \subsubsection*{Web Server Component View}
 Regarding the Web Server the main components are:
 \begin{itemize}
-    \item \textbf{first component}: description of component.
+    \item \textbf{LocationModule}: It provides the interface that allows the geolocalization of the user through the GPS. It's connected with the \textit{MapManager} in order to provide this service.
+    \item \textbf{MapManager}: This component communicates directly with the external \textit{GoogleMaps API}; it handles all the data received from the API and elaborates it for the other components.
 \end{itemize}
 
 \newpage
