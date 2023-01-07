@@ -181,11 +181,11 @@ The architecture is organized in three logical layers:
     \end{figure}
 \end{center}
 
-The system's architecture, as shown in Figure \ref{fig: high_level_architecture}, is composed by a DMZ, that includes the Web and the Mail Server in order to prevent a direct access to the internal system and improve the overall security, and firewalls that divide each newtwork segment.
+The system's architecture, as shown in Figure \ref{fig: high_level_architecture}, is composed by a DMZ, that includes the Web Server in order to prevent a direct access to the internal system and improve the overall security, and firewalls that divide each newtwork segment.
 To reduce computation client side a thin client is used, which allows all the heavy operations to be performed at server side. The Web Server handles the HTTP requests by the users and directs them to the Application Server, while also managing the GoogleMaps API. 
 The Application Server communicates with the Database Server and elaborates data following its business logic. The Application server also handles external APIs and services, such as GoogleCalendarAPI, CarAPI, and the exetrnal CPMSs and eMSPs systems.
-The Apllication Server's CPMS subsystem will also communicate with its Charging Stations and their relative sockets through the OCPP API, and with the external DSOs through their proprietary API.
-The Email Server will manage all the e-mail notification by communicating with the Application Server, The database server is responsible for storing and managing the data that is used by the application. It receives requests for data from the application logic tier, retrieves the requested data from the database, and returns the data to the application logic tier.
+The Application Server's CPMS subsystem will also communicate with its Charging Stations and their relative sockets through the OCPP API, and with the external DSOs through their proprietary API.
+The database server is responsible for storing and managing the data that is used by the application. It receives requests for data from the application logic tier, retrieves the requested data from the database, and returns the data to the application logic tier.
 
 \subsection{Component view}
 \subsubsection*{General Component View}
@@ -211,6 +211,7 @@ In the scheme the application server is represented by an empty box, since a com
 
 The following component diagram gives a detailed view of the Application Server. It shows the internal structure and the interaction between the components.
 External elements in the diagram are represented in a simplified way.
+\\
 \\
 \textbf{eMSP subsystem}
 \begin{itemize}
@@ -257,7 +258,7 @@ The devices shown are:
 \begin{itemize}
     \item \textbf{PC/Smartphone}: The user's device, where the web application is displayed. They can be used to access the web application and to interact with it through the web browser and the HTTPS protocol.
     \item \textbf{Firewall}: Protects the network from unauthorized access. It is used to filter the incoming and outgoing traffic.
-    \item \textbf{Load Balancer}: It is used to distribute the incoming traffic to the web servers and it guarantees the availability of the web application and the scalability of the system. Since the project will be hosted on Vercel it will use thier provided load balancer.
+    \item \textbf{Load Balancer}: It is used to distribute the incoming traffic to the web servers and it guarantees the availability of the web application and the scalability of the system. Since the project will be hosted on Vercel it will use their provided load balancer.
     \item \textbf{Web Server}: Hosts the web application and provides the rendered HTML and CSS web pages to the user's device. It is also responsible for the HTTPS protocol by routing the traffic to the application server, and the Google Maps API, which is used to display the interactive map.\\In order to provide the best performance, the web server will be hosted on Vercel, which is a cloud platform that provides serverless deployment and global distribution of the web application.
     \item \textbf{Application Server}: It is responsible for the business logic of the web application by managing all the requests coming from the web server. It also interacts with the database server, to retrieve and store data, and all the external services such as the Google Calendar API, the Car API, the Payment API, the OCPI and the OCPP.\\ The applicaiton server will host both the eMSP and the CPMS subsystems. We will use Digital Ocean as a cloud provider to host the application server, since it provides a simple and easy to use interface to manage the backend and the database server.
     \item \textbf{Database Server}: It runs the database that stores all the data of the web application. We will use a PostgreSQL database in order to easily manage the relations between the tables and the incoming queries.
@@ -314,7 +315,7 @@ Upon detecting the user's movement on the map, the server retrieves the new stat
 \textbf{Make a Booking}
  \begin{center}
     \begin{figure}[H]
-        \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/User Make Booking.png}
+        \includegraphics[scale=0.30, center]{assets/sequenceDiagrams/User Make Booking.png}
         \caption{Make a Booking}
         \label{Make Booking}
     \end{figure}
@@ -326,12 +327,11 @@ The first possible error is caused by checkInfo(), if the data inserted by the u
 
 \textbf{Book from map}\newline
 We decided not to show book from map as it is basically the same as Make a Booking: it is still a form that has some fields precompiled when the button is pressed on the map.
-
-\textbf{Delete a Booking}
 \newpage
+\textbf{Delete a Booking}
 \begin{center}
     \begin{figure}[H]
-        \includegraphics[scale=0.15, center]{assets/sequenceDiagrams/User delete bookings.png}
+        \includegraphics[scale=0.14, center]{assets/sequenceDiagrams/User delete bookings.png}
         \caption{Delete a Booking}
         \label{Delete Booking}
     \end{figure}
@@ -347,7 +347,7 @@ interested station(communicating with OCPI) then deleting it from the user's boo
 \textbf{Charging process}
 \begin{center}
     \begin{figure}[H]
-        \includegraphics[scale=0.10, center]{assets/sequenceDiagrams/User Start Charging Process.png}
+        \includegraphics[scale=0.28, center]{assets/sequenceDiagrams/User Start Charging Process.png}
         \caption{Start Charging Process}
         \label{Start Charging Process}
     \end{figure}
@@ -513,7 +513,7 @@ Please note that the described methods do not represent exactly the final versio
 \subsubsection{Charging Stations Offers} 
 All the offers have a standardized structure: a starting date, an ending date and a value, which represents the percentage of discount on the current price. This structure will be used on all the offers shown in the eMSP-side of the application. Additional options, for example the application of different offers to different sockets of a charging station, will not be available, but different offers can be applied to different charging stations simultaneously. 
 \subsubsection{Automatically change DSO or Station Battery}
-The CPMS subsystem will be able to dynamically change The source of energy for the charging stations. This operation can be overwritten by a human operator, and will take in consideration different aspects in order to decide which energy source and provider is currently the best. Among these aspects there are the current price of energy for each DSO, the median price of the energy used by the station in the previous period, the current charge of the battery station (if there's any) and the availability of the DSO. If a certain threshold is met the CPMS will start the change process with the best option.
+The CPMS subsystem will be able to dynamically change the source of energy for the charging stations. This operation can be overwritten by a human operator, and will take in consideration different aspects in order to decide which energy source and provider is currently the best. Among these aspects there are the current price of energy for each DSO, the median price of the energy used by the station in the previous period, the current charge of the battery station (if there's any) and the availability of the DSO. If a certain threshold is met the CPMS will start the change process with the best option.
 \subsubsection{Car position for suggestions} 
 Most brands of EVs already offer the possibility of seeing the battery status of the car and the position of the car. Our application will use that information to make suggestions on near charging locations when the battery is low based on the Car location, which will be given through the car's specific API.
 \subsubsection{Schedule based Suggestions} 
@@ -1002,7 +1002,7 @@ In order to simplify and standardize the booking process we opted to set the res
 \subsection{Implementation Plan}
 To speed up the development, parallelization of multiple components must be a priority. The ideal way to do this is following a bottom-up approach that gives priority to the basic components to which there are more dependencies and testing them.
 By implementing unit testing while developing, the application will be built upon solid foundations and later revision of past work will be avoided. Unit testing further helps identifying bugs and errors early in the development process, avoiding situations in which errors would
-cause the whole implementation to change (possible problem if top-down is followed). Since the eMSP and CPMS subsystems are independent from each order, the order of implementation of the two is indiffirent. They could be parallelized as well, but we chose to fully develop the eMSP first and the CPMS second.
+cause the whole implementation to change (possible problem if top-down is followed). Since the eMSP and CPMS subsystems are independent from each other, the order of implementation of the two is indiffirent. They could be parallelized as well, but we chose to fully develop the eMSP first and the CPMS second.
 
 \textbf{eMSP Subsystem}\newline
 This is the order in which the eMSP components will be developed in:
@@ -1014,7 +1014,7 @@ This is the order in which the eMSP components will be developed in:
 \end{enumerate}
 Each group is composed of independent modules so they can be easily developed in parallel.
 Furthermore, it is expected that external services (e.g. Google Calendar API, Payment API and DBMS Service) work properly since they're not a responsibility of eMall.
-The \emph{eMSP Data Manager} must be developed as the very first, as many components must rely on him. Right after him should be developed the the other components that act
+The \emph{eMSP Data Manager} must be developed as the very first, as many components must rely on it. Right after it should be developed the other components that act
 as interfaces with the APIs:\emph{Calendar Manager, EV Manager, OCPI, Payment Manager}. Just as the database, since many components will rely on them, it is important to have them running and tested as soon as possible.
 Next come the components that aren't directly part of either User Manager or the authentication process: \emph{Charging Stations Manager, Charging Process Manager, Booking Manager, Suggestions Manager}. Lastly, all the components that will communicate directly to the 
 the user, and will thus heavily depend on the ones developed before:\emph{Authentication Service, EV Service, Suggestion Service, Booking Service, Charging Process Service, Interactive Map Service, Payment Service}.
@@ -1034,7 +1034,7 @@ Lastly are all the components that interact directly with the CPOW and that are 
 
 
 \subsection{Integration Strategy}
-Given our system's structure and the Implementation plan, the most logical integration approach is bottom-up. Bottom-up overall allows for more comprehensive testing at each level and detects any issues before
+Given our system's structure and the Implementation plan, the most logical integration approach is bottom-up. Bottom-up overall allows for more comprehensive testing at each level and helps detect any issues before
 they become too widespread. Furthermore bottom-up encourages modularity and reusability, two properties that we'll need since we have to implement both the CPMS and eMSP, two similar subsystems. Thanks to bottom-up 
 it is also easier to expand the subsystem with any possible future feature.
 
