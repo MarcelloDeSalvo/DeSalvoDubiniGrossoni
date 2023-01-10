@@ -13,17 +13,17 @@ Make sure to have django (>=4.1.5) and Python (>= 3.9.12) installed:
 # 0] Upgrade pip if necessary
 python -m pip install --upgrade pip
 
-# 1] Install the requirements
-pip install -r requirements.txt
-
-# 2] clone the repo and switch to the Back-end branch
+# 1] clone the repo and switch to the Back-end branch
 git clone https://github.com/MarcelloDeSalvo/DeSalvoDubiniGrossoni
 
-# 3] create a virtual environment 
+# 2] create a virtual environment 
 python -m venv django
 
-# 4] activate the environment
+# 3] activate the environment
 django\Scripts\activate.bat
+
+# 4] Install the requirements
+pip install -r requirements.txt
 
 # 5] install Django
 python -m pip install Django 
@@ -53,3 +53,23 @@ Start the development server on http://127.0.0.1:8000
 ```bash
 python manage.py runserver
 ```
+
+
+## Database setup
+Install postgresSQL
+make a DB with
+
+name =
+passsword = 
+user = 
+host = 
+port = 
+
+
+```bash
+manage.py makemigrations
+manage.py migrate
+manage.py createsuperuser -> follow instructions
+```
+
+now you can connect with superuser credentials on http://localhost:8000/admin/
