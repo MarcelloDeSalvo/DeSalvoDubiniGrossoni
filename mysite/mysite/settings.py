@@ -88,11 +88,11 @@ if DEVELOPMENT_MODE is True:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'PASSWORD': 'db',
+            'NAME': os.getenv("DATABASE_NAME", "postgres"),
+            'USER': os.getenv("DATABASE_USER", "postgres"),
+            'PASSWORD': os.getenv("DATABASE_PASSWORD", None),
             'HOST': 'localhost',
-            'PORT': '5432',
+            'PORT': os.getenv("DATABASE_PORT", 5432),
         }
     }
 elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':

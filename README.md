@@ -7,42 +7,45 @@ mettere link host
 
 ## Local Setup
 
-Make sure to have django (>=4.1.5) and Python (>= 3.9.12) installed:
+Make sure to have the dependencies and Python (>= 3.9.12) installed:
 
 ```bash
 # 0] Upgrade pip if necessary
 python -m pip install --upgrade pip
 
-# 1] clone the repo and switch to the Back-end branch
-git clone https://github.com/MarcelloDeSalvo/DeSalvoDubiniGrossoni
-
-# 2] create a virtual environment 
+# 1] create a virtual environment with your favourite env. manager (in this ex. venv)
 python -m venv django
 
-# 3] activate the environment
+# 2] activate the environment
 django\Scripts\activate.bat
+
+# 3] clone the repo and switch to the Back-end branch
+git clone https://github.com/MarcelloDeSalvo/DeSalvoDubiniGrossoni
 
 # 4] Install the requirements
 pip install -r requirements.txt
 
-# 5] install Django
-python -m pip install Django 
-
-# 6] run the server
+# 5] run the server
 python manage.py runserver
 
-# 7] test it
+# 6] test it
 http://127.0.0.1:8000
 
 ```
 ## Environment Variables
 Inside /mysite/mysite you need to create a .env file containing the following informations
 
-SECRET_KEY=your_backend_secret_key
 ```bash
-DATABASE_NAME=db.sqlite3
-DATABASE_URL=sqlite
-DEVELOPMENT_MODE=True
+SECRET_KEY=your_backend_secret_key
+DATABASE_NAME=your_db_name
+DATABASE_PORT=your_db_port
+DATABASE_USER=your_db_user
+DATABASE_PASSWORD=your_db_password
+
+DATABASE_URL=your_db_url
+DEVELOPMENT_MODE=True if working locally, False otherwise
+DEBUG=True/False
+ALLOWED_HOSTS=[your_allowed_hosts]
 ```
 
 
@@ -59,11 +62,11 @@ python manage.py runserver
 Install postgresSQL
 make a DB with
 
-name =
-passsword = 
-user = 
-host = 
-port = 
+name = your_db_name
+password = your_db_password
+user = your_db_user_name
+host = your_db_local_url
+port = your_db_port
 
 
 ```bash
