@@ -35,6 +35,16 @@ python manage.py runserver
 http://127.0.0.1:8000
 
 ```
+## Environment Variables
+Inside /mysite/mysite you need to create a .env file containing the following informations
+
+SECRET_KEY=your_backend_secret_key
+```bash
+DATABASE_NAME=db.sqlite3
+DATABASE_URL=sqlite
+DEVELOPMENT_MODE=True
+```
+
 
 ## Development Server
 
