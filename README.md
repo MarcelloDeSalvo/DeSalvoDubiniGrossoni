@@ -24,8 +24,9 @@ yarn
 # 5] Start the development server
 yarn run dev
 ```
+
 ## Error fix
-- about_Execution_Policies ERROR FIX: https://bobbyhadz.com/blog/yarn-cannot-be-loaded-running-scripts-disabled]
+- about_Execution_Policies: https://bobbyhadz.com/blog/yarn-cannot-be-loaded-running-scripts-disabled]
 
 ## Development Server
 
