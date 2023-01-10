@@ -1,0 +1,1794 @@
+\documentclass[table, 12pt]{article} % \documentclass{} is the first command in any LaTeX code.  It is used to define what kind of document you are creating such as an article or a book, and begins the document preamble
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{float}
+\usepackage[export]{adjustbox}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage{alloy-style}
+\usepackage{rotating}
+
+
+
+% The preamble ends with the command \begin{document}
+\begin{document} % All begin commands must be paired with an end command somewhere
+    
+    \begin{titlepage}
+        \centering
+        {\scshape\large AY 2022/2023 \par}
+        \vfill
+        \includegraphics[width=200pt]{assets/logo_polimi}\par\vspace{1cm}
+        \vspace{0.5cm}
+        {\huge\bfseries RASD\@: Requirement Analysis
+            and Specification Document \par}
+        \vspace{1cm}
+        {\large {Marcello De Salvo\quad Riccardo Grossoni \par Francesco Dubini}\par}
+        \vfill
+        {\large Professor\par
+            Elisabetta \textsc{Di Nitto}}
+        \vfill
+        {\large \textbf{Version 1.0}\\ \today \par}
+    \end{titlepage}
+    
+    \thispagestyle{plain}
+    \pagenumbering{gobble}
+
+    % Blank page
+    \mbox{}
+
+    % Table of content page
+    \newpage
+    \pagenumbering{roman}
+    \tableofcontents
+
+    % Start of the document
+    \newpage
+    \pagenumbering{arabic}
+
+    \section{Introduction}
+        \emph{Electric mobility} (e-Mobility) is a way to reduce the carbon footprint caused by motorized vehicles in urban and sub-urban areas.\\
+        % One way to do so while using an electric vehicle is to fit and optimize the charging process into our daily schedule
+        Comfortably knowing how to fit the charging process into one's daily schedule is a fundamental step towards that goal.
+        
+    \subsection{Purpose} %goals of the project
+
+        %One of the biggest drawbacks of electric vehicles is the toll the charging process takes in terms of time. So on and so forth
+         
+        In the last 3 years the number of electric vehicles has doubled and, with the proposed european legislation on banning diesel fuel by 2035, the future seems to be full-electric. This rapid change requires a better and more efficient infrastructure to serve this ever increasing demand \cite{EV stock}. 
+        %In these years the number of electric vehicles has been on the rise and, as it is expcted to be quadrupled by 2050, a better working infrastructure for them is needed.
+        
+        %Electric vehicles will quadruple in the next 5 years. As of now, having to charge your car in the middle of the day can prove to be a very daunting task
+
+        \emph{eMall} (e-Mobility for all) aims to ease the charging process for the users through the \emph{e-Mobility Service Provider's} (eMSP) platform,
+        providing all the needed end-users' services and by actively communicating with multiple \emph{Charging Point Operators'} (CPOs) \emph{Management Systems} (CPMS).
+        The eMall platform will also provide a dashboard for the \emph{Charging Point Operators' workers}(CPOW) to change some settings that can also be done automatically by the CPMS.
+
+    \subsubsection{Goals}
+        \newcounter{goalCtr}
+        \underline{User goals}
+        \begin{itemize}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Know about the charging stations nearby, including their cost and any special offer they have.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Book a charge in a specific charging station for a certain timeframe.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Start the charging process at a certain station.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Pay for the obtained service.}
+        \end{itemize}
+        
+        \newpage
+        \underline{eMSP goals}
+        \begin{itemize}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Be able to communicate with multiple CPMS.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Suggest the user convenient charging timeframes based on his upcoming schedule.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Notify the user when the charging process is finished.}
+        \end{itemize}
+        
+        \underline{CPMS goals}
+        \begin{itemize}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Be able to communicate with multiple eMSPs.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Be able to communicate with at least one DSO.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Communicate the location and “external” status of a charging station.}\\ 
+            e.g. the number of charging sockets
+            available, their type, their cost, if all sockets of a certain type are
+            occupied or the estimated amount of time until the first socket of that type is freed.
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Know the “internal” status of a charging station .}\\
+            e.g. the amount of energy available in its batteries, if 
+            any, number of vehicles being charged and, for each charging vehicle, amount of power 
+            absorbed and time left to the end of the charge.
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Start charging a vehicle according to the amount of power supplied by the socket, and monitor the charging process to infer when the battery is full.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Acquire from the DSOs information about the current price of energy.}
+            %\item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Decide from which DSO to acquire energy (if more than one is available).}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Dynamically decide where to get energy for charging (station battery, DSO, or a mix according to availability and cost).}
+        \end{itemize}
+
+        \newpage
+        \underline{CPOW goals}
+        \begin{itemize}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Change the source of energy between batteries and grid.}
+            \item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Insert special and limited offers.}
+            %\item  \textbf{(\stepcounter{goalCtr}G\arabic{goalCtr}) Change the price of a charging station.}
+        \end{itemize}
+
+    \newpage
+    \subsection{Scope} %analysis of the world and shared phenomena
+    %ADD: basic service and advanced functionalities
+    \subsubsection*{Shared Phenomena}
+        \newcounter{sharedP}
+        \rowcolors{2}{red!25}{}
+        \begin{center}
+        \begin{tabular}{|c|p{0.70\textwidth}|c|}
+            \hline
+            \textbf{ID} & \textbf{Phenomenom} &  \textbf{Controller}\\\hline\hline
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & User registers through the application & World \\\hline
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & User logs into the application & World \\\hline %might remove this
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & User gets notified by the system about the status of the charge & Machine \\\hline
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & User is suggested by the system to go and charge the vehicle, depending on the status of the battery, his daily schedule and the charging type & Machine \\\hline
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & User is shown special offers made available by some CPOs & Machine\\\hline
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & The system shows the availability of nearby charging stations &  Machine \\\hline%User checks the availability of charging slots at nearby stations%
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & User pays the cost of the charge through the application & World \\\hline
+            \stepcounter{sharedP}
+            S\arabic{sharedP} & CPOW inserts a new discount into the system & World \\\hline
+            
+            \hline
+        \end{tabular}
+        \end{center}
+    
+    \subsubsection*{World Phenomena}
+    \newcounter{worldP}
+    \begin{center}
+        \rowcolors{2}{red!25}{}
+        \begin{tabular}{|c|p{0.70\textwidth}|c|}
+            \hline
+            \textbf{ID} & \textbf{Phenomenom}\\\hline\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Power outage in a station nearby area\\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & Physical problem in the charging station\\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & User EV's battery runs low\\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & User schedules an appointment\\\hline
+            \stepcounter{worldP}
+            W\arabic{worldP} & User drives somewhere in his EV\\\hline
+            \hline
+        \end{tabular}
+    \end{center}
+    
+    \newpage
+    \subsection{Definitions, acronyms, abbreviations}
+    \subsubsection*{Definitions}
+        \begin{itemize}
+            \item \textbf{User}: anyone using the eMSP part of the system.
+            \item \textbf{e-Mobility Service Providers}: company offering an electric vehicle charging service to drivers by providing access to multiple charging points around a geographic area.
+            \item \textbf{Charging Point Operator}: charging point stations owner.
+            \item \textbf{Charge Point Management System}: charging Point Operator's IT infrastructure. Handles the acquisition of energy from external Distribution System Operators and distributes it to the connected vehicles. It can also makes automatic decisions, such as the amount of energy to be used for each connected vehicle.
+            \item \textbf{Distribution System Operator}: entity responsible for distributing and managing energy from the generation sources to the final consumers.
+            \item \textbf{Open Charge Point Interface}: open protocol used for connections between charge station operators and service providers.
+            \item \textbf{Open Charge Point Protocol}: open protocol used for connections between charge stations and their charge point management system.
+            \item \textbf{DIN SPEC 70121}: Standard for digital communication between a charging station and an electric vehicle.
+            \item \textbf{ISO 15118}: Alternative standard for digital communication between a charging station and an electric vehicle.
+        \end{itemize}
+
+    \subsubsection*{Acronyms}
+        \begin{itemize}
+            \item \textbf{EV}: Electric vehicle
+            \item \textbf{eMSP}: e-Mobility Service Providers
+            \item \textbf{CPO}: Charging Point Operator
+            \item \textbf{CPMS}: Charge Point Management System
+            \item \textbf{OCPI}: Open Charge Point Interface
+            \item \textbf{OCPP}: Open Charge Point Protocol
+            \item \textbf{DSO}: (3rd party) Distribution System Operator
+            \item \textbf{API}: Application Programming Interface
+            \item \textbf{UML}: Unified Modeling Language
+            \item \textbf{CPOW}: Charging Point Operator Worker
+            \item \textbf{BESS}: Battery Energy Storage System
+            \item \textbf{RTC}: Real Time Communication
+        \end{itemize}
+
+    \newpage
+    \subsection{Revision history}
+        \begin{itemize}
+            \item Version 0.1: Setup
+            \begin{itemize}
+                \item[--] Created first layout
+            \end{itemize}
+        \end{itemize}
+
+        \begin{itemize}
+            \item Version 1.0: First version published
+            \begin{itemize}
+                \item[--] First complete version of the document
+            \end{itemize}
+        \end{itemize}
+
+    \subsection{Reference documents}
+        \begin{itemize}
+            \item Specification document: "Assignment RDD AY 2022-2023"
+            \item Alloy documentation: https://alloytools.org/documentation.html
+            \item Data on number of electric vehicles: https://www.iea.org/data-and-statistics/charts/global-electric-car-stock-2010-2021
+        \end{itemize}
+    
+    \subsection{Document structure}
+        \begin{itemize}
+            \item \textbf{Section 1}: introduces the problem, describes every goal of the project and gives an analysis of the world and shared phenomena.
+            \item \textbf{Section 2}: gives an overall description of the project and all the interactions that will occur between the system and the final users, including a list of possible scenarios and a description of all the actors involved. It provides also an UML class diagram that will be used as a reference point for the developers.
+            \item \textbf{Section 3}: includes all the project's requirements and an in-depth description everything presented in Section 2.
+            \item \textbf{Section 4}: shows the Alloy model defined for this project.
+        \end{itemize}
+
+    \newpage
+
+
+
+    
+
+    \section{Overall Description}
+
+    \subsection{Product perspective}
+    In this section we mainly describe some typical scenarios, all the \textit{Product Functions (\ref{product_functions})} offered by the eMall system and the\textit{UML(\ref{class_diagram})} class-diagram.
+
+        \subsubsection{Scenarios}
+        \label{scenarios}
+            \begin{enumerate}
+            
+            \item Mister Fontana has just bought an EV and wants to create an account for the application.  
+            \begin{itemize}
+                \item He opens the web app and clicks the "Sign Up" button
+                \item He inserts all the required information in the mandatory fields and presses the "Confirm" button
+                \item The system verifies that the mail has not been used before. After passing the verification a confirmation e-mail is sent to mister Fontana's mailbox
+                \item He checks his mailbox to see if he received the confimation e-mail
+            \end{itemize}
+                
+            \item Mister Brambilla is about to go to bed. He opens his schedule and he notices that the following day he has a 3 hour break. He opens his email and opens a list of possible charging stations in which he can charge his EV during his break and books one.
+            \begin{itemize}
+                \item He receives an e-mail suggesting where and when to charge his EV 
+                \item He opens the mail and selects the station of his liking
+                \item Brambilla clicks the link and logs in eMall
+                \item Inside eMall, Brambilla books the station for the following day
+            \end{itemize}
+
+            \item Mister Fontana is on vacation and since he's new to the area he wants to know which charging stations are nearby
+            \begin{itemize}
+                \item He opens the web application and logs-In
+                \item He navigates to the interactive map section
+                \item He clicks the "current position" button
+                \item He gets notified by the web application that his GPS position is not turned on
+                \item He turns on the GPS and then searches all the nearby stations by simply clicking the "current position" button and viewing the map 
+                
+            \end{itemize}
+            
+            \item Miss Sala will go to the hairdresser next sunday. She knows that in the parking lot near the hairdresser there's a charging station and she wants to make sure that a spot will be available that day, so she decides to book a spot for that charging station
+            \begin{itemize}
+                \item She opens the web application and logs-In
+                \item She selects the "Make a booking" option
+                \item She compiles the requested fields with date, time of arrival and location and selects confirm
+                \item The system checks if a charging spot for that date and time is still available, in that case a confirmation message is shown and the booking is saved. If no spot is still available an "unsuccesful booking" message is shown and the booking is aborted
+                \item After successfully booking a spot the system sends a mail with a recap of the booking 
+                \item Miss Sala after reaching the charging station on the booked timeframe unlocks the booked charging spot via the web app and can start the starting process
+            \end{itemize}
+            
+            \item Mister Ferrari has booked a charging spot for saturday. He realizes that he has lost the keys to his car, and will not make it in time. While he searches for his keys he forgets to delete the reservation.
+            \begin{itemize}
+                \item The system locks the charging spot while waiting for mister Ferrari
+                \item 5 minutes after the booked time, if the reservated user doesn't show up, the charging spot is unlocked and the reservation is cancelled
+                \item Other users can now start using the previously reserved charging spot
+            \end{itemize}
+
+            \item Mister Rana wants to start the charging process and pay, since he's arrived at the booked station near his office
+            \begin{itemize}
+                \item He opens the web application and logs-In
+                \item He navigates to the "booking list" section
+                \item He plugs-in the charging cable to the car 
+                \item He selects the right station and clicks the "start charging" button
+                \item He's then asked to pay inside the web app and he pays with his credit card
+                \item He finally sees that the car has started to charge
+                \item When the charging ends he gets notified by the application
+            \end{itemize}
+
+            \item Mister Rossi wants to plan his trip to Rome with his electric car. He would also like to save money by selecting the cheapest charging stations along the itinerary.
+            \begin{itemize}
+                \item He opens the web-application and he logs-In
+                \item He plans his trip inside the navigation system or the in-app map
+                \item He then sorts the charging stations by the charging price and the special offers
+                \item He books the cheaper ones that covers the right amount of distance from each other
+            \end{itemize}
+            
+            \item Mister Lamborghini wants to delete his booked charge since his schedule changed and he can no longer make it there in time.
+            \begin{itemize}
+                \item He opens the web-application and he logs-In
+                \item On the webapp he opens his "bookings list"
+                \item He then selects the one he wants to delete and clicks on "cancel booking"
+                \item An email of the succesful cancellation is sent and the system deletes the previous reservation
+            \end{itemize}
+            
+
+            
+            \end{enumerate}
+
+
+        \subsubsection{Class diagram}
+        \label{class_diagram}
+            In the UML diagram are described all the main entities in the system.
+            We can see that the system is composed by 2 main actors: the \textit{User} and the \textit{CPO}.\\
+            The user owns an \textit{E-car} and can book a charging spot, while the charging station is the entity that provides the charging service.\\
+            Data regarding the charging stations and the sockets are provided by the CPMS \textit{OCPI API} which is used by the \textit{Booking}, \textit{Charging Process} and \textit{Charging station} entities to retrieve or send all the needed information, and that is implemented inside the CPMS subsystem.\\
+            There's also an entity for the \textit{Socket} in order to store the information about the socket's status and his price, and another one for the \textit{Offer} that can be applied to all the charging stations owned by the same CPO.\\
+            Information about the Users' daily schedule are represented inside the \textit{Calendar Schedule} and the the \textit{Event} entity, that use the \textit{Calendar API} to retrieve the user's appointments.\\
+            There's also an interface for the \textit{Payment} that can be implemented by different payment methods.
+            
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/UML_EMSP.png}
+                    \caption{High-level UML - EMSP Subsystem}
+                    \label{fig: UML EMSP}
+                \end{figure}
+            \end{center}
+            \newpage
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/UML_CPMS.png}
+                    \caption{High-level UML - CPMS Subsystem}
+                    \label{fig: UML CPMS}
+                \end{figure}
+            \end{center}
+
+    \newpage
+    \subsection{Product functions}
+    \label{product_functions}
+   
+        \subsubsection{Shared}
+        \begin{itemize}
+            \item \textbf{Sign-up:} let the user sign-up thorugh an email and a password.
+        
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[width=\textwidth]{assets/bpmn/sign-up.png}
+                    \caption{Sign Up BPMN}
+                    \label{fig: singup}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+        
+    \newpage
+
+        \subsubsection{EMSP functions}
+        \begin{itemize}                                 
+            \item \textbf{Check nearby stations:} let the user check the nearby charging stations through an inter map and the GPS position.
+        
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[scale=0.60, center]{assets/bpmn/Check area.png}
+                    \caption{check nearby stations}
+                    \label{fig: check nearby stations}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+        
+        \newpage
+        \begin{itemize}                                 
+            \item \textbf{User's schedule suggestions:} notify the user about the best charging stations to visit based on the user's schedule and their current price.\\
+            The check would be done at least once a day based on the events planned for the next day.
+            
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[scale=0.60, center]{assets/bpmn/suggestion_calendar.png}
+                    \caption{User's schedule suggestions}
+                    \label{fig: User's schedule suggestions}
+                \end{figure}
+            \end{center}
+        \newpage
+            \item \textbf{Battery and navigation system suggestions:} notify the user about the best charging stations to use based on the EV's battery level and the current route.\\            
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[scale=0.60, center]{assets/bpmn/suggestion_battery_nav.png}
+                    \caption{Battery and navigation suggestions}
+                    \label{fig: Battery and navigation suggestions}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+
+        \newpage
+        \begin{itemize}                                 
+            \item \textbf{Booking a charging spot:} let the user book a charging spot for a specific timeframe. The user can also see the available charging spots and the price for each one.
+            
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[width=\textwidth]{assets/bpmn/Booking.png}
+                    \caption{Booking a charging spot}
+                    \label{fig: Booking a charging spot}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+
+        \newpage
+        \begin{itemize}                                 
+            \item \textbf{Charging Process:} let the user start the charging process and pay for the service.
+        
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[width=\textwidth]{assets/bpmn/Charging Process.png}
+                    \caption{Charging Process}
+                    \label{fig: Charging Process}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+    
+    \newpage
+        \subsubsection{CPMS functions}
+        \begin{itemize}                                 
+            \item \textbf{Retrieve Station's status:} the CPMS queries the charging stations through the OCPP protocol and sends back the desired information to the emsp through the OCPI.
+        \end{itemize}
+
+        \begin{itemize}                                 
+            \item \textbf{Retrieve DSO's status:} the CPMS queries the available DSOs through their communication interface about their current price.
+        \end{itemize}
+
+        \begin{itemize}                                 
+            \item \textbf{Charging Process:} the CPMS manages the charging process by communicating with the socket and the EMSP.
+        
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[width=\textwidth]{assets/bpmn/CPMS_Charging_Process.png}
+                    \caption{Charging Process}
+                    \label{fig: CPMS Charging Process}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+    \newpage
+        \begin{itemize}                                 
+            \item \textbf{Dynamic selection of the source of energy:} the CPMS selects the best energy provider based on the price, the availability and the status of the internal battery.
+            It sorts the energy providers by price, then if the internal battery is full, it selects the cheapest energy provider. If the internal battery is not full, it selects a mix of the cheapest energy provider and the internal battery based on the battery level. 
+        
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[width=\textwidth]{assets/bpmn/CPMS_Dynamic_selection.png}
+                    \caption{CPMS Dynamic selection}
+                    \label{fig: CPMS Dynamic selection}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+
+    \newpage
+        \subsubsection{CPOW functions}
+        \begin{itemize}                                 
+            \item \textbf{Manual source of energy selection:} the logged CPOW visits the CPMS webapp and selects the current source of energy (or a mix between the internal battery and the external energy provider).
+        
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[width=\textwidth]{assets/bpmn/CPOW_sel_source.png}
+                    \caption{CPOW manual selection of the source of energy}
+                    \label{fig: CPOW manual selection of the source of energy}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+    \newpage
+        \begin{itemize}                                 
+            \item \textbf{Management of price and special offers:} the logged CPOW visits the CPMS webapp and can decide to create or remove a special offer.
+        
+            \begin{center}
+                \begin{figure}[!h]
+                    \includegraphics[width=\textwidth]{assets/bpmn/CPOW_sel_offer.png}
+                    \caption{CPOW management of price and special offers}
+                    \label{fig: CPOW management of price and special offers}
+                \end{figure}
+            \end{center}
+        \end{itemize}
+    
+    \newpage
+    \subsection{User characteristics}
+    \subsubsection{EV owner}
+    The application has been thought for anybody that owns an EV and wants to plan his charging process. 
+    Because of this, the potential user base comprises of any EV owner with a device connected to the internet.
+    The user should also be capable of interacting with a webapp.
+    
+    \subsubsection{CPO's Human Operators (CPOW)}
+    The CPOW is the person that manages the charging stations owned by the CPO.\\
+    He is a spacialized worker that has to be able to interact with the webapp and the CPMS in order to change from which DSO or battery the charging stations are getting the energy from, or to set special offers for the charging stations.
+    He needs a device connected to the internet, a web browser and the company credentials to access the webapp.
+
+    \subsection{Assumptions, dependencies and constraints}
+    \newcounter{assumptionCtr}
+    \begin{itemize}
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Users have access to the internet while using the web application
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The infrastructure of the charging stations is reliable and works 99\% of the time
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: User's EV works properly while charging
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Information about the charging stations offered by the CPMS are accurate (such as position, state and availability )
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The DSO's infrastructure is working and their data is reliable 
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Information about the user's schedule is correct and meaningful
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Users own an IT device to connect to the application
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Each user registers only once, and always feeds correct information to the app     
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The data supplied by the user's devices are correct (such as current position)
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Special offers regarding the charging stations are correct and reliable
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: Special offers provided by one CPO concern all the charging stations owned by that CPO
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol
+        \item \stepcounter{assumptionCtr}D\arabic{assumptionCtr}: EV battery status can be accessed by the app through the API
+       \end{itemize}
+
+
+    
+    
+    
+    \newpage
+    \section{Specific Requirements}
+    
+    \subsection{External Interface Requirements}
+
+    \subsubsection{User Interfaces}
+    Users should interface the web application through devices that must be connected to the Internet. The service will be accessed through a web browser from the web site domain (i.g. www.eMall.com).
+    As the service will be used by a lot of different kinds of users, the web application interface should be as simple and intuitive as possible.
+    
+
+    \subsubsection{Hardware Interfaces}
+    \label{hardware_interfaces}
+    Since the system provides a web application, there's not a hardware interface. 
+    In order to give a complete experience, the system should be given the access/permission to the user's GPS position or navigation system.  
+
+    \subsubsection{Software Interfaces}
+    \label{software_interfaces}
+    To access the application a web browser is required. Additional software like a calendar and GPS is necessary for accessing all the functionalities of the application. The software will also take advantage of some interfaces to accomplish its requirements. An external API is necessary to visualize on maps the user location and the near charging stations. %frase copiatissima%
+    
+    \newpage
+    \subsubsection{Communication Interfaces}
+    Internet connections will be mandatory since the web application must communicate with the web server and the system APIs.\\
+    \begin{itemize}
+        \item \textbf{Communication between the EMSP and the CPMS:}\\
+              Will be done through the OCPI protocol that allows the exchange of data in real time (synchronous RTC) and supports both peer-to-peer (P2P) and roaming hub connections.\\
+              In P2P roaming, CPOs and EMSPs have direct bilateral connections via which they exchange data. Meanwhile, in hub-based roaming, a charge point operator or mobility service provider can access many roaming partners via a single, standardised connection.\\
+        \item \textbf{Communication between the CPMS and the Charging stations:}\\
+              Will be done through the asynchronous OCPP protocol that allows charging stations to communicate with a central management system (CPMS) in order to exchange information.
+              The OCPP is based on REST (Representational State Transfer) and uses JSON (JavaScript Object Notation) as the format for its messages. It uses a client-server model, where the charging stations act as clients and the CPMS acts as the server.
+        \item \textbf{Communication between the CPMS and the DSOs:}\\
+              Will be done through a specialized proprietary API that allows the coordination of their activities and the exchange of data.
+        \end{itemize}
+
+    Both the OCPI and the OCPP protocols are open source and available on the internet, and for this reason they could be extended to meet the needs of our system.
+    \newpage
+    \subsection{Functional Requirements}
+
+    \subsubsection{List of Requirements}
+    \newcounter{RequirementCtr}
+    \rowcolors{2}{}{PineGreen!25}
+    \underline{Shared Requirements}
+    \begin{longtable}{|c|p{0.69\textwidth}|}
+        \hline
+        \textbf{ID} & \textbf{Requirement}\\ \hline\hline
+        \stepcounter{RequirementCtr}%R1
+        R\arabic{RequirementCtr}    & The system must allow registered and logged-in users to use the app.\\\hline
+        \stepcounter{RequirementCtr}%R2
+        R\arabic{RequirementCtr}    & The system must respect the GDPR and the user's privacy.\\\hline
+        \stepcounter{RequirementCtr}%R3
+        R\arabic{RequirementCtr}    & The system must allow registered users to log-in using their e-mail.\\\hline
+        \stepcounter{RequirementCtr}%R4
+        R\arabic{RequirementCtr}    & Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol. \\\hline
+    \end{longtable}  
+    \rowcolors{1}{white!100}{} 
+    \rowcolors{2}{}{PineGreen!25}
+    \underline{EMSP Subsystem Requirements}
+    \begin{longtable}{|c|p{0.69\textwidth}|}
+        \hline
+        \textbf{ID} & \textbf{Requirement}\\ \hline\hline       
+        \stepcounter{RequirementCtr}%R5
+        R\arabic{RequirementCtr}    & The eMSP subsystem must show the user the nearby charging stations through an interactive map.\\\hline  
+        \stepcounter{RequirementCtr}%R6
+        R\arabic{RequirementCtr}    & The eMSP subsystem must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission.\\\hline  
+        \stepcounter{RequirementCtr}%R7
+        R\arabic{RequirementCtr}    & The eMSP subsystem must notify the user when the charge has finished.\\\hline
+        \stepcounter{RequirementCtr}%R8
+        R\arabic{RequirementCtr}    & The eMSP subsystem must show the user the discounted prices.\\\hline
+        \stepcounter{RequirementCtr}%R9
+        R\arabic{RequirementCtr}    & The eMSP subsystem must show the user the prices of the charging stations.\\\hline
+        \stepcounter{RequirementCtr}%R10
+        R\arabic{RequirementCtr}    & The eMSP subsystem must access the User calendar schedule in order to suggest the best charging timeframes, if given permission.\\\hline
+        \stepcounter{RequirementCtr}%R11
+        R\arabic{RequirementCtr}    & The eMSP subsystem must suggest the user on which charging stations to go based on the EV battery and his daily schedule.\\\hline
+        \stepcounter{RequirementCtr}%R12
+        R\arabic{RequirementCtr}    & The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.\\\hline
+        \stepcounter{RequirementCtr}%R13
+        R\arabic{RequirementCtr}    & The eMSP subsystem must allow the user to book a charging spot for a future date.\\\hline
+        \stepcounter{RequirementCtr}%R14
+        R\arabic{RequirementCtr}    & The eMSP subsystem must allow the user to cancel a future reservation for a charging spot.\\\hline
+        \stepcounter{RequirementCtr}%R15
+        R\arabic{RequirementCtr}    & The eMSP subsystem must allow the user to pay for the charge through an external payment service.\\\hline
+        \stepcounter{RequirementCtr}%R16
+        R\arabic{RequirementCtr}    & The eMSP subsystem must allow the user to start or stop the charge via the application.\\\hline
+        \stepcounter{RequirementCtr}%R17
+        R\arabic{RequirementCtr}    & The eMSP subsystem must notify the user of the upcoming booked sessions.\\\hline
+    \end{longtable}  
+    \rowcolors{1}{white!100}{}  
+    \rowcolors{2}{}{PineGreen!25}
+    \underline{CPMS Subsystem Requirements}
+    \begin{longtable}{|c|p{0.69\textwidth}|}
+        \hline
+        \textbf{ID} & \textbf{Requirement}\\ \hline\hline
+        \stepcounter{RequirementCtr}%R18
+        R\arabic{RequirementCtr}    & The CPMS subsystem must communicate with the DSO according to a standard protocol.\\\hline
+        \stepcounter{RequirementCtr}%R19
+        R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the DSO current energy price.\\\hline
+        \stepcounter{RequirementCtr}%R20
+        R\arabic{RequirementCtr}    & The CPMS subsystem must automatically decide from which DSO to acquire energy.\\\hline
+        \stepcounter{RequirementCtr}%R21
+        R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the charging station's battery status.\\\hline
+        \stepcounter{RequirementCtr}%R22
+        R\arabic{RequirementCtr}    & The CPMS subsystem must dynamically change the energy source depending on the internal station's battery status and the available DSOs' prices.\\\hline
+        \stepcounter{RequirementCtr}%R23
+        R\arabic{RequirementCtr}    & The CPMS subsystem must communicate the location of the charging stations to all connected eMSPs.\\\hline
+        \stepcounter{RequirementCtr}%R24
+        R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the internal status of the sockets through the OCPP standard protocol.\\\hline
+        \stepcounter{RequirementCtr}%R25
+        R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols.\\\hline
+        \stepcounter{RequirementCtr}%R26
+        R\arabic{RequirementCtr}    & The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.\\\hline
+        \stepcounter{RequirementCtr}%R27
+        R\arabic{RequirementCtr}    & The CPMS subsystem must retrieve the battery status of the EV through the DIN/ISO specifications.\\\hline
+        \stepcounter{RequirementCtr}%R28
+        R\arabic{RequirementCtr}    & The CPMS subsystem must allow the CPOW to add or change the current special offer.\\\hline
+        \stepcounter{RequirementCtr}%R29
+        R\arabic{RequirementCtr}    & The CPMS subsystem must allow the CPOW to change the energy provider of a charging station.\\\hline
+        \stepcounter{RequirementCtr}%R30
+        R\arabic{RequirementCtr}    & The CPMS subsystem must unlock the reserved charging spot if the user doesn't show up.\\\hline
+        
+    \end{longtable}
+    
+    \newpage
+    \subsubsection{Mapping}
+    \rowcolors{1}{white!100}{}
+    \newcounter{goalCtr2}
+    %written explanation of how the G,D and R go together
+
+    \underline{User Goals}
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} &  Know about the charging stations nearby, including their cost and any special offer they have.\\\hline
+                \cellcolor{pink!50}R1 & The system must allow registered and logged-in users to use the app.\\\hline
+                \cellcolor{pink!50}R2 & The system must respect the GDPR and the user's privacy.\\\hline
+                \cellcolor{pink!50}R3 & The system must allow registered users to log-in using their e-mail.\\\hline 
+                \cellcolor{pink!50}R5 & The eMSP subsystem must show the user the nearby charging stations through an interactive map.\\\hline
+                \cellcolor{pink!50}R6 & The eMSP subsystem must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission.\\\hline
+                \cellcolor{pink!50}R8 & The eMSP subsystem must show the user the discounted prices.\\\hline
+                \cellcolor{pink!50}R9 & The eMSP subsystem must show the user the prices of the charging stations.\\\hline
+                \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
+                \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability).\\\hline
+                \cellcolor{green!50}D7 & Users own an IT device to connect to the application.\\\hline
+                \cellcolor{green!50}D8 & Each user registers only once, and always feeds correct information to the app.\\\hline
+                \cellcolor{green!50}D9 & The data supplied by the user's devices are correct (such as current position).\\\hline
+                \cellcolor{green!50}D10 & Special offers regarding the charging stations are correct and reliable.\\\hline
+                
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Book a charge in a specific charging station for a certain timeframe.\\\hline
+                \cellcolor{pink!50}R1 &  The system must allow registered and logged-in users to use the app.\\\hline
+                \cellcolor{pink!50}R2 &  The system must respect the GDPR and the user's privacy.\\\hline
+                \cellcolor{pink!50}R3 &  The system must allow registered users to log-in using their e-mail.\\\hline
+                \cellcolor{pink!50}R13 & The eMSP subsystem must allow the user to book a charging spot for a future date.\\\hline
+                \cellcolor{pink!50}R14 & The eMSP subsystem must allow the user to cancel a future reservation for a charging spot.\\\hline
+                \cellcolor{pink!50}R17 & The eMSP subsystem must notify the user of the upcoming booked sessions.\\\hline
+                \cellcolor{pink!50}R30 & The CPMS subsystem must unlock the reserved charging spot if the user doesn't show up.\\\hline
+                \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
+                \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability).\\\hline
+                \cellcolor{green!50}D7 & Users own an IT device to connect to the application.\\\hline
+                \cellcolor{green!50}D8 & Each user registers only once, and always feeds correct information to the app.\\\hline
+                \cellcolor{green!50}D12 & The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol.\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Start the charging process at a certain station.\\\hline
+                \cellcolor{pink!50}R1 &  The system must allow registered and logged-in users to use the app.\\\hline
+                \cellcolor{pink!50}R2 &  The system must respect the GDPR and the user's privacy.\\\hline
+                \cellcolor{pink!50}R3 &  The system must allow registered users to log-in using their e-mail.\\\hline
+                \cellcolor{pink!50}R4 &  Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol.\\\hline
+                \cellcolor{pink!50}R7 &  The eMSP subsystem must notify the user when the charge has finished.\\\hline
+                \cellcolor{pink!50}R16 & The eMSP subsystem must allow the user to start or stop the charge via the application.\\\hline
+                \cellcolor{pink!50}R26 & The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.\\\hline
+                \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
+                \cellcolor{green!50}D3 & User's EV works properly while charging.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
+                \cellcolor{green!50}D5 & The DSO's infrastructure is working and their data is reliable.\\\hline
+                \cellcolor{green!50}D12 & The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol.\\\hline
+                \cellcolor{green!50}D13 & EV battery status can be accessed by the app through the API.\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Pay for the obtained service.\\\hline
+                \cellcolor{pink!50}R1 &  The system must allow registered and logged-in users to use the app.\\\hline
+                \cellcolor{pink!50}R2 &  The system must respect the GDPR and the user's privacy.\\\hline
+                \cellcolor{pink!50}R3 &  The system must allow registered users to log-in using their e-mail.\\\hline
+                \cellcolor{pink!50}R15 & The eMSP subsystem must allow the user to pay for the charge through an external payment service.\\\hline
+                \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
+                \cellcolor{green!50}D7 & Users own an IT device to connect to the applicationg.\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \underline{eMSP Subsystem Goals}
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Be able to communicate with multiple CPMS.\\\hline
+                \cellcolor{pink!50}R4 & Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol.\\\hline
+                \cellcolor{pink!50}R4 & The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.\\\hline
+                \cellcolor{green!50}D12 & The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol.\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Suggest the user convenient charging timeframes based on his upcoming schedule.\\\hline
+                \cellcolor{pink!50}R10 & The eMSP subsystem must access the User calendar schedule in order to suggest the best charging timeframes, if given permission.\\\hline
+                \cellcolor{pink!50}R11 & The eMSP subsystem must suggest the user on which charging stations to go based on the EV's battery and his daily schedule.\\\hline
+                \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
+                \cellcolor{green!50}D6 & Information about the user's schedule is correct and meaningful.\\\hline
+                \cellcolor{green!50}D9 & The data supplied by the user's devices are correct (such as current position).\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Notify the user when the charging process is finished.\\\hline
+                \cellcolor{pink!50}R7 & The eMSP subsystem must notify the user when the charge has finished.\\\hline
+                \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
+                \cellcolor{green!50}D3 & User's EV works properly while charging.\\\hline
+                \cellcolor{green!50}D7 & Users own an IT device to connect to the application.\\\hline
+                \cellcolor{green!50}D13 & EV's battery status can be accessed by the app through the API.\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Be able to communicate with multiple eMSPs.\\\hline
+                \cellcolor{pink!50}R4 & Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol.\\\hline
+                \cellcolor{pink!50}R23 & The CPMS subsystem must communicate the location of the charging stations to all connected eMSPs.\\\hline
+                \cellcolor{pink!50}R25 & The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols.\\\hline
+                \cellcolor{green!50}D12 & The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol.\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+   
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Be able to communicate with at least one DSO.\\\hline
+                \cellcolor{pink!50}R18 & The CPMS subsystem must communicate with the DSO according to a standard protocol.\\\hline
+                \cellcolor{green!50}D5 & The DSO's infrastructure is working and their data is reliable.\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Communicate the location and the "external" status of the charging station.\\\hline
+                \cellcolor{pink!50}R23 & The CPMS subsystem must communicate the location of the charging stations to all connected eMSPs.\\\hline
+                \cellcolor{pink!50}R25 & The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols.\\\hline
+                \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
+                \cellcolor{green!50}D12 & The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol.\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Know the internal status of a charging station.\\\hline
+                \cellcolor{pink!50}R21 & The CPMS subsystem must retrieve the charging station's battery status.\\\hline
+                \cellcolor{pink!50}R24 & The CPMS subsystem must retrieve the internal status of the sockets through the OCPP standard protocol.\\\hline
+                \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
+                \cellcolor{green!50}D12 & The eMSPs and all the connected CPMSs follow the OCPI 2.2.1 protocol.\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Start charging a vehicle according to the amount of power supplied by the socket, and monitor the charging process to infer when the battery is full.\\\hline
+                \cellcolor{pink!50}R26 & The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.\\\hline
+                \cellcolor{pink!50}R27 & The CPMS subsystem must retrieve the battery status of the EV through the DIN/ISO specifications.\\\hline
+                \cellcolor{green!50}D3 & User's  EV works properly while charging.\\\hline
+                \cellcolor{green!50}D5 & The DSO's infrastructure is working and their data is reliable .\\\hline
+                \cellcolor{green!50}D13 & EV battery status can be accessed by the app through the API.\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Acquire from the DSOs information about the current price of energy.\\\hline
+                \cellcolor{pink!50}R19 & The CPMS subsystem must retrieve the DSO current energy price.\\\hline
+                \cellcolor{green!50}D5 & The DSO's infrastructure is working and their data is reliable.\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    %\begin{table}[H]
+    %    \begin{center}
+    %        \begin{tabular}{|c | p{0.69\textwidth}|}
+    %            \hline
+    %            \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Decide from which DSO to acquire energy (if more than one is available).\\\hline
+    %            \cellcolor{pink!50}R20 & TEXT\\\hline
+    %            \cellcolor{pink!50}R22 & TEXT\\\hline
+    %            \cellcolor{pink!50}R29 & TEXT\\\hline
+    %            \cellcolor{green!50}D & .\\\hline
+    %        \end{tabular}
+    %    \end{center}
+    %\end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Dynamically decide where to get energy for charging (station battery, DSO, or a mix according to availability and cost).\\\hline
+                \cellcolor{pink!50}R21 & The CPMS subsystem must retrieve the charging station's battery status.\\\hline
+                \cellcolor{pink!50}R22 & The CPMS subsystem must dynamically change the energy source depending on the internal station's battery status and the available DSOs' prices.\\\hline
+                \cellcolor{pink!50}R29 & The CPMS subsystem must allow the CPOW to change the energy provider of a charging station.\\\hline
+                \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
+                \cellcolor{green!50}D3 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
+                \cellcolor{green!50}D4 & The DSO's infrastructure is working and their data is reliable.\\\hline
+
+            \end{tabular}
+        \end{center}
+    \end{table}
+    \newpage
+    \underline {CPOW goals}
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Change the source of energy between batteries and grid.\\\hline
+                \cellcolor{pink!50}R1 &  The system must allow registered and logged-in users to use the app.\\\hline
+                \cellcolor{pink!50}R2 &  The system must respect the GDPR and the user's privacy.\\\hline
+                \cellcolor{pink!50}R3 &  The system must allow registered users to log-in using their e-mail.\\\hline
+                \cellcolor{pink!50}R29 &  The CPMS subsystem must allow the CPOW to change the energy provider of a charging station.\\\hline
+                \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
+                \cellcolor{green!50}D2 & The infrastructure of the charging stations is reliable and works 99\% of the time.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
+                \cellcolor{green!50}D5 & The DSO's infrastructure is working and their data is reliable.\\\hline
+                \cellcolor{green!50}D7 & Each user registers only once, and always feeds correct information to the app.\\\hline
+                \cellcolor{green!50}D8 & Users have access to the internet while using the web application.\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[H]
+        \begin{center}
+            \begin{tabular}{|c | p{0.69\textwidth}|}
+                \hline 
+                \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Insert special and limited owners.\\\hline
+                \cellcolor{pink!50}R1 &  The system must allow registered and logged-in users to use the app.\\\hline
+                \cellcolor{pink!50}R2 &  The system must respect the GDPR and the user's privacy.\\\hline
+                \cellcolor{pink!50}R3 &  The system must allow registered users to log-in using their e-mail.\\\hline
+                \cellcolor{pink!50}R28 & The CPMS subsystem must allow the CPOW to add or change the current special offer.\\\hline
+                \cellcolor{green!50}D1 & Users have access to the internet while using the web application.\\\hline
+                \cellcolor{green!50}D4 & Information about the charging stations offered by the CPMS are accurate (such as position, state and availability ).\\\hline
+                \cellcolor{green!50}D7 & Users own an IT device to connect to the application.\\\hline
+                \cellcolor{green!50}D10 & Special offers regarding the charging stations are correct and reliable.\\\hline
+                \cellcolor{green!50}D11 & Special offers provided by one CPO concern all the charging stations owned by that CPO.\\\hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    %%\begin{table}[H]
+    %    \begin{center}
+    %        \begin{tabular}{|c | p{0.69\textwidth}|}
+    %            \hline
+    %            \cellcolor{blue!30}\textbf{\stepcounter{goalCtr2}G\arabic{goalCtr2}} & Change the price of a charging station.\\\hline
+    %            \cellcolor{pink!50}R1 &  Text.\\\hline
+    %            \cellcolor{pink!50}R2 &  Text.\\\hline
+    %            \cellcolor{pink!50}R3 &   Text.\\\hline
+    %            \cellcolor{green!50}D & .\\\hline
+    %        \end{tabular}
+    %    \end{center}
+    %\end{table}
+
+    \newpage
+    \subsubsection{Use Cases}
+    \setcounter{secnumdepth}{4}
+
+      \paragraph{Use Cases Diagram}
+    \begin{itemize}
+        \item \textbf {User}
+        \begin{center}
+            \begin{figure}[H]
+                \includegraphics[scale=0.55, center]{assets/USER use case.png}
+                \caption{User - Use Case Diagram}
+                \label{fig: UseCase_User}
+            \end{figure}
+        \end{center}
+        \newpage
+        \item \textbf {CPOW}
+        \begin{center}
+            \begin{figure}[H]
+                \includegraphics[scale=0.60, center]{assets/CPOW use case.png}
+                \caption{CPOW - Use Case Diagram}
+                \label{fig: UseCase_CPOW}
+            \end{figure}
+        \end{center}
+        \newpage
+    \end{itemize}
+
+    \paragraph{Use Cases Description}
+
+    For more details \ref{sequencediagram}.
+
+        \begin{itemize}
+            \item \textbf {User use cases}
+
+            \begin{table}[H]
+                \item[] \textbf{Sign Up}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Sign Up\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & User wants to register in the system\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item User opens eMall
+                                                \item User presses the sign up button
+                                                \item User enters his name, email and password
+                                                \item User presses the confirm button
+                                                \item System displays a confirmation message
+                                                \item An email is sent to the user
+
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} & User data are saved into the system and registration ends successfully  \\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item User email is already taken
+                        \item User presses the cancel button
+                        \item E-Mall is closed
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 3\\ \hline
+                \end{tabular}
+            \end{table}
+
+
+             \begin{table}[H]
+                \item[] \textbf{Log in}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Log in\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & User wants to log into the system\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item User opens E-Mall
+                                                \item User presses the log in button
+                                                \item User enters his email and password
+                                                \item User presses the confirm button
+                                                \item System displays the main page
+
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} & System recognizes the user's password as correct and the main page is displayed  \\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item Email is not in the system
+                        \item The password for the given email is incorrect
+
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 3\\ \hline
+                \end{tabular}
+            \end{table}
+
+
+            \begin{table}[H]
+                \item[] \textbf{View Nearby Stations}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & View Nearby Stations\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & User is logged and wants to view charging stations near him\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item User is in the home page
+                                                \item User clicks the "view charging stations" button
+                                                \item System displays the map with the data
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} & Uses presses the home button  \\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The command goes through
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+
+            \begin{table}[H]
+                \item[] \textbf{Delete a booking}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Delete a booking\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & User is logged and has at least a booking\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item User is in the home page
+                                                \item User clicks the "view bookings list" button
+                                                \item System displays the list of the bookings
+                                                \item User selects his chosen booking
+                                                \item User clicks on "Delete"
+                                                \item System displays a confirmation message and the booking is removed from the list
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} & The deletion is successfully registered from the system  \\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item User had only one booking
+                    \end{enumerate}
+                    A "no bookings are left!" message is displayed and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+            \begin{table}[H]
+                \item[] \textbf{Make a booking}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Make a booking\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & User is logged and wants make a new booking\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item User is in the home page
+                                                \item User clicks the "make a booking" button
+                                                \item User fills the form with the information about his booking and confirms
+                                                \item System adds the booking to the user's list and displays a confirmation message
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} & All the form information was valid (e.g. the date exists) and the slot is available  \\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item Slot selected by user isn't available
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+             \begin{table}[H]
+                \item[] \textbf{Book from map}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Book from map\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & A logged user is viewing a map and presses on the "Book" button near it \\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item User is viewing the map of the stations
+                                                \item User clicks on the desired station
+                                                \item User clicks on the "Book" button near it
+                                                \item User fills the form with all the necessary data
+                                                \item System adds the booking to the user's list and displays a confirmation message
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  All the form information was valid (e.g. the date exists) and the slot is available\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The specific station is already booked at that time
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+             \begin{table}[H]
+                \item[] \textbf{Start charging process}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Start a charging process\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & User is at the stations and selects the corresponding station on the app \\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item User is viewing the desired socket on the app
+                                                \item User clicks the start "start charging" button
+                                                \item System displays a form to fill with the payment informations
+                                                \item User fills the form and clicks start
+                                                \item System processes and displays a screen containing the information about the ongoing charge
+                                                \item when ongoing charge ends, the system sends the user a notification
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  System detects an EV at that socket and the payment goes through\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The selected socket is detected as empty by the CPMS
+                        \item The selected socket is already undergoing a charging process
+                        \item The payment doesn't go through correctly
+                    \end{enumerate}
+                    An error message is shown and flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+            \begin{table}[H]
+                \item[] \textbf{Battery suggestion}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Battery suggestion\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & User EV's battery is running low \\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item Systems detects user's battery is low
+                                                \item System sends a notification to the user with the stations near him
+                                                \item User opens notification and clicks one of the suggested stations
+                                                \item System offers the user the possibility to book the location
+                                                \item User accepts and fills the form
+                                                \item System sends a confirmation message
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  All the form information was valid (e.g. the date exists) and the slot is available\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The specific station has been booked in the meanwhile
+                        \item Booking information is wrong
+                    \end{enumerate}
+                    An error message is shown and the user is returned to the main page\\ \hline
+                \end{tabular}
+            \end{table}
+
+            \begin{table}[H]
+                \item[] \textbf{Calendar Suggestion}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Calendar Suggestion\\ \hline
+                    \textbf{Actor} & User\\ \hline
+                    \textbf{Entry condition} & User has at least an event in next day's calendar \\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item Systems retrieves user schedule and finds an appropriate time and place for charging
+                                                \item System sends a notification to the user with the times and places he can charge his EV
+                                                \item User opens notification and clicks one of the suggested stations
+                                                \item System offers the user the possibility to book the location
+                                                \item User accepts and fills the form
+                                                \item System sends a confirmation message
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  All the form information was valid (e.g. the date exists) and the slot is available\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The specific station has been booked in the meanwhile
+                        \item Booking information is wrong
+                    \end{enumerate}
+                    An error message is shown and the user is returned to the main page\\ \hline
+                \end{tabular}
+            \end{table}
+            \pagebreak
+            \item \textbf {CPOW use cases}
+            \begin{table}[H]
+                \item[] \textbf{Log in}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Log in\\ \hline
+                    \textbf{Actor} & CPOW\\ \hline
+                    \textbf{Entry condition} & CPOW wants to log into the system \\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item CPOW opens eMall
+                                                \item CPOW clicks "log in as CPO"
+                                                \item CPOW fills the form with its name, surname, institutional mail and password
+                                                \item System checks the information and sends a confirmation notification
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  All the fields are valid and the password was correct\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The email given isn't recognized by the system
+                        \item The password for the given email is incorrect
+                        \item The institution isn't recognized
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+            \begin{table}[H]
+                \item[] \textbf{Insert discount}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Insert discount\\ \hline
+                    \textbf{Actor} & CPOW\\ \hline
+                    \textbf{Entry condition} & CPOW is logged and wants insert a new discount \\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item CPOW is logged and in the main screen
+                                                \item CPOW clicks "insert new discount"
+                                                \item system displays a form containing all the information required (including a list of all the stations to which the discount will be applied)
+                                                \item CPOW inserts the discount information in the form
+                                                \item System displays a confirmation message
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  The form information is correct \\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item Some of the form information isn't valid
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+            \begin{table}[H]
+                \item[] \textbf{Delete discount}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Delete a discount\\ \hline
+                    \textbf{Actor} & CPOW\\ \hline
+                    \textbf{Entry condition} & CPOW is logged and wants delete one of his discounts \\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item CPOW is logged and in the main screen
+                                                \item CPOW clicks on "view discounts"
+                                                \item System displays a list containing all active discounts and their information
+                                                \item CPOW clicks on "delete" on the specific discount he wants deleted
+                                                \item System returns a confirmation message
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  The company the CPOW is associated with has at least one active discount\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The CPOW doesn't have any active discounts
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+
+             \begin{table}[H]
+                \item[] \textbf{View Stations}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & View stations\\ \hline
+                    \textbf{Actor} & CPOW\\ \hline
+                    \textbf{Entry condition} & CPOW is logged and wants to view his stations\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item CPOW is logged and in the main screen
+                                                \item CPOW clicks on "view stations"
+                                                \item System displays a page containting all the stations available to him with their current status
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  The CPO associated to the CPOW by the system has at least a station linked to it\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The CPO the CPOW is associated with doesn't have a single station linked
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+            \begin{table}[H]
+                \item[] \textbf{Switch to battery}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Switch to battery\\ \hline
+                    \textbf{Actor} & CPOW\\ \hline
+                    \textbf{Entry condition} & CPOW is viewing one of his stations and wants to switch to the internal battery\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item CPOW is viewing his stations list
+                                                \item CPOW (selects a specific socket and) clicks on "switch to internal battery"
+                                                \item System processes the request and displays a confirmation message
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  The operation correctly goes through\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The station's battery has run out
+                        \item The station's battery is not working
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+
+             \begin{table}[H]
+                \item[] \textbf{Switch DSO}
+                \item[]
+                \centering
+                \begin{tabular}{|c |m{0.69\textwidth}|}
+                    \hline
+                    \textbf{Use Case} & Switch DSO\\ \hline
+                    \textbf{Actor} & CPOW\\ \hline
+                    \textbf{Entry condition} & CPOW is viewing one of his stations and wants to switch to a different DSO\\  \hline
+                    \textbf{Flow of events} & \begin{enumerate}
+                                                \item CPOW is viewing his stations list
+                                                \item CPOW clicks on the selected one and presses "Switch DSO"
+                                                \item System displays a list of available DSOs
+                                                \item CPOW presses the selected one from the list
+                                                \item System processes the request and sends a confirmation pop-up
+                                            \end{enumerate}\\ \hline
+                    \textbf{Exit condition} &  User doesn't click the cancel button when the list of DSOs is displayed\\ \hline
+                    \textbf{Exceptions} &  \begin{enumerate}
+                        \item The station has only 1 available DSO
+                    \end{enumerate}
+                    An error message is shown and the flow of events starts again from point 1\\ \hline
+                \end{tabular}
+            \end{table}
+
+
+
+
+
+
+
+            \newpage
+        
+    
+        \item[] \begin{longtable}{|p{0.31\textwidth}|p{0.69\textwidth}|}
+                    \hline
+                    \cellcolor{SpringGreen!50}\textbf{1) User Sign Up}\centering & 
+                    R1) The system must allow registered and logged-in users to use the app.
+
+                    R2) The system must respect the GDPR and the user's privacy.
+
+                    R3) The system must allow registered users to log-in using their e-mail.
+                    \\\hline
+
+                    \cellcolor{SpringGreen!50}\textbf{2) User Log in}\centering & 
+                    R1) The system must allow registered and logged-in users to use the app.
+
+                    R3) The system must allow registered users to log-in using their e-mail.
+                    \\\hline
+
+                    \cellcolor{SpringGreen!50}\textbf{3)View nearby stations}\centering & 
+                    R5) The eMSP subsystem must show the user the nearby charging stations through an interactive map.
+
+                    R6) The eMSP subsystem must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission.
+
+                    R8) The eMSP subsystem must show the user the discounted prices.
+
+                    R9) The eMSP subsystem must show the user the prices of the charging stations.
+
+                    R12) The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.
+
+                    R23) The CPMS subsystem must communicate the location of the charging stations to all connected eMSPs.
+                    \\\hline
+
+
+                    \cellcolor{SpringGreen!50}\textbf{4)Delete booking}\centering & 
+                    R12) The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.
+
+                    R14) The eMSP subsystem must allow the user to cancel a future reservation for a charging spot.
+
+                    R25) The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols.
+                    \\\hline
+                    
+                    \cellcolor{SpringGreen!50}\textbf{5)Make a booking}\centering & 
+                    R12) The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.
+
+                    R13) The eMSP subsystem must allow the user to book a charging spot for a future date.
+
+                    R17) The eMSP subsystem must notify the user of the upcoming booked sessions.
+                    
+                    R25) The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols.
+                    
+                    R30) The CPMS subsystem must unlock the reserved charging spot if the user doesn't show up.
+                    \\\hline
+
+
+                    \cellcolor{SpringGreen!50}\textbf{6)Book from map}\centering & 
+                    R5) The eMSP subsystem must show the user the nearby charging stations through an interactive map.
+
+                    R6) The eMSP subsystem must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission.
+
+                    R8) The eMSP subsystem must show the user the discounted prices.
+
+                    R9) The eMSP subsystem must show the user the prices of the charging stations.
+
+                    R12) The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.
+
+                    R13) The eMSP subsystem must allow the user to book a charging spot for a future date.
+
+                    R25) The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocol.
+                    
+                    R30) The CPMS subsystem must unlock the reserved charging spot if the user doesn't show up.
+                    \\\hline
+
+
+                    \cellcolor{SpringGreen!50}\textbf{7)Start charging process}\centering & 
+                    R7) The eMSP subsystem must notify the user when the charge has finished.
+
+                    R9) The eMSP subsystem must show the user the prices of the charging stations.
+
+                    R15) The eMSP subsystem must allow the user to pay for the charge through an external payment service.
+
+                    R16) The eMSP subsystem must allow the user to start or stop the charge via the application.
+
+                    R19) The CPMS subsystem must retrieve the DSO current energy price.
+
+                    R21) The CPMS subsystem must retrieve the charging station's battery status.
+
+                    R24) The CPMS subsystem must retrieve the internal status of the sockets through the OCPP standard protocol.
+
+                    R25) The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols.
+
+                    R26) The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol.
+                    
+                    R27) The CPMS subsystem must retrieve the battery status of the EV through the DIN/ISO specications.
+                    \\\hline
+
+
+
+                    \cellcolor{SpringGreen!50}\textbf{8) CPOW Sign Sup}\centering & 
+                    R1) The system must allow registered and logged-in users to use the app
+
+                    R2) The system must respect the GDPR and the user's privacy
+R12
+                    R3) The system must allow registered users to log-in using their e-mail.
+                    \\\hline
+                    
+                    \cellcolor{SpringGreen!50}\textbf{9) CPOW Log in}\centering & 
+                    R1) The system must allow registered and logged-in users to use the app
+
+                    R3) The system must allow registered users to log-in using their e-mail
+                    \\\hline
+
+                    \cellcolor{SpringGreen!50}\textbf{10) Insert discount}\centering & 
+                    R28) The CPMS subsystem must allow the CPOW to add or change the current special offer.
+                    \\\hline
+
+                    \cellcolor{SpringGreen!50}\textbf{11) Delete discount}\centering & 
+                    R28) The CPMS subsystem must allow the CPOW to add or change the current special offer.
+                    \\\hline
+
+                    \cellcolor{SpringGreen!50}\textbf{12) View stations}\centering & 
+                    R12) The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.
+                    
+                    R25) The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of thesockets through the OCPP and the OCPI standard protocols.\\\hline
+
+                    \cellcolor{SpringGreen!50}\textbf{13) Switch to battery}\centering & 
+                    R12) The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations.
+
+                    R21)  The CPMS subsystem must retrieve the charging station's battery status 
+                    \\\hline
+
+                    \cellcolor{SpringGreen!50}\textbf{14) switch DSO}\centering & 
+                    R18) The CPMS subsystem must communicate with the DSO according to a standard protocol.
+
+                    R19) The CPMS subsystem must retrieve the DSO current energy price.
+
+                    R29) The CPMS subsystem must allow the CPOW to change the energy provider of a charging station.
+                    \\\hline
+            \end{longtable}
+    
+    \end{itemize}
+
+        \newpage
+        \subsubsection{Sequence Diagrams} \label{sequencediagram} 
+        \begin{itemize}
+            \item \textbf{Shared Sequence Diagrams}\\
+            
+            \textbf{Sign Up}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Sign up sequence.png}
+                    \caption{Shared Sequence Diagram - Sign Up Sequence Diagram}
+                    \label{fig: sequence_signup}
+                \end{figure}
+            \end{center}
+
+            \newpage
+            \textbf{Log in}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Log in sequence.png}
+                    \caption{Shared Sequence Diagram - Login Sequence Diagram}
+                    \label{fig: sequence_login}
+                \end{figure}
+            \end{center}
+
+            \newpage
+            \item \textbf{Users}\\
+            \textbf{View nearby stations}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/View Map.png}
+                    \caption{User Sequence Diagram - View nearby stations Diagram}
+                    \label{fig: View nearby stations}
+                \end{figure}
+            \end{center}
+            \newpage
+
+            \textbf{Delete a booking}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Booking deletion sequence.png}
+                    \caption{User Sequence Diagram - Delete a booking Diagram}
+                    \label{fig: Delete a booking}
+                \end{figure}
+            \end{center}
+
+            \textbf{Make a booking}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Make a booking.png}
+                    \caption{User Sequence Diagram - Make a booking Diagram}
+                    \label{fig: Make a booking}
+                \end{figure}
+            \end{center}
+
+            \newpage
+            \textbf{Book from map}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Book from map.png}
+                    \caption{User Sequence Diagram - Book from map Diagram}
+                    \label{fig: Book from map}
+                \end{figure}
+            \end{center}
+
+            \newpage
+            \textbf{Start charging process}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Start charging process.png}
+                    \caption{User Sequence Diagram - Start charging process Diagram}
+                    \label{fig: Start charging process}
+                \end{figure}
+            \end{center}
+
+            \newpage
+            \textbf{Battery suggestion}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Battery Suggestion.png}
+                    \caption{User Sequence Diagram - Battery suggestion Diagram}
+                    \label{fig: Battery suggestion process}
+                \end{figure}
+            \end{center}
+
+            \newpage
+            \textbf{Calendar suggestion}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Calendar Suggestion.png}
+                    \caption{User Sequence Diagram - Calendar suggestion Diagram}
+                    \label{fig: Calendar suggestion process}
+                \end{figure}
+            \end{center}
+
+            \newpage
+            \item \textbf{CPOW}\\
+            \textbf{Insert a discount}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Insert Discount.png}
+                    \caption{CPOW Sequence Diagram - Insert Discount Diagram}
+                    \label{fig: Insert Discount}
+                \end{figure}
+            \end{center}
+
+            \textbf{Delete a discount}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Delete Discount.png}
+                    \caption{CPOW Sequence Diagram - Delete a discount Diagram}
+                    \label{fig: Delete a discount}
+                \end{figure}
+            \end{center}
+
+            \textbf{View Stations}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/View Stations.png}
+                    \caption{CPOW Sequence Diagram - View Stations Diagram}
+                    \label{fig: View Stations}
+                \end{figure}
+            \end{center}
+
+            \textbf{Switch to battery}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Switch to Battery.png}
+                    \caption{CPOW Sequence Diagram - Switch to battery Diagram}
+                    \label{fig: Switch to battery}
+                \end{figure}
+            \end{center}
+
+            \textbf{Switch to DSO}
+            \begin{center}
+                \begin{figure}[H]
+                    \includegraphics[scale=0.55, center]{assets/sequenceDiagrams/Switch DSO.png}
+                    \caption{CPOW Sequence Diagram - Switch to DSO Diagram}
+                    \label{fig: Switch to DSO}
+                \end{figure}
+            \end{center}
+           
+        \end{itemize}
+        \newpage
+
+
+    \subsection{Performance Requirements}
+    The vast majority of the user base will be represented by electric car owners, while the number s will be negligible.\\
+    According to the European Environment Agency, 2021 saw a significant increase in the number of newly registered EVs:
+    electric car registrations for the year were close to 1.7 milions, with a 17.8\% increase in the share in just 1 year.
+    For Italy the trend is also positive with 32 thousand electric cars registered in 2020, and 67 thousand in 2021 \cite{EV registrations}.\\
+    This means that we are expected to have thousands of registrations in the first year of the system, and a significant increase in the following years that could reach milions of users.\\
+    For this reason we should consider as our mid-term goal to have a scalable, reliable and efficient system to guarantee a good user experience.\\
+    The workload is also expected to be high so we need to ensure that the system can handle all the simultaneous requests with a good enough response time (less than 600ms should be enough ).
+
+    \subsubsection{Design Constraints}
+    \subsubsection{Standards compliance}
+    eMall's user data must be compliant with the European Union's General Data Protection Regulation (GDPR). \\
+    The system must be able to store and process user data in a secure way, and must be able to provide the user with a way to access, modify or delete their data at any time.
+    It should also ask the user for the permission to activate the GPS tracking feature and the permission to access the user's calendar to schedule the charging sessions, and must be able to revoke these permissions at any time.
+    
+    \subsubsection{Hardware limitations}
+    The software must be able to run on any device with a modern web browser (Chrome, Firefox, Edge, Safari, Opera, etc.).\\
+    Given the geographical context of the project, the main limitations are related to the internet connection speed.\\
+    Also, in order to fully use the system, the user must have a smartphone with a GPS sensor and a calendar app installed.
+
+
+    \subsection{Software System Attributes}
+    \subsubsection{Reliability}
+    The system must have a backup infrastructure to ensure that the data is always available and that the system can be restored in case of a failure.\\
+    It must be characterized by an high MTTF (Mean Time To Failure) and a low MTTR (Mean Time To Repair).\\
+    All the needed components must be redundant and parallelized as much as possibile to ensure an high reliablity of the overall system in case of a single component failure (as shown in Fig. \ref{fig: components of eMall }).
+
+    %insert image
+    \begin{figure}[H]
+        \includegraphics[scale=0.70, center]{assets/componentDiag.png}
+        \caption{eMall - Components}
+        \label{fig: components of eMall }
+    \end{figure}
+
+    \subsubsection{Availability}
+    The system should be accessible 24/7, with a downtime of less than 1 hour per year.
+    The peak hours are expected to be during the working hours, especially during lunch-breaks, so the system should be able to handle the workload during these hours.
+    For this reason it would be better to do all the manteinance activities during the night, when the system is not used.
+
+
+    \begin{table}[H]
+        \begin{center}
+        \label{tab:availability}
+        \begin{tabular}{l|c|r}
+            \textbf{Component} & \textbf{Availability} & \textbf{Downtime}\\
+            \hline
+            Main System & 99.99\% & 52 min/y\\
+            Calendar API & 99.999\% & 5 min/y\\
+            GPS API & 99.999\% & 5 min/y\\
+            CPMS & 99.99\% & 52 min/y\\
+            EMSP & 99.99\% & 52 min/y\\
+            \hline
+            Entire System & 99.99\% & 52 min/y
+
+        \end{tabular}
+        \end{center}
+    \end{table}
+
+    \subsubsection{Security}
+    All the user data must be stored in a secure way, and must be hashed and encrypted using approved hash algorithms like SHA-256 and strong encryption algorithm like AES-256.
+    The communication between the client and the server must be encrypted using TLS 1.3 and powered HTTPS.
+    All stored data must be compliant with the GDPR.
+
+    \subsubsection{Maintainability}
+    The system must be easy to maintain and to update, and must be able to be extended with new features in the future.
+    For this reason the system must be designed with a modular architecture, and must be developed using modern design patterns and best practices to guarantee high reusability.\\
+    The code should also be well documented and easy to understand, and must be tested using unit tests and integration tests.
+
+    \subsubsection{Portability}
+    The system will be designed to work with most of the modern web browsers (Chrome, Firefox, Edge, Safari, Opera, and possible other Chromium based web browsers) and most of the modern operating systems (Windows, Linux, MacOS, Android, iOS).
+
+    \newpage
+    \section{Formal Analysis using Alloy}
+    \subsection{Formal Analysis Purpose}
+    The following analysis aims to formally prove the correctness of the system model by exploiting Alloy verification tool. To achieve so, we test the model by checking if some of the previous defined goals are met. 
+
+    in particular, we will focus on this goals:
+    \begin{itemize}
+        \item \textbf{(G1) Know about the charging stations nearby }: For this goal an assertion checks if the system correctly matched each user with the charging stations near them. 
+        \item \textbf{(G2) Book a charge in a specific charging station for a certain timeframe }: Using an assertion we verify that each user can make a reservation as long as he is registered in the system, while also making sure that the booking is valid and the booking information is registered in the correct charging station via its CPMS.
+        \item \textbf{(G3) Start the Charging process at a specific station }: For this goal we show an istance where a user who has booked a socket is currently charging his EV at that socket. This also covers the goal \textbf{(G12)}.
+        \item \textbf{(G5) Be able to communicate with multiple CPMS }: Using a predicate we show that the model is able to communicate with different CPMSs.
+        \item \textbf{(G6) Suggest the user convenient charging timeframes based on his upcoming schedule }: With one assertiona we verify that the system correctly suggests to each user specific timeframes taken from their schedule where they can charge their EV based on the proximity to a charging station.
+        \item \textbf{(G9) Be able to communicate with at least one DSO }: With an assertion we verify that for each CPMS in the system at least one DSO is connected to its stations. 
+        \item \textbf{(G12) Start charging a vehicle according to the amount of power supplied by the socket, and monitor the charging process to infer when the battery is full }: Thanks to the predicate we show that if a user booked a socket they can start charging their EV. We also show that the system knows the status of the socket and the currently charging car.
+        \item \textbf{(G15) Dynamically decide where to get energy for a charging station (battery or DSO) }: For this goal we show that in the system there can be stations that are currently running with their batteries and stations that are currently charging through the electrical grid.
+        \item \textbf{(G17) Insert special and limited offers }: Through an assertion we verify that only operators from a company can apply offers to charging stations belonging to that company, and we check that only registered users can apply those offers.
+ 
+        
+    \end{itemize}
+
+    Plus, we runned some empty predicates \texttt{show} to generate some more general instances of the app system.
+
+    \newpage
+    \subsection{Alloy Code}
+    \lstinputlisting[language=alloy]{alloy/alloy_v0.99.als}
+
+    Below we show some of the instances satifying the predicates that have been generated by the Alloy Analyser.
+    Note that, to make the istances more readable, we did some projections on signatures that are less relevant for specific predicates. 
+    For example, in the predicate switchSources the focus is on the usage of batteries or DSO-provided energy by the charging station, so data regarding the users are less relevant.
+    We still included a full instance in the last example provided.
+
+    \begin{center}
+        \begin{figure}[H]
+            \includegraphics[scale=0.38, center]{assets/alloy/pred_bookingRequest.png}
+            \caption{Predicate bookingRequest}
+            \label{fig: bookingRequest_alloy}
+        \end{figure}
+    \end{center}
+
+    \begin{center}
+        \begin{figure}[H]
+            \includegraphics[scale=0.38, center]{assets/alloy/pred_chargingProcess.png}
+            \caption{Predicate chargingProcess}
+            \label{fig: chargingProcess_alloy}
+        \end{figure}
+    \end{center}
+    \begin{sidewaysfigure}
+        \centering
+            \includegraphics[scale=0.40, center]{assets/alloy/pred_nearStation.png}
+            \caption{Predicate nearStation}
+            \label{fig: nearStation_alloy}
+    \end{sidewaysfigure}
+    \begin{sidewaysfigure}
+        \centering
+            \includegraphics[scale=0.33, center]{assets/alloy/pred_switchSources.png}
+            \caption{Predicate switchSource}
+            \label{fig: switchSources_alloy}
+    \end{sidewaysfigure}
+    \begin{sidewaysfigure}
+        \centering
+            \includegraphics[scale=0.35, center]{assets/alloy/run_show_all.png}
+            \caption{Empty Predicate show}
+            \label{fig: show_full_alloy}
+    \end{sidewaysfigure}
+    
+    \newpage
+    \section{Effort Spent}
+        \begin{tabular}{| c || c | c| c| c |}
+            \hline
+            Student & Time for S.1 & S.2 & S.3 & S.4 \\ \hline
+            Riccardo Grossoni & 3h & 8h & 2h & 14h \\
+            Francesco Dubini & 3h & 8h & 15h & 2h \\
+            Marcello De Salvo & 3h & 15h & 8h & 2h \\
+            \hline
+        \end{tabular}
+    \section{References}
+
+    \begin{thebibliography}{9}
+        \bibitem{EV stock}
+        \url{https://www.iea.org/data-and-statistics/charts/global-electric-car-stock-2010-2021}
+
+        \bibitem{EV registrations}
+        \url{https://www.eea.europa.eu/ims/new-registrations-of-electric-vehicles}
+
+
+    \end{thebibliography}
+\end{document} % This is the end of the document
+
+
+
