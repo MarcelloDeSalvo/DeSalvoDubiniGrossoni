@@ -2,7 +2,7 @@
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-https://se-2-e-mall.vercel.app
+de-salvo-dubini-grossoni.vercel.app
 
 ## Local Setup
 
