@@ -1,6 +1,7 @@
 # Django Minimal Starter
 
 Look at https://docs.djangoproject.com/en/4.1/intro/tutorial01/ to learn more.
+Look at https://docs.digitalocean.com/tutorials/app-deploy-django-app/ to learn how to deploy django on Digital Ocean
 
 mettere link host
 
@@ -9,8 +10,11 @@ mettere link host
 Make sure to have django (>=4.1.5) and Python (>= 3.9.12) installed:
 
 ```bash
-# 1] Upgrade pip if necessary
+# 0] Upgrade pip if necessary
 python -m pip install --upgrade pip
+
+# 1] Install the requirements
+pip install -r requirements.txt
 
 # 2] clone the repo and switch to the Back-end branch
 git clone https://github.com/MarcelloDeSalvo/DeSalvoDubiniGrossoni
