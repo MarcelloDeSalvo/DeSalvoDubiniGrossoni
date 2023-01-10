@@ -2,7 +2,7 @@
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-[de-salvo-dubini-grossoni.vercel.app](de-salvo-dubini-grossoni.vercel.app)
+[de-salvo-dubini-grossoni.vercel.app](https://de-salvo-dubini-grossoni.vercel.app)
 
 ## Local Setup
 
