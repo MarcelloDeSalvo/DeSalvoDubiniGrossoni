@@ -4,6 +4,24 @@
         <div class="grid row-gap-10 mb-8 lg:grid-cols-6">
           <div class="grid grid-cols-2 gap-5 row-gap-8 lg:col-span-4 md:grid-cols-4">
             <div>
+              <p class="font-medium tracking-wide text-gray-300">Are you lost?</p>
+              <ul class="mt-2 space-y-2">
+                <li>
+                  <a href="/login" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Sign in</a>
+                </li>
+                <li>
+                  <a href="/register" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Sign up</a>
+                </li>
+                <li>
+                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">CPMS Sign in</a>
+                </li>
+                <li>
+                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">References</a>
+                </li>
+              </ul>
+            </div>
+            <!-- se vuoi aggiungere categorie (ma perchè dovresti?) copia e incolla la div sopra, poi modifica-->
+            <div>
               <p class="font-medium tracking-wide text-gray-300">Category</p>
               <ul class="mt-2 space-y-2">
                 <li>
@@ -20,63 +38,9 @@
                 </li>
               </ul>
             </div>
-            <div>
-              <p class="font-medium tracking-wide text-gray-300">Apples</p>
-              <ul class="mt-2 space-y-2">
-                <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Web</a>
-                </li>
-                <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">eCommerce</a>
-                </li>
-                <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Business</a>
-                </li>
-                <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Entertainment</a>
-                </li>
-                <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Portfolio</a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <p class="font-medium tracking-wide text-gray-300">Cherry</p>
-              <ul class="mt-2 space-y-2">
-                <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Media</a>
-                </li>
-                <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Brochure</a>
-                </li>
-                <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Nonprofit</a>
-                </li>
-                <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Educational</a>
-                </li>
-                <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Projects</a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <p class="font-medium tracking-wide text-gray-300">Business</p>
-              <ul class="mt-2 space-y-2">
-                <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Infopreneur</a>
-                </li>
-                <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Personal</a>
-                </li>
-                <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Wiki</a>
-                </li>
-                <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Forum</a>
-                </li>
-              </ul>
-            </div>
+            
+            
+            
           </div>
         </div>
         <div class="flex flex-col justify-between pt-5 pb-10 border-t border-gray-800 sm:flex-row">

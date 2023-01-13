@@ -42,7 +42,7 @@
     <div class="mt-8 flex items-center space-x-1">
       <p class="text-sm font-semibold text-gray-500">Don't have an account?</p>
       <a
-        href="#"
+        href="/register"
         class="text-sm font-semibold text-indigo-400 hover:text-indigo-500"
         >Sign up</a
       >
