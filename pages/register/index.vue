@@ -13,7 +13,7 @@
 					<!-- Col -->
 					<div class="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
 						<h3 class="pt-4 text-2xl text-center">Create an Account!</h3>
-						<form class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+						<form  @submit.prevent="formSubmit" class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
 							<div class="mb-4 md:flex md:justify-between">
 								<div class="mb-4 md:mr-2 md:mb-0">
 									<label class="block mb-2 text-sm font-bold text-gray-700" for="firstName">
@@ -21,7 +21,7 @@
 									</label>
 									<input
 										class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-										id="firstName"
+										required v-model="formData.firstName"
 										type="text"
 										placeholder="First Name"
 									/>
@@ -32,7 +32,7 @@
 									</label>
 									<input
 										class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-										id="lastName"
+										required v-model="formData.lastName"
 										type="text"
 										placeholder="Last Name"
 									/>
@@ -44,7 +44,7 @@
 								</label>
 								<input
 									class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-									id="email"
+									required v-model="formData.email"
 									type="email"
 									placeholder="Email"
 								/>
@@ -56,7 +56,7 @@
 									</label>
 									<input
 										class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-										id="password"
+										required v-model="formData.password"
 										type="password"
 										placeholder="******************"
 									/>
@@ -68,16 +68,16 @@
 									</label>
 									<input
 										class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-										id="c_password"
+										id="confirmPassword"
 										type="password"
 										placeholder="******************"
 									/>
 								</div>
 							</div>
-							<div class="mb-6 text-center">
+							<div class="mb-6 text-center submit">
 								<button
 									class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-									type="button"
+									type="submit"
 								>
 									Register Account
 								</button>
@@ -107,9 +107,40 @@
 	</div>
 </template>
   
-  <script>
-    export default {
-      name: 'LoginPage',
-      layout: 'login',
+<script>
+import {ref} from "vue";
+import {serverUrl} from "../../config";
+
+export default {
+  data() {
+    return {
+      formData: {
+		firstName:'',
+        lastName: '',
+        email: '',
+		password: ''
+      }
     }
-  </script>
+  },
+  methods: {
+    formSubmit() {
+        this.formRequest().then( (result) => {
+			// Success
+            console.log(result)
+        }).catch( (error) => {
+            console.error('Registration form could not be sent', error)
+        });
+    },
+
+    async formRequest() {
+			return await $fetch(serverUrl+"/accounts/login/", { 
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+				method: 'POST',
+				body: JSON.stringify(this.formData)
+			} );
+    	}	
+	}
+}
+</script>
