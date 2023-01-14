@@ -151,3 +151,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #changed auth to custom user model
 AUTH_USER_MODEL = 'User.User'
+
+#trust origins
+CSRF_TRUSTED_ORIGINS = ['https://*.mydomain.com','https://*.127.0.0.1', 'http://localhost:3000']
+
+CSRF_COOKIE_SECURE = False
+
+SESSION_COOKIE_SECURE = False
+
+CSRF_COOKIE_HTTPONLY = False
+
+CORS_ALLOW_CREDENTIALS = True
