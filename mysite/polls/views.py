@@ -2,7 +2,14 @@
 
 # Create your views here.
 
-from django.http import HttpResponse
+from django.http import JsonResponse
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    print("Received: ", request, " request")
+    # Print contents of request body
+    print(request.body)
+    r =  JsonResponse({'message': 'Received POST request'})
+    r.status_code = 200
+    print(r.content)
+    return r
+
