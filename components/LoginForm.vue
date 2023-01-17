@@ -49,8 +49,6 @@
 </template>
 
 <script>
-import {ref} from "vue";
-import {serverUrl} from "../config";
 import Cookies from 'js-cookie'
 
 export default {
@@ -77,6 +75,8 @@ export default {
     },
 
     async formRequest() {
+      let config = useRuntimeConfig()
+      let serverUrl = config.BACKEND_URL
 			return await $fetch(serverUrl+"/api/token/", { 
 				headers: {
 					"Content-Type": "application/json",

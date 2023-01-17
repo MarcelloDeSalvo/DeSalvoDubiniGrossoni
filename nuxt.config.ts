@@ -7,4 +7,12 @@ export default defineNuxtConfig({
             autoprefixer: {},
         },
     },
+    runtimeConfig: {
+        public: {
+          BACKEND_URL: process.env.BACKEND_URL,
+        },
+        private:{
+          BACKEND_URL: process.env.BACKEND_URL,
+        }
+    }
 })

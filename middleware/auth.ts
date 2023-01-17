@@ -1,5 +1,3 @@
-import {serverUrl} from "../config";
-
 export default defineNuxtRouteMiddleware(async (to) => {
     // Check if the user is authenticated by calling an API endpoint with nuxt 3's new fetch API
     if (useCookie('token').value == null)
@@ -17,6 +15,9 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
 export async function checkToken() {
     const token = useCookie('token').value
+    let config = useRuntimeConfig()
+    let serverUrl = config.BACKEND_URL
+
     let resp = await fetch(serverUrl + '/api/isLogged/',
     { 
         headers: {

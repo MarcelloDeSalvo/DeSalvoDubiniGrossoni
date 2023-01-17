@@ -113,8 +113,6 @@
 </template>
   
 <script>
-import {ref} from "vue";
-import {serverUrl} from "../../config";
 definePageMeta({
     middleware: ['auth']
 })
@@ -149,6 +147,8 @@ export default {
     },
 
     async formRequest() {
+			let config = useRuntimeConfig()
+			let serverUrl = config.BACKEND_URL
 			return await fetch(serverUrl+"/api/register/", { 
 				headers: {
 					"Content-Type": "application/json",
