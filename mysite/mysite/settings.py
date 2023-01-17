@@ -161,7 +161,8 @@ AUTH_USER_MODEL = 'User.User'
 
 # CORS SETTINGS
 CORS_ORIGIN_ALLOW_ALL = True
-CSRF_TRUSTED_ORIGINS = ['https://localhost','https://*.127.0.0.1', 'http://localhost:3000']
+CSRF_TRUSTED_ORIGINS = ['https://localhost','https://*.127.0.0.1', 'http://localhost:3000', 
+                        'https://de-salvo-dubini-grossoni.vercel.app']
 
 """ 
 CSRF_COOKIE_SECURE = False
