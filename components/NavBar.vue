@@ -79,6 +79,17 @@
               Sign up
             </a>
           </li>
+          <li v-if="logged">
+            <a
+              href="/"
+              class= "inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+              aria-label="Sign up"
+              title="Sign up"
+              @click="logout"
+            >
+              logout
+          </a>
+          </li>
         </ul>
         <div class="z-1 ml-auto lg:hidden">
           <button
@@ -208,11 +219,29 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
+  
   data() {
     return {
       isMenuOpen: false,
+      logged: false,
     };
   },
-};
+  setup() {
+    const logout = () => {
+      // remove token cookie
+      Cookies.remove('token')
+      Cookies.remove('refresh')
+    }
+
+    return { logout }
+  },
+  mounted(){
+    if (document.cookie.indexOf("token") >= 0)
+        this.logged = true;
+    else
+        this.logged = false;
+  },
+}
 </script>

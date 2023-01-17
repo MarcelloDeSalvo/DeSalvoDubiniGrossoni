@@ -21,7 +21,7 @@
 									</label>
 									<input
 										class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-										required v-model="formData.firstName"
+										required v-model="formData.first_name"
 										type="text"
 										placeholder="First Name"
 									/>
@@ -32,7 +32,7 @@
 									</label>
 									<input
 										class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-										required v-model="formData.lastName"
+										required v-model="formData.last_name"
 										type="text"
 										placeholder="Last Name"
 									/>
@@ -68,7 +68,7 @@
 									</label>
 									<input
 										class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-										id="confirmPassword"
+										required v-model="formData.password2"
 										type="password"
 										placeholder="******************"
 									/>
@@ -99,6 +99,11 @@
 									Already have an account? Login!
 								</a>
 							</div>
+							<div class="text-center">
+								<p>
+									{{response}}
+								</p>
+							</div>
 						</form>
 					</div>
 				</div>
@@ -110,16 +115,20 @@
 <script>
 import {ref} from "vue";
 import {serverUrl} from "../../config";
-
+definePageMeta({
+    middleware: ['auth']
+})
 export default {
   data() {
     return {
       formData: {
-		firstName:'',
-        lastName: '',
+		first_name:'',
+        last_name: '',
         email: '',
-		password: ''
-      }
+		password: '',
+		password2: ''
+      },
+	  response: "" 
     }
   },
   methods: {
@@ -127,15 +136,22 @@ export default {
         this.formRequest().then( (result) => {
 			// Success
             console.log(result)
+			if (result.status != 201)
+				throw new Error(result.statusText)
+			
+			this.response = result.statusText
+			window.location.href = "/login"
+			
         }).catch( (error) => {
+			this.response = error
             console.error('Registration form could not be sent', error)
         });
     },
 
     async formRequest() {
-			return await $fetch(serverUrl+"/accounts/login/", { 
+			return await fetch(serverUrl+"/api/register/", { 
 				headers: {
-					"Content-Type": "multipart/form-data",
+					"Content-Type": "application/json",
 				},
 				method: 'POST',
 				body: JSON.stringify(this.formData)

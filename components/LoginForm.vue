@@ -66,7 +66,10 @@ export default {
     formSubmit() {
         this.formRequest().then( (response) => {
 			      // Redirect to home page
-            this.$router.push('/');
+            console.log("Tokens received: ", response);
+            Cookies.set('token', response.access);
+            Cookies.set('refresh', response.refresh);
+            document.location.href = "/";
       
         }).catch( (error) => {
             console.error('login form could not be sent', error)
@@ -74,7 +77,7 @@ export default {
     },
 
     async formRequest() {
-			return await $fetch(serverUrl+"/login/", { 
+			return await $fetch(serverUrl+"/api/token/", { 
 				headers: {
 					"Content-Type": "application/json",
 				},
