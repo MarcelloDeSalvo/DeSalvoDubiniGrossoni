@@ -17,7 +17,7 @@ class AccountManager(BaseUserManager):
         if not first_name or not last_name:
             raise ValueError('Users must have a name and a surname')
 
-        user = User( email=self.normalize_email(email) )
+        user = User( email=email )
         user.set_password(password)
         user.first_name = first_name
         user.last_name = last_name

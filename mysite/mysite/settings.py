@@ -108,8 +108,6 @@ elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
     }
 
 
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -163,10 +161,9 @@ AUTH_USER_MODEL = 'User.User'
 
 # CORS SETTINGS
 CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = ['https://localhost','https://*.127.0.0.1', 'http://localhost:3000']
 
-
-""" CSRF_TRUSTED_ORIGINS = ['https://localhost','https://*.127.0.0.1', 'http://localhost:3000']
-
+""" 
 CSRF_COOKIE_SECURE = False
 
 SESSION_COOKIE_SECURE = False
@@ -178,7 +175,7 @@ CORS_ALLOW_CREDENTIALS = True """
 # REST FRAMEWORK SETTINGS
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
