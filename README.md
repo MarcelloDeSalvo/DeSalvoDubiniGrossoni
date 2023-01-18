@@ -4,9 +4,9 @@
 We decided to split the main 4 projects in separate branches
 ```bash
 1 - DeSalvoDubiniGrossoni -> Documents
-2 - Front-end -> eMSP + CPMS website
-3 - Back-end -> eMSP backend
-4 - CPMS-Back-end -> CPMS backend
+2 - front-end -> eMSP + CPMS website
+3 - emsp-back-end -> eMSP backend
+4 - cpms-back-end -> CPMS backend
 ```
 
 ## Git worktree
