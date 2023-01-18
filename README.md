@@ -21,14 +21,18 @@ django\Scripts\activate.bat
 
 # 3] clone the repo and switch to the Back-end branch
 git clone https://github.com/MarcelloDeSalvo/DeSalvoDubiniGrossoni
+git worktree add ../cpms-back-end cpms-back-end
+open the new folder
 
 # 4] Install the requirements
 pip install -r requirements.txt
 
-# 5] run the server
+# 5] Make a .env file inside 'mysite/mysite' (see the next chapter)
+
+# 6] run the server
 python manage.py runserver
 
-# 6] test it
+# 7] test it
 http://127.0.0.1:8000
 
 ```
