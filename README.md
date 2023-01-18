@@ -21,6 +21,8 @@ django\Scripts\activate.bat
 
 # 3] clone the repo and switch to the Back-end branch
 git clone https://github.com/MarcelloDeSalvo/DeSalvoDubiniGrossoni
+git worktree add ../cpms-back-end cpms-back-end
+open the new folder
 
 # 4] Install the requirements
 pip install -r requirements.txt
