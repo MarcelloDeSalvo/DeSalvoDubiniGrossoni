@@ -1,19 +1,25 @@
 export default defineNuxtRouteMiddleware(async (to) => {
     // Check if the user is authenticated by calling an API endpoint with nuxt 3's new fetch API
-    if (useCookie('token').value == null)
-        return
-
-    let isAuthenticated = await checkToken()
+    let isAuthenticated = false
     
-    // If the user is not authenticated
-    if (to.path == '/login' && isAuthenticated)
-        document.location.href = '/'
-        
-    if (to.path == '/register' && isAuthenticated)
-        document.location.href = '/'
+    // Ask the server if the user is authenticated
+    isAuthenticated = await checkToken()
 
-    if (to.path == '/home' && !isAuthenticated)
-        document.location.href = '/'
+    const router = useRouter()
+
+    router.beforeResolve((to, from, next) => {
+        // If the user is not authenticated, filter out this routes
+        if (to.path == '/home' && !isAuthenticated)
+            navigateTo('/')
+        // If the user is authenticated, filter out this routes
+        if (to.path == '/login' && isAuthenticated)
+            navigateTo('/')
+            
+        if (to.path == '/register' && isAuthenticated)
+            navigateTo('/')
+
+        next()
+    });
 })
 
 export async function checkToken() {

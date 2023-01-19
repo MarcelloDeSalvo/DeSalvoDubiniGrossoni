@@ -9,12 +9,12 @@
     <form @submit.prevent="formSubmit" >
       <p class="mt-2 text-sm text-gray-400">Please sign in below</p>
       <p class="mt-5 text-sm font-semibold text-gray-500">Email</p>
-      <input class="mt-1 rounded border py-1 px-3 text-sm shadow"
+      <input class="mt-1 rounded border py-1 px-3 text-sm shadow text-gray-900"
         v-model="formData.email" 
         required/>
       <p class="mt-5 text-sm font-semibold text-gray-500">Password</p>
       <input
-        class="mt-1 rounded border py-1 px-3 text-sm text-sm shadow"
+        class="mt-1 rounded border py-1 px-3 text-sm text-sm shadow text-gray-900"
         type="password"
         required
         v-model="formData.password"
