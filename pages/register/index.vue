@@ -132,42 +132,42 @@ export default {
   methods: {
     formSubmit() {
         this.formRequest()
-			.then( (r)  => {
-				console.log(r)
-				let json = JSON.parse(r)
-				console.log("JSON: " +json)
-				let status = r.status
-				console.log("STATUS CODE: " + status)
-				if (status!= 201 && status != 200) {
-					let errors = json
-					let error_str = ""
-					for (let key in errors) {
-						error_str += errors[key] + "\n"
-					}
-					throw new Error(error_str)
+		.then((r) => {
+			let status = r.response.status
+			let json = r.json
+
+			if (status!= 201 && status != 200) {
+				let errors = json
+				let error_str = ""
+				for (let key in errors) {
+					error_str += errors[key] + "\n"
 				}
-				
-				console.log("Success")
-				window.location.href = "/login"
-				
-			}).catch( error => {
-				// Make an error message for every json error key
-				console.log(error.message)
-				this.response = error.message
-			});
+				throw new Error(error_str)
+			}
+
+			this.response = "Account created successfully"
+			document.location.href = "/login"
+
+		}).catch((error) => {
+			console.log(error.message)
+			this.response = error.message
+		})
     },
 
     async formRequest() {
-			let config = useRuntimeConfig()
-			let serverUrl = config.BACKEND_URL
-			return await fetch(serverUrl+"/api/register/", { 
-				headers: {
-					"Content-Type": "application/json",
-				},
-				method: 'POST',
-				body: JSON.stringify(this.formData)
-			} );
-    	}	
-	}
+		let config = useRuntimeConfig()
+		let serverUrl = config.BACKEND_URL
+		const r = await fetch(serverUrl+"/api/register/", { 
+			headers: {
+				"Content-Type": "application/json",
+			},
+			method: 'POST',
+			body: JSON.stringify(this.formData)
+		} );
+
+		const json = await r.json()
+		return { response: r, json: json }
+    }	
+  }
 }
 </script>
