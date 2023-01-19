@@ -70,7 +70,9 @@ export default {
             document.location.href = "/";
       
         }).catch( (error) => {
-            console.error('login form could not be sent', error)
+            // Print every error message by deserializing every json field in response
+
+            console.error('login form could not be sent', JSON.parse(error))
         });
     },
 

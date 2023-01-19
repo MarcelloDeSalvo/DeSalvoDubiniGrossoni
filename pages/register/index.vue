@@ -100,7 +100,7 @@
 								</a>
 							</div>
 							<div class="text-center">
-								<p>
+								<p class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 rounded shadow appearance-none focus:outline-none focus:shadow-outline">
 									{{response}}
 								</p>
 							</div>
@@ -131,19 +131,28 @@ export default {
   },
   methods: {
     formSubmit() {
-        this.formRequest().then( (result) => {
-			// Success
-            console.log(result)
-			if (result.status != 201)
-				throw new Error(result.statusText)
-			
-			this.response = result.statusText
-			window.location.href = "/login"
-			
-        }).catch( (error) => {
-			this.response = error
-            console.error('Registration form could not be sent', error)
-        });
+        this.formRequest()
+			.then( r => r.json())
+			.then( (result) => {
+				// Success
+				console.log(result)
+				if (result.status != 201){
+					let errors = result
+					let error_str = ""
+					for (let key in errors) {
+						error_str += key + ":\n"
+						error_str += errors[key].join("\n") + "\n"
+					}
+					throw new Error(error_str)
+				}
+	
+				window.location.href = "/login"
+				
+			}).catch( error => {
+				// Make an error message for every json error key
+				console.log(error.message)
+				this.response = error.message
+			});
     },
 
     async formRequest() {

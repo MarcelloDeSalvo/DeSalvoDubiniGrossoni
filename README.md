@@ -15,13 +15,16 @@ install Node https://nodejs.org/it/
 # 2] clone the repo
 git clone https://github.com/MarcelloDeSalvo/SE2nuxtjs.git
 
-# 3] install Yarn while inside the root folder
+# 3] make a .env file in the root directory and write
+BACKEND_URL=your_backend_url
+
+# 4] install Yarn while inside the root folder
 npm install --global yarn
 
-# 4] install all dependencies
+# 5] install all dependencies
 yarn
 
-# 5] Start the development server
+# 6] Start the development server
 yarn run dev
 ```
 
