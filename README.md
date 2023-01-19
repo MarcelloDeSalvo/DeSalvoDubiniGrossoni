@@ -49,7 +49,7 @@ DATABASE_PASSWORD=your_db_password
 DATABASE_URL=your_db_url
 DEVELOPMENT_MODE=True if working locally, False otherwise
 DEBUG=True/False
-ALLOWED_HOSTS=[your_allowed_hosts]
+ALLOWED_HOSTS="localhost domain1 domain2 etc.." or "*" to allow all possible domains
 ```
 
 

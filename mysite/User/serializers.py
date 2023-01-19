@@ -40,13 +40,19 @@ class RegisterSerializer(serializers.ModelSerializer):
     return attrs
 
   def create(self, validated_data):
-    user = AccountManager.create_user(
-        self,
-        validated_data['email'],
-        validated_data['first_name'],
-        validated_data['last_name'],
-        validated_data['password'],
-    )
-    return user
+      # try to create user, if exception is raised, return it
+      try:
+          user = AccountManager.create_user(
+              self,
+              validated_data['email'],
+              validated_data['first_name'],
+              validated_data['last_name'],
+              validated_data['password'],
+          )
+          return user
+      except Exception as e:
+          error_message = e.__cause__
+          raise serializers.ValidationError({"error": str(error_message)})
+
 
 
