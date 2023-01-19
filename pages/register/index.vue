@@ -165,8 +165,12 @@ export default {
 			body: JSON.stringify(this.formData)
 		} );
 
-		const json = await r.json()
-		return { response: r, json: json }
+        try{
+          const json = await r.json()
+          return { response: r, json: json }
+        }catch(e){
+          throw new Error("Invalid JSON response - Server Error");
+        }
     }	
   }
 }
