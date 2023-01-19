@@ -132,20 +132,22 @@ export default {
   methods: {
     formSubmit() {
         this.formRequest()
-			.then( r => r.json())
-			.then( (result) => {
-				// Success
-				console.log(result)
-				if (result.status != 201){
-					let errors = result
+			.then( (r)  => {
+				console.log(r)
+				let json = JSON.parse(r)
+				console.log("JSON: " +json)
+				let status = r.status
+				console.log("STATUS CODE: " + status)
+				if (status!= 201 && status != 200) {
+					let errors = json
 					let error_str = ""
 					for (let key in errors) {
-						error_str += key + ":\n"
-						error_str += errors[key].join("\n") + "\n"
+						error_str += errors[key] + "\n"
 					}
 					throw new Error(error_str)
 				}
-	
+				
+				console.log("Success")
 				window.location.href = "/login"
 				
 			}).catch( error => {

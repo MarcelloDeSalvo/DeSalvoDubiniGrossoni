@@ -11,6 +11,9 @@ export default defineNuxtRouteMiddleware(async (to) => {
         
     if (to.path == '/register' && isAuthenticated)
         document.location.href = '/'
+
+    if (to.path == '/home' && !isAuthenticated)
+        document.location.href = '/'
 })
 
 export async function checkToken() {
