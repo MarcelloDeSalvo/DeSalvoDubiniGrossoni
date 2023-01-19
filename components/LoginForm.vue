@@ -44,6 +44,10 @@
           >Sign up</a
         >
       </div>
+      <div class="mt-5 flex items-center">
+        <p class="text-sm font-semibold text-red-500">{{response}}</p>
+        <span class="flex-1" />
+      </div>
     </form>
   </div>
 </template>
@@ -57,36 +61,54 @@ export default {
       formData: {
         email: '',
 		    password: ''
-      }
+      },
+      response: ''
     }
   },
   methods: {
     formSubmit() {
-        this.formRequest().then( (response) => {
-			      // Redirect to home page
-            console.log("Tokens received: ", response);
-            Cookies.set('token', response.access);
-            Cookies.set('refresh', response.refresh);
-            document.location.href = "/";
-      
+        this.formRequest()
+        .then((r) => {
+            let status = r.response.status
+            let json = r.json
+
+            if (status!= 201 && status != 200) {
+              // Redirect to home page
+              let errors = json
+              let error_str = ""
+              for (let key in errors) {
+                error_str += errors[key] + "\n"
+              }
+              throw new Error(error_str)
+            }
+
+            console.log("Tokens received: ", r.response);
+            Cookies.set('token', json.access);
+            Cookies.set('refresh', json.refresh);
+            document.location.href = "/home";
+
         }).catch( (error) => {
             // Print every error message by deserializing every json field in response
-
-            console.error('login form could not be sent', JSON.parse(error))
+            this.response = error.message
+            console.error('login form could not be sent', error.message)
         });
     },
 
     async formRequest() {
-      let config = useRuntimeConfig()
-      let serverUrl = config.BACKEND_URL
-			return await $fetch(serverUrl+"/api/token/", { 
-				headers: {
-					"Content-Type": "application/json",
-				},
-				method: 'POST',
-				body: JSON.stringify(this.formData)
-			} );
-    	}	
+        let config = useRuntimeConfig()
+        let serverUrl = config.BACKEND_URL
+        const r = await fetch(serverUrl+"/api/token/", { 
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: 'POST',
+          body: JSON.stringify(this.formData)
+        } );
+
+        const json = await r.json()
+        return { response: r, json: json }
+      	
+    }
 	}
 }
 </script>
