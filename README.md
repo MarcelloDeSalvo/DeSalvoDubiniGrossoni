@@ -17,6 +17,7 @@ git clone https://github.com/MarcelloDeSalvo/SE2nuxtjs.git
 
 # 3] make a .env file in the root directory and write
 BACKEND_URL=your_backend_url
+ex: BACKEND_URL=http://127.0.0.1:8000
 
 # 4] install Yarn while inside the root folder
 npm install --global yarn
