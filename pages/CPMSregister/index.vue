@@ -12,12 +12,12 @@
 					></div>
 					<!-- Col -->
 					<div class="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
-						<h3 class="pt-4 text-2xl text-center">Create an Account!</h3>
+						<h3 class="pt-4 text-2xl text-center">This page is admin only</h3>
 						<form  @submit.prevent="formSubmit" class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
 							<div class="mb-4 md:flex md:justify-between">
 								<div class="mb-4 md:mr-2 md:mb-0">
 									<label class="block mb-2 text-sm font-bold text-gray-700" for="firstName">
-										First Name
+										CPOW first Name
 									</label>
 									<input
 										class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -28,7 +28,7 @@
 								</div>
 								<div class="md:ml-2">
 									<label class="block mb-2 text-sm font-bold text-gray-700" for="lastName">
-										Last Name
+										CPOW last Name
 									</label>
 									<input
 										class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -40,7 +40,7 @@
 							</div>
 							<div class="mb-4">
 								<label class="block mb-2 text-sm font-semibold text-gray-700" for="email">
-									Email
+									Institutional email
 								</label>
 								<input
 									class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -55,12 +55,12 @@
 										Password
 									</label>
 									<input
-										class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+										class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
 										required v-model="formData.password"
 										type="password"
 										placeholder="******************"
 									/>
-									<p class="text-xs italic text-red-500">Please choose a password.</p>
+							
 								</div>
 								<div class="md:ml-2">
 									<label class="block mb-2 text-sm font-bold text-gray-700" for="c_password">
@@ -76,29 +76,13 @@
 							</div>
 							<div class="mb-6 text-center submit">
 								<button
-									class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+									class="w-full px-4 py-2 font-bold text-white bg-orange-500 rounded-full hover:bg-orange-500 focus:outline-none focus:shadow-outline"
 									type="submit"
 								>
 									Register Account
 								</button>
 							</div>
 							<hr class="mb-6 border-t" />
-							<div class="text-center">
-								<a
-									class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-									href="#"
-								>
-									Forgot Password?
-								</a>
-							</div>
-							<div class="text-center">
-								<a
-									class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-									href="/login"
-								>
-									Already have an account? Login!
-								</a>
-							</div>
 							<div class="text-center">
 								<p class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 rounded shadow appearance-none focus:outline-none focus:shadow-outline">
 									{{response}}
@@ -146,7 +130,7 @@ export default {
 			}
 
 			this.response = "Account created successfully"
-			document.location.href = "/login"
+			document.location.href = "/"
 
 		}).catch((error) => {
 			console.log(error.message)
@@ -156,7 +140,7 @@ export default {
 
     async formRequest() {
 		let config = useRuntimeConfig()
-		let serverUrl = config.EMSP_URL
+		let serverUrl = config.CPMS_URL
 		const r = await fetch(serverUrl+"/api/register/", { 
 			headers: {
 				"Content-Type": "application/json",

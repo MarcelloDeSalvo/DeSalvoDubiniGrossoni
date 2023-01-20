@@ -13,10 +13,10 @@
                   <a href="/register" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">Sign up</a>
                 </li>
                 <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">CPMS Sign in</a>
+                  <a href="/CPMSlogin" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">CPMS Sign in</a>
                 </li>
                 <li>
-                  <a href="/" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">References</a>
+                  <a href="/CPMSregister" class="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200">CPMS Register</a>
                 </li>
               </ul>
             </div>

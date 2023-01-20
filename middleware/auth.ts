@@ -8,10 +8,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
     const router = useRouter()
 
     router.beforeResolve((to, from, next) => {
-        // If the user is not authenticated, filter out this routes
+        // If the user is not authenticated, filter out these routes
         if (to.path == '/home' && !isAuthenticated)
             navigateTo('/')
-        // If the user is authenticated, filter out this routes
+        // If the user is authenticated, filter out these routes
         if (to.path == '/login' && isAuthenticated)
             navigateTo('/')
             
@@ -25,7 +25,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
 export async function checkToken() {
     const token = useCookie('token').value
     let config = useRuntimeConfig()
-    let serverUrl = config.BACKEND_URL
+    let serverUrl = config.EMSP_URL
+
 
     let resp = await fetch(serverUrl + '/api/isLogged/',
     { 
