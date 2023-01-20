@@ -96,7 +96,7 @@ export default {
 
     async formRequest() {
         let config = useRuntimeConfig()
-        let serverUrl = config.BACKEND_URL
+        let serverUrl = config.EMSP_URL
         const r = await fetch(serverUrl+"/api/token/", { 
           headers: {
             "Content-Type": "application/json",

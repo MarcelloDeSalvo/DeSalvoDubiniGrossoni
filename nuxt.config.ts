@@ -9,10 +9,12 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-          BACKEND_URL: process.env.BACKEND_URL,
+          EMSP_URL: process.env.EMSP_URL,
+          CPMS_URL: process.env.CPMS_URL
         },
         private:{
-          BACKEND_URL: process.env.BACKEND_URL,
+          EMSP_URL: process.env.EMSP_URL,
+          CPMS_URL: process.env.CPMS_URL,
         }
     }
 })
