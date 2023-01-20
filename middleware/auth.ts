@@ -58,7 +58,7 @@ export async function checkToken() {
 export async function refreshToken() {
     const token = useCookie('refresh').value
     let config = useRuntimeConfig()
-    let serverUrl = config.BACKEND_URL
+    let serverUrl = config.EMSP_URL
 
     let resp = await fetch(serverUrl + '/api/refresh/',
     { 
