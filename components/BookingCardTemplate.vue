@@ -1,5 +1,5 @@
 <template>
-    <div tabindex="0" class="focus:outline-none bg-color">
+    <div tabindex="0" class="focus:outline-none bg-color flex">
         <div class="mx-auto container py-8">
             <div class="flex flex-wrap items-center lg:justify-between ">
                 <!-- CARD TEMPLATE -->

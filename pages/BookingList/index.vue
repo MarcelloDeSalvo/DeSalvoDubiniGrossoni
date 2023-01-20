@@ -6,6 +6,20 @@
 </template>
 
 <script>
+/*
+the structure of the json is the following
+items:[
+  {Street:
+   City:
+   Time:
+   Date:
+   Socket
+   Title:
+  },
+  {...}
+]
+*/
+
 //ideally we get the data (complete list of bookings) as a JSON object, parse it, then we can just feed them to the 
 let jsonString = '{"items":[{"Street":"Via Napoli 66","City":"Milano","Time":"14:00","Date":"21/02/2022","Socket":"2","Title":"kek"},{"Street":"Via Milan 3","City":"Somma Lombardo","Time":"13:00","Date":"11/02/2022","Socket":"2","Title":"kek"},{"Street":"Via Milan 3","City":"Somma Lombardo","Time":"13:00","Date":"11/02/2022","Socket":"2","Title":"kek"},{"Street":"Via Milan 3","City":"Somma Lombardo","Time":"13:00","Date":"11/02/2022","Socket":"2","Title":"kek"},{"Street":"Via Milan 3","City":"Somma Lombardo","Time":"13:00","Date":"11/02/2022","Socket":"2","Title":"kek"}]}';
 let parsedObject = JSON.parse(jsonString);
@@ -25,7 +39,7 @@ export default {
 /* sets the layout of each card as a grid, default is 4 columns, changes depending on the width of the screen (see settings below)*/
 .booking-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(3, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
@@ -46,6 +60,11 @@ export default {
   @media (min-width: 820px) and (max-width: 1120px) {
     .booking-container {
       grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (min-width: 1121px) and (max-width: 1400px) {
+    .booking-container {
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 

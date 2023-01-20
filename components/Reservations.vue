@@ -9,19 +9,19 @@
                     <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
                         <tr>
                             <th class="p-2">
-                                <div class="font-semibold text-center">Location</div>
+                                <div class="font-semibold text-center"></div>
                             </th>
                             <th class="p-2">
-                                <div class="font-semibold text-center">Socket</div>
+                                <div class="font-semibold text-center"></div>
                             </th>
                             <th class="p-2">
-                                <div class="font-semibold text-center">Date</div>
+                                <div class="font-semibold text-center"></div>
                             </th>
                             <th class="p-2">
-                                <div class="font-semibold text-center">Time</div>
+                                <div class="font-semibold text-center"></div>
                             </th>
                             <th class="p-2">
-                                <div class="font-semibold text-right pl-2">Delete</div>
+                                <div class="font-semibold text-right pl-2"></div>
                             </th>
                         </tr>
                     </thead>
@@ -116,11 +116,7 @@ td:last-child {
 
 
 tr {
-  height: 70px; /* makes the rows of the booking table a little bit taller*/
-}
-
-table {
-  margin-top: 50px; /* leaves a little bit of space between the navbar and the booking table*/
+  height: 50px; /* makes the rows of the booking table a little bit taller*/
 }
 
 
