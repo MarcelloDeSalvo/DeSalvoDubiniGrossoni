@@ -3,15 +3,15 @@
     <!-- Author: FormBold Team -->
     <!-- Learn More: https://formbold.com -->
     <div class="mx-auto w-full max-w-[550px]">
-      <form id="bookingform" method="POST">
+      <form @submit.prevent="formSubmit" id="bookingform" method="POST">
 
         <div class="mb-5">
             <div class="mb-5">
                 <label for="stations" class="mb-3 block text-base font-medium text-blue">Select a charging station</label>
-                <select v-model="selectedStations" @change="onSelectionStationChange"
+                <select v-model="stationIDs" required @change="onSelectionStationChange"
                   form="bookingform" id="stations" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-grey-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                   <!-- TODO: Generate a list of selection based on the incoming json file from the OCPI-->
-                  <option v-for="station in stations" :value="station.address">{{ station.address }}</option>
+                  <option v-for="station in stations" :value="station.id">{{ station.address }}</option>
                 </select>
             </div>
             <div class="mb-5">
@@ -34,6 +34,7 @@
                 Date
               </label>
               <input
+                v-model = "formData.date"
                 type="date"
                 name="date"
                 id="date"
@@ -50,6 +51,7 @@
                 Time
               </label>
               <input
+                v-model = "formData.time"
                 type="time"
                 name="time"
                 id="time"
@@ -72,6 +74,7 @@
 </template>
 
 <script>
+import { fetchApi } from '~~/utils/fetchapi'
 definePageMeta({
   middleware: ['auth']
 })
@@ -79,14 +82,26 @@ definePageMeta({
 export default {
     data() {
       return {
-        selectedStations: null,
         selectableSockets: null,
         selectedSockets: null,
+        stationIDs: null,
+
+        formData: {
+          user: null,
+          stationID: null,
+          socketID: null,
+          cpmsID: null,
+          date: null,
+          time: null
+        },
+
+        response: null,
 
         // Make a JSON example for the OCPI charging stations that contains sockets with their id
         stations: [
           {
             id: 'S1',
+            cpmsID: 'CPMS1',
             address: 'Station 1 address',
             sockets: [
               {
@@ -106,6 +121,7 @@ export default {
           {
             id: 'S2',
             address: 'Station 2 address',
+            cpmsID: 'CPMS2',
             sockets: [
               {
                 id: 'So1',
@@ -124,6 +140,7 @@ export default {
           {
             id: 'S3',
             address: 'Station 3 address',
+            cpmsID: 'CPMS13',
             sockets: [
               {
                 id: 'So1',
@@ -142,19 +159,69 @@ export default {
         ]
       }
     },
+
     methods: {
       onSelectionStationChange(e) {
+        console.log(e.target.value)
         // Update the selected station and give it also the sockets
-        this.selectedStations = e.target.value
-        this.selectableSockets = this.stations.find(station => station.address === e.target.value).sockets
+        this.formData.stationID = e.target.value
+        this.selectableSockets = this.stations.find(station => station.id === e.target.value).sockets
         // Filter the sockets that are available
         this.selectableSockets = this.selectableSockets.filter(socket => socket.status === 'available')
-        console.log(e.target.value)
+        this.formData.cpmsID = this.stations.find(station => station.id === e.target.value).cpmsID
+
       },
       onSelectionSocketChange(e) {
-        this.selectedSockets = e.target.value
+        this.formData.socketID = e.target.value
         console.log(e.target.value)
-      }
-    }    
+      },
+
+      formSubmit() {
+
+        this.formRequest()
+          .then((r) => {
+            let status = r.response.status
+            let json = r.json
+
+            if (status!= 201 && status != 200) {
+              let errors = json
+              let error_str = ""
+              for (let key in errors) {
+                error_str += errors[key] + "\n"
+              }
+              throw new Error(error_str)
+            }
+
+            this.response = "Account created successfully"
+            document.location.href = "/BookingList"
+
+          }).catch((error) => {
+            console.log(error.message)
+            this.response = error.message
+          })
+      },
+
+      async formRequest() {
+        let config = useRuntimeConfig()
+        let serverUrl = config.BACKEND_URL
+        let token = useCookie('token').value
+        const r = await fetch(serverUrl+"/api/registerbooking/", { 
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': 'Bearer ' + token
+          },
+          method: 'POST',
+          body: JSON.stringify(this.formData)
+        } );
+
+        try{
+          const json = await r.json()
+          return { response: r, json: json }
+        }catch(e){
+          throw new Error("Invalid JSON response - Server Error");
+        }
+    }	
+    },
+
 }
 </script>
