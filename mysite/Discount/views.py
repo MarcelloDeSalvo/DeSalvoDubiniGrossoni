@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.response import Response
-from .serializers import BookingSerializer, CreateBookingSerializer
+from .serializers import DiscountSerializer, CreateDiscountSerializer
 from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
@@ -10,30 +10,29 @@ from rest_framework.decorators import (
     authentication_classes,
     permission_classes,
 )
-
 # Create your views here.
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
-class BookingAPIView(generics.RetrieveAPIView):
-    serializer_class = BookingSerializer
+@authentication_classes([])
+@permission_classes([])
+class DiscountAPIView(generics.RetrieveAPIView):
+    serializer_class = DiscountSerializer
 
     def get_object(self):
         return self.request.user
 
 
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
-class RegisterBookingAPIView(generics.CreateAPIView):
-    serializer_class = CreateBookingSerializer
+@authentication_classes([])
+@permission_classes([])
+class RegisterDiscountAPIView(generics.CreateAPIView):
+    serializer_class = CreateDiscountSerializer
 
-    # Return success message after successful registration
+    # Return success message after successful discount add
     def post(self, request, *args, **kwargs):
-        # Add user to request data object
+    
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        booking = serializer.save()
+        discount = serializer.save()
         return Response({
-            "booking": BookingSerializer(booking, context=self.get_serializer_context()).data,
+            "discount": DiscountSerializer(discount, context=self.get_serializer_context()).data,
             "message": "Booking Registered Successfully.",
         })
 

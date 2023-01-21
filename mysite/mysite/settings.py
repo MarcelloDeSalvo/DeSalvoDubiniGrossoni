@@ -42,6 +42,10 @@ print("ALLOWED HOSTS: ", ALLOWED_HOSTS)
 INSTALLED_APPS = [
     'Booking',
     'User',
+    'ChargingStation',
+    'Discount',
+    'Socket',
+    'DSO',
     'corsheaders',  
     'rest_framework', 
     'django.contrib.admin',
