@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import CPMSLoginForm from '~~/components/CPMSLoginForm.vue';
+import CPMSLoginForm from '~/components/CPMSLoginForm.vue'
 
   definePageMeta({
     middleware: ['auth']

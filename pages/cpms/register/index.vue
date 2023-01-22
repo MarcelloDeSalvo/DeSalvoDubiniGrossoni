@@ -130,7 +130,7 @@ export default {
 			}
 
 			this.response = "Account created successfully"
-			document.location.href = "/"
+			document.location.href = "/cpms/home"
 
 		}).catch((error) => {
 			console.log(error.message)
