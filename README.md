@@ -17,7 +17,8 @@ python -m pip install --upgrade pip
 python -m venv django
 
 # 2] activate the environment
-django\Scripts\activate.bat
+django\Scripts\activate.bat [WINDOWS]
+source django/bin/activate [LINUX]
 
 # 3] clone the repo and switch to the Back-end branch
 git clone https://github.com/MarcelloDeSalvo/DeSalvoDubiniGrossoni
@@ -30,10 +31,10 @@ pip install -r requirements.txt
 # 5] Make a .env file inside 'mysite/mysite' (see the next chapter)
 
 # 6] run the server
-python manage.py runserver 
+python manage.py runserver
 
 # 7] test it
-http://127.0.0.1:8001
+http://127.0.0.1:8000
 
 ```
 ## Environment Variables
