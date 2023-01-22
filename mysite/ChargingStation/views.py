@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from rest_framework.response import Response
+
+from mysite.ChargingStation.models import ChargingStation
 from .serializers import ChargingStationSerializer, CreateChargingStationSerializer
 from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -35,3 +37,13 @@ class RegisterChargingStationAPIView(generics.CreateAPIView):
             "message": "Station Registered Successfully.",
         })
 
+
+# Return all charging stations
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([])
+def getChargingStations(request):
+    stations = ChargingStation.objects.all()
+    serializer = ChargingStationSerializer(stations, many=True)
+    return Response(serializer.data)
+    
