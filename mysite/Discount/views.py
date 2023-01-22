@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 
 from Discount.models import Discount
-from .serializers import DiscountSerializer, CreateDiscountSerializer
+from .serializers import DiscountSerializer, CreateDiscountSerializer, DeleteDiscountSerializer
 from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
@@ -12,6 +12,7 @@ from rest_framework.decorators import (
     authentication_classes,
     permission_classes,
 )
+
 # Create your views here.
 @authentication_classes([])
 @permission_classes([])
@@ -37,6 +38,21 @@ class RegisterDiscountAPIView(generics.CreateAPIView):
             "discount": DiscountSerializer(discount, context=self.get_serializer_context()).data,
             "message": "Discount Registered Successfully.",
         })
+
+
+@authentication_classes([])
+@permission_classes([])
+class RemoveDiscountAPIView(generics.DestroyAPIView):
+
+    def delete(self, request):
+        id = request.data['id']
+        discount = Discount.objects.filter(id=id)
+        discount.delete()
+        return Response({
+            "message": "Discount deleted Successfully.",
+        })
+
+    
 
 
 # Return all discounts

@@ -20,6 +20,10 @@ class DiscountManager(models.Model):
         discount.save(using=self._db)
         discount.applied_stations.set(applied_stations)
         return discount
+
+    def delete_discount(self, discount):
+        discount.delete(using=self._db)
+        return discount
     
     pass
         

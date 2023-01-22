@@ -73,3 +73,30 @@ class CreateDiscountSerializer(serializers.ModelSerializer):
             error_message = e.__cause__
             print("EXEPTION", e)
             raise serializers.ValidationError({"error": str(error_message)})
+
+class DeleteDiscountSerializer(serializers.ModelSerializer):
+    _db = 'default'
+
+    class Meta:
+        model = Discount
+        fields = ('id',)
+
+    def validate(self, attrs):
+        if attrs['id'] == None:
+            raise serializers.ValidationError(
+                {"id": "You must select a discount to delete"})
+        return attrs
+
+    def delete(self, validated_data):
+        # try to delete the discount, if exception is raised, return it
+        try:
+            discount = DiscountManager.delete_discount(
+                self,
+                validated_data['id'],
+            )
+            return discount
+
+        except Exception as e:
+            error_message = e.__cause__
+            print("EXEPTION", e)
+            raise serializers.ValidationError({"error": str(error_message)})
