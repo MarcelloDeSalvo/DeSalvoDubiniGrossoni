@@ -29,7 +29,7 @@ export async function fetchApi(method='POST', endpoint, onOk, onKo) {
     }
 }
 
-export async function postRequest( backend, endpoint, formData) {
+export async function postRequest(backend, endpoint, formData) {
     let config = useRuntimeConfig()
     let serverUrl = null
     if (backend == 'emsp' || backend == 'EMSP')
@@ -45,6 +45,34 @@ export async function postRequest( backend, endpoint, formData) {
       },
       method: 'POST',
       body: JSON.stringify(formData)
+    } );
+
+    try {
+        const json = await r.json()
+        return { response: r, json: json }
+    }catch(e){
+        throw new Error("Invalid JSON request");
+    }
+      
+}
+
+export async function deleteRequest(backend, endpoint, id) {
+    let config = useRuntimeConfig()
+    let serverUrl = null
+    if (backend == 'emsp' || backend == 'EMSP')
+        serverUrl = config.EMSP_URL
+    else if (backend == 'cpms' || backend == 'CPMS')
+        serverUrl = config.CPMS_URL
+    else
+        throw new Error("Invalid backend request");
+    
+    
+    const r = await fetch(serverUrl+ "/" +endpoint, { 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: 'DELETE',
+      body: JSON.stringify({id: id})
     } );
 
     try {
