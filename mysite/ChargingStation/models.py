@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class ChargingStationManager(models.Model):
     def create_station(self, address):
-        #print("data in create booking", user, date, time, stationID, socketID, cpmsID)
+        
         station = ChargingStation()
         station.address = address
         station.save(using=self._db)
@@ -16,7 +16,7 @@ class ChargingStationManager(models.Model):
 
 class ChargingStation(models.Model):
  
-    address = models.CharField(max_length=255, default=None)
+    address = models.CharField(max_length=255, default=None, unique=True)
     objects = ChargingStationManager()
     
 

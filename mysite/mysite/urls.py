@@ -29,6 +29,7 @@ urlpatterns = [
     path('', include('Discount.urls')),
     path('', include('Socket.urls')),
     path('', include('Booking.urls')),
+    path('', include('ChargingStation.urls')),
     path('polls/', include('polls.urls')),
     path('api-token-auth', views.obtain_auth_token),
     path('admin/', admin.site.urls),

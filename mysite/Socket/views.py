@@ -11,8 +11,8 @@ from rest_framework.decorators import (
     permission_classes,
 )
 
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
+@authentication_classes([])
+@permission_classes([])
 class RegisterSocketAPIView(generics.CreateAPIView):
     serializer_class = SocketSerializer
 
@@ -23,7 +23,7 @@ class RegisterSocketAPIView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         socket = serializer.save()
         return Response({
-            "booking": SocketSerializer(socket, context=self.get_serializer_context()).data,
-            "message": "Booking Registered Successfully.",
+            "socket": SocketSerializer(socket, context=self.get_serializer_context()).data,
+            "message": "Socket Registered Successfully.",
         })
 

@@ -6,18 +6,19 @@ from Discount.models import Discount, DiscountManager
 class DiscountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Discount
-        fields = ('start_date','end_date','discount_amount')
+        fields = ('start_date','end_date','discount_amount','applied_stations')
 
 class CreateDiscountSerializer(serializers.ModelSerializer):
     _db = 'default'
 
     class Meta:
         model = Discount
-        fields = ('start_date','end_date','discount_amount')
+        fields = ('start_date','end_date','discount_amount','applied_stations')
         extra_kwargs = {
             'start_date' : {'required' : True},
             'end_date': {'required': True},
             'discount_amount': {'required': True},
+            'applied_stations': {'required': True},
         }
 
     def validate(self, attrs):
@@ -37,7 +38,22 @@ class CreateDiscountSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 {"end_date": "You can't end a discount in the past"})
         
+        if attrs['start_date'] == attrs['end_date']:
+            raise serializers.ValidationError(
+                {"end_date": "You can't end a discount in the same day it starts"})
 
+        if attrs['discount_amount'] < 0:
+            raise serializers.ValidationError(
+                {"discount_amount": "You can't apply a negative discount"})
+
+        if attrs['discount_amount'] >= 100:
+            raise serializers.ValidationError(
+                {"discount_amount": "You can't apply a discount higher than 100%"})
+        
+        if attrs['applied_stations'] == None:
+            raise serializers.ValidationError(
+                {"applied_stations": "You must select at least one charging station"})
+                
         return attrs
 
 
@@ -49,6 +65,7 @@ class CreateDiscountSerializer(serializers.ModelSerializer):
                 validated_data['start_date'],
                 validated_data['end_date'],
                 validated_data['discount_amount'],
+                validated_data['applied_stations'],
             )
             return discount
 

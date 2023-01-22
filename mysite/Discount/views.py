@@ -33,6 +33,6 @@ class RegisterDiscountAPIView(generics.CreateAPIView):
         discount = serializer.save()
         return Response({
             "discount": DiscountSerializer(discount, context=self.get_serializer_context()).data,
-            "message": "Booking Registered Successfully.",
+            "message": "Discount Registered Successfully.",
         })
 

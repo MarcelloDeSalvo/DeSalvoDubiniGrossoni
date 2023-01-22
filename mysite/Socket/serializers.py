@@ -22,6 +22,21 @@ class CreateBookingSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, attrs):
+        if attrs['chargingStation'] == None:
+            raise serializers.ValidationError(
+                {"chargingStation": "You must select a charging station"})
+        if attrs['socketType'] == None:
+            raise serializers.ValidationError(
+                {"socketType": "You must select a socket type"})
+        if attrs['socketStatus'] == None:
+            raise serializers.ValidationError(
+                {"socketStatus": "You must select a socket status"})
+        if attrs['price'] <0:
+            raise serializers.ValidationError(
+                {"price": "You can't have a negative price"})
+        if attrs['price'] == None:
+            raise serializers.ValidationError(
+                {"price": "You must select a price"})
         return attrs
     
     def create(self, validated_data):
