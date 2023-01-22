@@ -8,7 +8,7 @@ from ChargingStation.models import ChargingStation, ChargingStationManager
 class ChargingStationSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChargingStation
-        fields = ('address',)
+        fields = ('id', 'address')
 
 class CreateChargingStationSerializer(serializers.ModelSerializer):
     _db = 'default'

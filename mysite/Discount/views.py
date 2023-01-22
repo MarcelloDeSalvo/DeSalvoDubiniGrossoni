@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from rest_framework.response import Response
+
+from Discount.models import Discount
 from .serializers import DiscountSerializer, CreateDiscountSerializer
 from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -36,3 +38,13 @@ class RegisterDiscountAPIView(generics.CreateAPIView):
             "message": "Discount Registered Successfully.",
         })
 
+
+# Return all discounts
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([])
+def getDiscounts(request):
+    discounts = Discount.objects.all()
+    serializer = DiscountSerializer(discounts, many=True)
+    return Response(serializer.data)
+    

@@ -2,5 +2,5 @@ from django.urls import path
 from ChargingStation.views import RegisterChargingStationAPIView
 
 urlpatterns = [
-  path("api/ChargingStation/",RegisterChargingStationAPIView.as_view()),
+  path("api/registerChargingStation/",RegisterChargingStationAPIView.as_view()),
 ]

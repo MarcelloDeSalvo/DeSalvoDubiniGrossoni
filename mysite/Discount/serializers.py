@@ -6,7 +6,7 @@ from Discount.models import Discount, DiscountManager
 class DiscountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Discount
-        fields = ('start_date','end_date','discount_amount','applied_stations')
+        fields = ('id', 'start_date','end_date','discount_amount','applied_stations')
 
 class CreateDiscountSerializer(serializers.ModelSerializer):
     _db = 'default'

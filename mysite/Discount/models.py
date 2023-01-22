@@ -17,8 +17,8 @@ class DiscountManager(models.Model):
         discount.start_date=start_date
         discount.end_date=end_date
         discount.discount_amount=discount_amount
-        discount.applied_stations=applied_stations
         discount.save(using=self._db)
+        discount.applied_stations.set(applied_stations)
         return discount
     
     pass

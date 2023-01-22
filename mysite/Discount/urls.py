@@ -1,6 +1,7 @@
 from django.urls import path
-from Discount.views import RegisterDiscountAPIView
+from Discount.views import RegisterDiscountAPIView, getDiscounts
 
 urlpatterns = [
-  path("api/Discount/",RegisterDiscountAPIView.as_view()),
+  path("api/registerDiscount/",RegisterDiscountAPIView.as_view()),
+  path("api/discounts/",getDiscounts),
 ]
