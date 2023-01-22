@@ -1,23 +1,38 @@
 <template>
     <h1 class="text-center text-5xl mt-8 tracking-wide relative">Discounts</h1>
     <div class="grid grid-flow-col mx-64 mt-8 md:mt-16 ">
-        <DiscountCard v-for="item in items" :key="item.discountID" :discountID="item.discountID" :start_date="item.start_date" :end_date="item.end_date" :discount_amount="item.discount_amount" :applied_stations="item.applied_stations" />
-    </div >   
+        <DiscountCard v-for="item in items" :id="item.id" :start_date="item.start_date" :end_date="item.end_date" :discount_amount="item.discount_amount" :applied_stations="item.applied_stations" />
+    </div >
+    <div class="text-center mt-20">
+        <p class="w-full px-3 py-2 mb-3 text-lm leading-tight text-red-700 rounded appearance-none focus:outline-none focus:shadow-outline">
+            {{response}}
+        </p>
+	</div>
 </template>
 
 <script>
-let jsonString = '{"items":[{"discountID":"1", "start_date":"4/4/4", "end_date":"5/5/5", "discount_amount":"10%", "applied_stations" : [{"station_id": "1"}, {"station_id":"2"}]}, {"discountID":"1", "start_date":"4/4/4", "end_date":"5/5/5", "discount_amount":"30%", "applied_stations" : [{"station_id": "1"}, {"station_id":"2"}]}]}';
-let parsedObject = JSON.parse(jsonString);
+import { getRequest } from '~~/utils/fetchapi';
+
 export default {
     data() {
         return {
-            items: parsedObject.items
+            items: null,
+            response: null
         }
     },
     setup() {
         definePageMeta({
             middleware: ['auth']
         })
+    },
+    async created() {
+        try{
+            let {response, json} = await getRequest('CPMS', 'api/discounts')
+            this.items = json
+        } catch (error) {
+            this.response = error
+            console.error(error)
+        }
     }
 };
 </script>

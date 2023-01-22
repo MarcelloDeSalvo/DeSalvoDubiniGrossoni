@@ -1,4 +1,4 @@
-export function fetchApi(method='POST', endpoint, onOk, onKo) {
+export async function fetchApi(method='POST', endpoint, onOk, onKo) {
     if (method == 'POST') {
         return postRequest(endpoint, onOk, onKo).then((r) => {
             let status = r.response.status
@@ -29,10 +29,17 @@ export function fetchApi(method='POST', endpoint, onOk, onKo) {
     }
 }
 
-export async function postRequest( endpoint, formData) {
+export async function postRequest( backend, endpoint, formData) {
     let config = useRuntimeConfig()
-    let serverUrl = config.BACKEND_URL
-    const r = await fetch(serverUrl+endpoint, { 
+    let serverUrl = null
+    if (backend == 'emsp' || backend == 'EMSP')
+        serverUrl = config.EMSP_URL
+    else if (backend == 'cpms' || backend == 'CPMS')
+        serverUrl = config.CPMS_URL
+    else
+        throw new Error("Invalid backend request");
+    
+    const r = await fetch(serverUrl+ "/" +endpoint, { 
       headers: {
         "Content-Type": "application/json",
       },
@@ -49,10 +56,17 @@ export async function postRequest( endpoint, formData) {
       
 }
 
-export async function getRequest( endpoint ) {
+export async function getRequest( backend , endpoint ) {
     let config = useRuntimeConfig()
-    let serverUrl = config.BACKEND_URL
-    const r = await fetch(serverUrl+endpoint, { 
+    let serverUrl = null
+    if (backend == 'emsp' || backend == 'EMSP')
+        serverUrl = config.EMSP_URL
+    else if (backend == 'cpms' || backend == 'CPMS')
+        serverUrl = config.CPMS_URL
+    else
+        throw new Error("Invalid backend request");
+    
+    const r = await fetch(serverUrl+ "/" +endpoint, { 
       headers: {
         "Content-Type": "application/json",
       },

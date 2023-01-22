@@ -8,7 +8,7 @@
 		  <div class="mb-5">
 			  <div class="mb-5">
 				  <label for="stations" class="mb-3 block text-base font-medium text-blue">Select a charging station</label>
-				  <select multiple v-model="stationIDs" required @change="onSelectionStationChange"
+				  <select multiple v-model="formData.applied_stations" required @change="onSelectionStationChange"
 					form="bookingform" id="stations" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-grey-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
 					<!-- TODO: Generate a list of selection based on the incoming json file from the OCPI-->
 					<option v-for="station in stations" :value="station.id">{{ station.address }}</option>
@@ -20,16 +20,16 @@
 			<div class="w-full px-3 sm:w-1/2">
 			  <div class="mb-5">
 				<label
-				  for="initialDate"
+				  for="start_date"
 				  class="mb-3 block text-base font-medium text-blue"
 				>
 				  Initial Date
 				</label>
 				<input
-				  v-model = "formData.initialDate"
+				  v-model = "formData.start_date"
 				  type="date"
-				  name="initialDate"
-				  id="initialDate"
+				  name="start_date"
+				  id="start_date"
 				  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
 				/>
 			  </div>
@@ -37,16 +37,16 @@
 			<div class="w-full px-3 sm:w-1/2">
 			  <div class="mb-5">
 				<label
-				  for="finalDate"
+				  for="end_date"
 				  class="mb-3 block text-base font-medium text-blue"
 				>
 				  Final Date
 				</label>
 				<input
-				  v-model = "formData.finalDate"
+				  v-model = "formData.end_date"
 				  type="date"
-				  name="finalDate"
-				  id="finalDate"
+				  name="end_date"
+				  id="end_date"
 				  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
 				/>
 			  </div>
@@ -54,16 +54,16 @@
 			<div class="w-full px-3 sm:w-1/2">
 				<div class="mb-5">
 					<label
-					for="amount"
+					for="discount_amount"
 					class="mb-3 block text-base font-medium text-blue"
 					>
-					Amount
+					discount_amount
 					</label>
 					<input
-					v-model = "formData.amount"
-					type="number" step="0.01"
-					name="amount"
-					id="amount"
+					v-model = "formData.discount_amount"
+					type="number"
+					name="discount_amount"
+					id="discount_amount"
 					class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
 					/>
 				</div>
@@ -77,8 +77,14 @@
 			>
 			  Submit
 			</button>
+			<div class="text-center mt-20">
+				<p class="w-full px-3 py-2 mb-3 text-lm leading-tight text-red-700 rounded appearance-none focus:outline-none focus:shadow-outline">
+					{{response}}
+				</p>
+			</div>
 		  </div>
 		</form>
+
 	  </div>
 	</div>
   </template>
@@ -94,10 +100,10 @@
 		  stationIDs: null,
   
 		  formData: {
-			stationID: null,
-			initialDate: null,
-			finalDate: null,
-			amount: null
+			applied_stations: null,
+			start_date: null,
+			end_date: null,
+			discount_amount: null
 		  },
   
 		  response: null,
@@ -105,7 +111,7 @@
 		  // Make a JSON example for the OCPI charging stations that contains sockets with their id
 		  stations: [
 			{
-			  id: 'S1',
+			  id: '1',
 			  cpmsID: 'CPMS1',
 			  address: 'Station 1 address',
 			  sockets: [
@@ -124,7 +130,7 @@
 			  ]
 			},
 			{
-			  id: 'S2',
+			  id: '2',
 			  address: 'Station 2 address',
 			  cpmsID: 'CPMS2',
 			  sockets: [
@@ -143,7 +149,7 @@
 			  ]
 			},
 			{
-			  id: 'S3',
+			  id: '3',
 			  address: 'Station 3 address',
 			  cpmsID: 'CPMS13',
 			  sockets: [
@@ -187,7 +193,7 @@
 			  }
   
 			  this.response = "Account created successfully"
-			  document.location.href = "/BookingList"
+			  document.location.href = "/cpms/viewDiscounts"
   
 			}).catch((error) => {
 			  console.log(error.message)
@@ -197,9 +203,9 @@
   
 		async formRequest() {
 		  let config = useRuntimeConfig()
-		  let serverUrl = config.BACKEND_URL
+		  let serverUrl = config.CPMS_URL
 		  let token = useCookie('token').value
-		  const r = await fetch(serverUrl+"/api/registerbooking/", { 
+		  const r = await fetch(serverUrl+"/api/registerDiscount/", { 
 			headers: {
 			  "Content-Type": "application/json",
 			  'Authorization': 'Bearer ' + token
