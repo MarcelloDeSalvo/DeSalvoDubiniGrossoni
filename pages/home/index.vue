@@ -32,31 +32,47 @@
         </a>
     </div>
     <div class="grid grid-flow-col  gap-8 mt-8 md:mt-16 ">
-        <SimpleCard class="component-class" v-for="(item, index) in items" :key="index" :StationName="item.StationName" :Address="item.Address" :NumberSockets="item.NumberSockets" ></SimpleCard>
+        <SimpleCard class="component-class" v-for="station in stations" 
+            :StationName="station.id" 
+            :Address="station.address" 
+            :NumberSockets="station.nSockets" 
+            :AvailableSockets="station.AvailableSockets"
+            >
+        </SimpleCard>
     </div >   
-    <!--<div class="booking-container">
-        <BookingCardTemplate class="component-class" v-for="(item, index) in items" :key="index" :Street="item.Street"
-            :DateBook="item.Date" :City="item.City" :Time="item.Time" :Date="item.Date" :Socket="item.Socket"
-            :Title="item.Title"></BookingCardTemplate>
-    </div>-->
 </template>
 
 
 
 
 <script>
-let jsonString = '{"items":[{"StationName":"Station1", "NumberSockets":"4", "Address":"Via Milano 4, Napoli 69420", "Price":"€40", "CurrentDiscount":"10%"},{"StationName":"Station1", "NumberSockets":"4", "Address":"Via Milano 4, Napoli 69420", "Price":"€40", "CurrentDiscount":"10%"},{"StationName":"Station1", "NumberSockets":"4", "Address":"Via Milano 4, Napoli 69420", "Price":"€40", "CurrentDiscount":"10%"},{"StationName":"Station1", "NumberSockets":"4", "Address":"Via Milano 4, Napoli 69420", "Price":"€40", "CurrentDiscount":"10%"},{"StationName":"Station1", "NumberSockets":"4", "Address":"Via Milano 4, Napoli 69420", "Price":"€40", "CurrentDiscount":"10%"},{"StationName":"Station1", "NumberSockets":"4", "Address":"Via Milano 4, Napoli 69420", "Price":"€40", "CurrentDiscount":"10%"}]}';
-let parsedObject = JSON.parse(jsonString);
+//let jsonString = '{"items":[{"StationName":"Station1", "NumberSockets":"4", "Address":"Via Milano 4, Napoli 69420", "Price":"€40", "CurrentDiscount":"10%"},{"StationName":"Station1", "NumberSockets":"4", "Address":"Via Milano 4, Napoli 69420", "Price":"€40", "CurrentDiscount":"10%"},{"StationName":"Station1", "NumberSockets":"4", "Address":"Via Milano 4, Napoli 69420", "Price":"€40", "CurrentDiscount":"10%"},{"StationName":"Station1", "NumberSockets":"4", "Address":"Via Milano 4, Napoli 69420", "Price":"€40", "CurrentDiscount":"10%"},{"StationName":"Station1", "NumberSockets":"4", "Address":"Via Milano 4, Napoli 69420", "Price":"€40", "CurrentDiscount":"10%"},{"StationName":"Station1", "NumberSockets":"4", "Address":"Via Milano 4, Napoli 69420", "Price":"€40", "CurrentDiscount":"10%"}]}';
 export default {
     data() {
         return {
-            items: parsedObject.items
+            stations: "",
         }
     },
     setup() {
         definePageMeta({
             middleware: ['auth']
         })
+    },
+    async created() {
+        try{
+            let {response, json} = await getRequest('CPMS', 'api/getChargingStations')
+            this.stations = json
+            // count the number of elements inside 'sockets' for each station
+            this.stations.forEach(station => {
+                station.AvaliableSockets = station.sockets.filter(socket => socket.status == 'Y').length
+                station.nSockets = station.sockets.length
+            });
+
+
+        } catch (error) {
+            this.response = error
+            console.error(error)
+        }
     }
 };
 
