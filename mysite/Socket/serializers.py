@@ -6,18 +6,18 @@ from Socket.models import Socket, SocketManager
 class SocketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Socket
-        fields = ('id','chargingStation', 'socketType', 'socketStatus', 'price')
+        fields = ('id','chargingStation', 'type', 'status', 'price')
 
 class CreateBookingSerializer(serializers.ModelSerializer):
     _db = 'default'
 
     class Meta:
         model = Socket
-        fields = ('chargingStation', 'socketType', 'socketStatus', 'price')
+        fields = ('chargingStation', 'type', 'status', 'price')
         extra_kwargs = {
             'chargingStation' : {'required' : True},
-            'socketType': {'required': True},
-            'socketStatus': {'required': True},
+            'type': {'required': True},
+            'status': {'required': True},
             'price': {'required': True},
         }
 
@@ -25,12 +25,12 @@ class CreateBookingSerializer(serializers.ModelSerializer):
         if attrs['chargingStation'] == None:
             raise serializers.ValidationError(
                 {"chargingStation": "You must select a charging station"})
-        if attrs['socketType'] == None:
+        if attrs['type'] == None:
             raise serializers.ValidationError(
-                {"socketType": "You must select a socket type"})
+                {"type": "You must select a socket type"})
         if attrs['socketStatus'] == None:
             raise serializers.ValidationError(
-                {"socketStatus": "You must select a socket status"})
+                {"status": "You must select a socket status"})
         if attrs['price'] <0:
             raise serializers.ValidationError(
                 {"price": "You can't have a negative price"})
@@ -45,8 +45,8 @@ class CreateBookingSerializer(serializers.ModelSerializer):
             booking = SocketManager.create_booking(
                 self,
                 validated_data['chargingStation'],
-                validated_data['socketType'],
-                validated_data['socketStatus'],
+                validated_data['type'],
+                validated_data['status'],
                 validated_data['price'],
             )
             return booking

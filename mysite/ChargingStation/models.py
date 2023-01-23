@@ -11,6 +11,9 @@ class ChargingStationManager(models.Model):
     
     def get_station_by_id(self, id):
         return self.get(id=id)
+
+    def get_sockets(self, id):
+        return self.get(id=id).sockets.all()
     
     pass
 

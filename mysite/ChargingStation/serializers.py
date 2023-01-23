@@ -2,13 +2,17 @@ from django.shortcuts import render
 import datetime
 from rest_framework import serializers
 from ChargingStation.models import ChargingStation, ChargingStationManager
+from Socket.serializers import SocketSerializer
 
 # keep in mind that there won't be an actual form available for the user to add a station
 # this is just for testing purposes, maybe only available to an admin
+
+# Suitable for the EMSP read only view
 class ChargingStationSerializer(serializers.ModelSerializer):
+    sockets = SocketSerializer(many=True, read_only=True)
     class Meta:
         model = ChargingStation
-        fields = ('id', 'address')
+        fields = ('id', 'address', 'sockets')
 
 class CreateChargingStationSerializer(serializers.ModelSerializer):
     _db = 'default'

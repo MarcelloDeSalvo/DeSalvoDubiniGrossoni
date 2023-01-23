@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 
-from mysite.ChargingStation.models import ChargingStation
+from ChargingStation.models import ChargingStation, ChargingStationManager
 from .serializers import ChargingStationSerializer, CreateChargingStationSerializer
 from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -39,11 +39,22 @@ class RegisterChargingStationAPIView(generics.CreateAPIView):
 
 
 # Return all charging stations
+# Suitable for the EMSP read only view
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([])
 def getChargingStations(request):
     stations = ChargingStation.objects.all()
     serializer = ChargingStationSerializer(stations, many=True)
+    return Response(serializer.data)
+
+# Return a specific charging station
+# Suitable for the EMSP read only view
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([])
+def getChargingStation(request, pk):
+    station = ChargingStation.objects.get(id=pk)
+    serializer = ChargingStationSerializer(station, many=False)
     return Response(serializer.data)
     
