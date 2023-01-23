@@ -107,67 +107,9 @@
 		  },
   
 		  response: null,
-  
-		  // Make a JSON example for the OCPI charging stations that contains sockets with their id
-		  stations: [
-			{
-			  id: '1',
-			  cpmsID: 'CPMS1',
-			  address: 'Station 1 address',
-			  sockets: [
-				{
-				  id: 'So1',
-				  status: 'available'
-				},
-				{
-				  id: 'So2',
-				  status: 'unavailable'
-				},
-				{
-				  id: 'So3',
-				  status: 'available'
-				}
-			  ]
-			},
-			{
-			  id: '2',
-			  address: 'Station 2 address',
-			  cpmsID: 'CPMS2',
-			  sockets: [
-				{
-				  id: 'So1',
-				  status: 'available'
-				},
-				{
-				  id: 'So2',
-				  status: 'available'
-				},
-				{
-				  id: 'So3',
-				  status: 'available'
-				}
-			  ]
-			},
-			{
-			  id: '3',
-			  address: 'Station 3 address',
-			  cpmsID: 'CPMS13',
-			  sockets: [
-				{
-				  id: 'So1',
-				  status: 'available'
-				},
-				{
-				  id: 'So2',
-				  status: 'available'
-				},
-				{
-				  id: 'So3',
-				  status: 'available'
-				}
-			  ]
-			}
-		  ]
+
+  		  stations: null,
+
 		}
 	  },
   
@@ -220,8 +162,17 @@
 		  }catch(e){
 			throw new Error("Invalid JSON response - Server Error");
 		  }
-	  }	
-	  },
+	  	}	
+	},
+	async created() {
+        try{
+            let {response, json} = await getRequest('CPMS', 'api/getChargingStations')
+            this.stations = json
+        } catch (error) {
+            this.response = error
+            console.error(error)
+        }
+    }
   
   }
   </script>

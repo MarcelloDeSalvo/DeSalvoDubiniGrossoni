@@ -19,8 +19,8 @@
                                 <td class="p-3 text-center">{{ socket.price }}</td>
                                 <td class="p-3 text-center">
                                     <!-- If ACTIVE make bg-green, otherwise red-->
-                                    <span v-if="socket.status === 'Available'" class="bg-green-400 text-gray-50 rounded-md px-2">{{ socket.status }}</span>
-                                    <span v-else class="bg-red-400 text-gray-50 rounded-md px-2">{{ socket.status }}</span>
+                                    <span v-if="socket.status === 'Y'" class="bg-green-400 text-gray-50 rounded-md px-2">Available</span>
+                                    <span v-else class="bg-red-400 text-gray-50 rounded-md px-2">Unavailable</span>
                                 </td>
                             </tr>
                         </tbody>

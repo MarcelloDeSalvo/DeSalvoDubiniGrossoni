@@ -2,11 +2,12 @@
 
 
             <div class="border-2 card1 border-gray-50 shadow-lg m-4 p-2">
-                <a href="/BookingList" class="leading-10">
+                <a :href="Redirect" class="leading-10">
                     <div class="flex justify-between items-center">
                         <div>
-                            <p class="text-2xl leading-10" v-text="StationName"></p>
-                            <p class="text-lg leading-10" v-text="NumberSockets"></p>
+                            <p class="text-2xl leading-10">Station - {{  StationName }}</p>
+                            <p class="text-lg leading-10">N° Sockets: {{ NumberSockets }}</p>
+                            <p class="text-lg leading-10">Currently Avaliable: {{ NumberAvailable }}</p>
                         </div>
                         <div>
 
@@ -48,9 +49,18 @@ export default {
             type: String,
             required: true,
         },
+        NumberAvailable: {
+            type: String,
+            required: true,
+        },
         Address: { //Contains the date, Date was already present and might give errors due to ambiguity
             type: String,
             required: true,
+        },
+        Redirect: {
+            type: String,
+            required: true,
+            default: "/BookingList"
         },
     },
 }

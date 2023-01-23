@@ -32,7 +32,7 @@
         </a>
     </div>
     <div class="grid grid-flow-col  gap-8 mt-8 md:mt-16 ">
-    <SimpleCard class="component-class" v-for="(item, index) in items" :key="index" :StationName="item.StationName" :Address="item.Address" :NumberSockets="item.NumberSockets" ></SimpleCard>
+        <SimpleCard class="component-class" v-for="(item, index) in items" :key="index" :StationName="item.StationName" :Address="item.Address" :NumberSockets="item.NumberSockets" ></SimpleCard>
     </div >   
     <!--<div class="booking-container">
         <BookingCardTemplate class="component-class" v-for="(item, index) in items" :key="index" :Street="item.Street"
