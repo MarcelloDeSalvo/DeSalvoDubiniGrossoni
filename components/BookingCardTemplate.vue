@@ -49,11 +49,13 @@
 </template>
 
 <script>
+import { NuxtLayout } from '~~/.nuxt/components';
+
 const BookDate = "" //placeholder
 const BookingID = 12  //placeholder for delete
 export default {
     props: {
-        Street: {   //contains address and civic number
+        Street: {
             type: String,
             required: true,
         },
@@ -61,7 +63,7 @@ export default {
             type: String,
             required: true,
         },
-        DateBook: { //Contains the date, Date was already present and might give errors due to ambiguity
+        DateBook: {
             type: String,
             required: true,
         },
@@ -69,21 +71,22 @@ export default {
             type: String,
             required: true,
         },
-        Socket: {   //contains the socket number
+        Socket: {
             type: String,
             required: true,
         },
-        Title: {    //Contains the booking title
+        Title: {
             type: String,
             required: true,
         },
     },
     methods: {
         handleClick(item) {
-            console.log(2)
+            console.log(2);
             //should handle delete functions
         }
-    }
+    },
+    components: { NuxtLayout }
 }
 </script>
 

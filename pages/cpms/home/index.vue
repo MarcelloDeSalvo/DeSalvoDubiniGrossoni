@@ -28,7 +28,7 @@
             :NumberAvailable="station.AvaliableSockets" 
             :Redirect="'/cpms/viewStationDetails/' + station.id">
         </SimpleCard>
-    </div >   
+    </div >
 </template>
 
 <script>
@@ -41,7 +41,8 @@ export default {
     },
     setup() {
         definePageMeta({
-            middleware: ['auth']
+            middleware: ['auth'],
+            layout: "cpmsnavlayout"
         })
     },
     async created() {
@@ -61,6 +62,7 @@ export default {
         }
     }
 };
+
 </script>
 
 <style>

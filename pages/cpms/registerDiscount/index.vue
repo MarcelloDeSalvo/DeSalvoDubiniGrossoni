@@ -91,7 +91,8 @@
   
   <script>
   definePageMeta({
-	middleware: ['auth']
+	middleware: ['auth'],
+	layout: "cpmsnavlayout"
   })
   // Export default data with a sample of the incoming json file from the OCPI, and a method to generate the list of selection for the form
   export default {

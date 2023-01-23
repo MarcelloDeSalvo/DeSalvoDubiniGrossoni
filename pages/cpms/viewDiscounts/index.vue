@@ -22,7 +22,8 @@ export default {
     },
     setup() {
         definePageMeta({
-            middleware: ['auth']
+            middleware: ['auth'],
+            layout: "cpmsnavlayout"
         })
     },
     async created() {
