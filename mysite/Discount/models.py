@@ -33,7 +33,9 @@ class Discount(models.Model):
     
     objects = DiscountManager()
 
-    applied_stations = models.ManyToManyField(ChargingStation,related_name='applied_stations')
+    applied_stations = models.ManyToManyField(ChargingStation,
+        related_name='applied_stations', 
+        )
     start_date = models.DateField(default=None)
     end_date = models.DateField(default=None)
     discount_amount = models.IntegerField(default=10)

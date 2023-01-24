@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class DsoConfig(AppConfig):
+class EnergyproviderConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'DSO'
+    name = 'EnergyProvider'

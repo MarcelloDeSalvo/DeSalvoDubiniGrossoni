@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'ChargingStation',
     'Discount',
     'Socket',
-    'DSO',
+    'EnergyProvider',
     'corsheaders',  
     'rest_framework', 
     'django.contrib.admin',

@@ -30,6 +30,7 @@ urlpatterns = [
     path('', include('Socket.urls')),
     path('', include('Booking.urls')),
     path('', include('ChargingStation.urls')),
+    path('', include('EnergyProvider.urls')),
     path('polls/', include('polls.urls')),
     path('api-token-auth', views.obtain_auth_token),
     path('admin/', admin.site.urls),

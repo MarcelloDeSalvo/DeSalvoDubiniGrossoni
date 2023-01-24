@@ -20,6 +20,8 @@ class ChargingStationManager(models.Model):
 class ChargingStation(models.Model):
  
     address = models.CharField(max_length=255, default=None, unique=True)
+    activeDso = models.ForeignKey('EnergyProvider.DSO', on_delete=models.DO_NOTHING, related_name='active_dso', default=None)
+    
     objects = ChargingStationManager()
     
 

@@ -22,7 +22,10 @@ class BookingManager(models.Model):
 class Booking(models.Model):
 
     # set fields for a date, a time, a stationID, a userID, a socketID
-    chargingStation = models.ForeignKey('ChargingStation.ChargingStation', on_delete=models.CASCADE, default=None)
+    chargingStation = models.ForeignKey('ChargingStation.ChargingStation', 
+        on_delete=models.CASCADE, 
+        related_name='bookings',
+        default=None)
     user = models.EmailField(
         verbose_name='email address',
         max_length=255,
