@@ -5,33 +5,6 @@
     >
       <div class="relative flex grid items-center grid-cols-2 lg:grid-cols-3">
         <ul class="flex items-center hidden space-x-8 lg:flex">
-          <li>
-            <a
-              href="/"
-              aria-label="Our product"
-              title="Our product"
-              class="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400"
-              >Product</a
-            >
-          </li>
-          <li>
-            <a
-              href="/"
-              aria-label="Our product"
-              title="Our product"
-              class="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400"
-              >Features</a
-            >
-          </li>
-          <li>
-            <a
-              href="/"
-              aria-label="Product pricing"
-              title="Product pricing"
-              class="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-teal-accent-400"
-              >Pricing</a
-            >
-          </li>
         </ul>
         <a
           href="/"
@@ -162,33 +135,6 @@
               </div>
               <nav>
                 <ul class="space-y-4">
-                  <li>
-                    <a
-                      href="/"
-                      aria-label="Our product"
-                      title="Our product"
-                      class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                      >Product</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      aria-label="Our product"
-                      title="Our product"
-                      class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                      >Features</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      aria-label="Product pricing"
-                      title="Product pricing"
-                      class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                      >Pricing</a
-                    >
-                  </li>
                   <li>
                     <a
                       href="/login"
