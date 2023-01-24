@@ -2,11 +2,13 @@ from django.db import models
 
 # Create your models here.
 class ChargingStationManager(models.Model):
-    def create_station(self, address):
+    def create_station(self, address, connected_dsos, active_dso):
         
         station = ChargingStation()
         station.address = address
+        station.active_dso = active_dso
         station.save(using=self._db)
+        station.connected_dsos.set(connected_dsos)
         return station
     
     def get_station_by_id(self, id):
@@ -20,12 +22,13 @@ class ChargingStationManager(models.Model):
 class ChargingStation(models.Model):
  
     address = models.CharField(max_length=255, default=None, unique=True)
-    activeDso = models.ForeignKey('EnergyProvider.DSO', on_delete=models.DO_NOTHING, related_name='active_dso', default=None)
+    connected_dsos = models.ManyToManyField('EnergyProvider.DSO',related_name='connected_dsos')
+    active_dso = models.ForeignKey('EnergyProvider.DSO', on_delete=models.DO_NOTHING, related_name='active_dso', default=None)
     
     objects = ChargingStationManager()
     
 
-    REQUIRED_FIELDS = ['address']
+    REQUIRED_FIELDS = ['address', 'connected_dsos', 'active_dso']
 
     def get_id(self):
         return self.id

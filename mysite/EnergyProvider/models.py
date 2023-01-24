@@ -27,17 +27,11 @@ class EnergyProviderInterface(models.Model):
 
 
 class DSOManager(models.Manager):
-    def create_dso(self,station, name, availability, price):
-        dso = DSO()
-        dso.name = name
-        dso.availability = availability
-        dso.price = price
-        dso.save()
-        dso.station.set(station)
+    def create_dso(self, name, availability, price):
+        dso = self.create(name=name, availability=availability, price=price)
         return dso
 
 class DSO(EnergyProviderInterface):
-    station = models.ManyToManyField(ChargingStation,related_name='connected_dso')
     objects = DSOManager()
 
 class BSSManager(models.Manager):

@@ -11,39 +11,53 @@ from Booking.serializers import BookingSerializer
 #Full Details of a Charging Station
 class ChargingStationSerializer(serializers.ModelSerializer):
     sockets = SocketSerializer(many=True, read_only=True)
-    connected_dso = DSO_Serializer(many=True, read_only=True)
+    connected_dsos = DSO_Serializer(many=True, read_only=True)
     connected_bss = BSS_Serializer(read_only=True)
+    bookings = BookingSerializer(many=True, read_only=True)
     class Meta:
         model = ChargingStation
-        fields = ('id', 'address', 'sockets', 'connected_dso', 'connected_bss')
+        fields = ('id', 'address', 'active_dso', 'sockets', 'connected_dsos', 'connected_bss', 'bookings')
 
+#Same as above, but with less details (suitable for the EMSP)
 class ChargingStationBookingsSerializer(serializers.ModelSerializer):
     bookings = BookingSerializer(many=True, read_only=True)
     class Meta:
         model = ChargingStation
-        fields = ('id', 'address', 'bookings')
+        fields = ('id', 'address', 'sockets', 'bookings')
 
 class CreateChargingStationSerializer(serializers.ModelSerializer):
     _db = 'default'
 
     class Meta:
         model = ChargingStation
-        fields = ('address',)
-        extra_kwargs = {
-            'address' : {'required' : True},
-        }
+        fields = ('address', 'connected_dsos', 'active_dso')
 
     def validate(self, attrs):
         if attrs['address'] == None:
             raise serializers.ValidationError(
                 {"address": "You must select an address"})
+
+        if attrs['connected_dsos'] == None:
+            raise serializers.ValidationError(
+                {"connected_dsos": "You must select at least one DSO"})
+        
+        if attrs['active_dso'] == None:
+            raise serializers.ValidationError(
+                {"active_dso": "You must select an active DSO"})
+
+        if attrs['active_dso'] not in attrs['connected_dsos']:
+            raise serializers.ValidationError(
+                {"active_dso": "The active DSO must be one of the connected DSOs"})
+        
         return attrs
     
     def create(self, validated_data):
         try:
             station = ChargingStationManager.create_station(
                 self,
-                validated_data['address']
+                validated_data['address'],
+                validated_data['connected_dsos'],
+                validated_data['active_dso']
             )
             return station
             
@@ -51,3 +65,5 @@ class CreateChargingStationSerializer(serializers.ModelSerializer):
             error_message = e.__cause__
             print("EXEPTION", e)
             raise serializers.ValidationError({"error": str(error_message)})
+
+# create a class
