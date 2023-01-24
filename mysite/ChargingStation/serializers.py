@@ -13,15 +13,17 @@ class ChargingStationSerializer(serializers.ModelSerializer):
     sockets = SocketSerializer(many=True, read_only=True)
     connected_dsos = DSO_Serializer(many=True, read_only=True)
     connected_bss = BSS_Serializer(read_only=True)
+    bookings = BookingSerializer(many=True, read_only=True)
     class Meta:
         model = ChargingStation
-        fields = ('id', 'address', 'active_dso', 'sockets', 'connected_dsos', 'connected_bss')
+        fields = ('id', 'address', 'active_dso', 'sockets', 'connected_dsos', 'connected_bss', 'bookings')
 
+#Same as above, but with less details (suitable for the EMSP)
 class ChargingStationBookingsSerializer(serializers.ModelSerializer):
     bookings = BookingSerializer(many=True, read_only=True)
     class Meta:
         model = ChargingStation
-        fields = ('id', 'address', 'bookings')
+        fields = ('id', 'address', 'sockets', 'bookings')
 
 class CreateChargingStationSerializer(serializers.ModelSerializer):
     _db = 'default'
