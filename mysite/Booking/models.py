@@ -2,13 +2,13 @@ from django.db import models
 
 class BookingManager(models.Model):
 
-    def create_booking(self, chargingStation, user, date, time):
-        #print("data in create booking", user, date, time, stationID, socketID, cpmsID)
+    def create_booking(self, chargingStation, socket, user, date, time):
         booking = Booking()
         booking.chargingStation = chargingStation
+        booking.socket = socket
         booking.user = user
         booking.date = date
-        booking.time = time
+        booking.time = time       
         booking.save(using=self._db)
         return booking
     
@@ -24,8 +24,11 @@ class Booking(models.Model):
     # set fields for a date, a time, a stationID, a userID, a socketID
     chargingStation = models.ForeignKey('ChargingStation.ChargingStation', 
         on_delete=models.CASCADE, 
-        related_name='bookings',
+        related_name='bookings', 
         default=None)
+    socket = models.ForeignKey('Socket.Socket', 
+        on_delete=models.CASCADE, 
+        related_name='bookingSocket')
     user = models.EmailField(
         verbose_name='email address',
         max_length=255,
@@ -37,7 +40,7 @@ class Booking(models.Model):
     objects = BookingManager()
     
 
-    REQUIRED_FIELDS = ['chargingStation', 'user', 'date', 'time']
+    REQUIRED_FIELDS = ['chargingStation','socket','user', 'date', 'time']
 
     def get_id(self):
         return self.id
@@ -51,6 +54,6 @@ class Booking(models.Model):
     def get_time(self):
         return self.time
 
-    def __str__(self):
-        return "Booking: " + str(self.id) + " - " + str(self.user) + " - " + str(self.date) + " - " + str(self.time)
+   # def __str__(self):
+    #    return "Booking: " + str(self.id) + " - " + str(self.user) + " - " + str(self.date) + " - " + str(self.time)
 

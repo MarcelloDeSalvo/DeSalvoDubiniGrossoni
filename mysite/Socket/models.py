@@ -43,7 +43,3 @@ class Socket(models.Model):
 
     def get_price(self):
         return self.price
-
-
-    def __str__(self):
-       return 
