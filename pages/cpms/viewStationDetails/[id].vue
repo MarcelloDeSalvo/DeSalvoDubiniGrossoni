@@ -1,14 +1,51 @@
 <template>
     <h1 v-text="station.address" class="text-center text-5xl mt-16 tracking-wide relative"></h1>
-     <div>
+    <div>
         <StationSocketDetail :sockets="station.sockets"/>
-     </div>
-     <div class="text-center mt-20">
+    </div>
+    <div class="text-center mt-20">
         <p class="w-full px-3 py-2 mb-3 text-lm leading-tight text-red-700 rounded appearance-none focus:outline-none focus:shadow-outline">
             {{response}}
         </p>
-	  </div>
-     <h1 class="text-center text-4xl mt-16 tracking-wide relative">Energy Providers</h1>   
+    </div>
+    <h1 class="text-center text-4xl tracking-wide relative">Station Battery</h1>
+        <!-- if station.connected_bss is null print something, otherwise display a card-->
+        <div v-if="station.connected_bss == null" class="text-center mt-20">
+            <p class="w-full px-3 py-2 mb-3 text-lm leading-tight text-red-700 rounded appearance-none focus:outline-none focus:shadow-outline">
+                No Battery Connected
+            </p>
+        </div>
+        <div v-else>
+            <div class="flex mt-12 mb-32 justify-center items-center">
+                <BatteryCard :battery="station.connected_bss"/>
+            </div>
+        </div>
+
+    <h1 class="text-center text-4xl mt-16 tracking-wide relative">Energy Providers</h1>
+    <div class="grid grid-flow-col mb-32 mx-64 mt-8 md:mt-16 ">
+        <DsoCard v-for="dso in station.connected_dsos" 
+            :id="dso.id" 
+            :availability="dso.availability"
+            :name="dso.name"
+            :price="dso.price"
+            :is_active="dso.is_active"
+            />
+    </div >
+    <h1 class="text-center text-4xl mt-16 tracking-wide relative">Bookings</h1>
+    <!-- if station.bookings is null print something, otherwise display a card-->
+    <div v-if="bookingLength == 0" class="text-center mt-20">
+        <p class="w-full px-3 py-2 mb-3 mb-64 text-lm leading-tight text-red-700 rounded appearance-none focus:outline-none focus:shadow-outline">
+            No Bookings for this Station
+        </p>
+    </div>
+    <div v-else>
+        <div class="grid grid-flow-col mb-64 mx-64 mt-8 mb-64 md:mt-16 ">
+            <BookingCard v-for="booking in station.bookings" 
+                :booking="booking"
+            />
+        </div >
+    </div>
+
 </template>
 
 <script>
@@ -17,6 +54,7 @@ export default {
         return {
             station: "",
             id: "",
+            bookingLength: 0,
         }
     },
     setup() {
@@ -34,14 +72,26 @@ export default {
     methods: {
         async updateStation() {
             try{
-            this.id = this.$route.params.id
-            console.log("ID", this.id)
-            if (this.id == null)
-                throw new Error("No ID provided")
-        
-            let {response, json} = await getRequest('CPMS', 'api/getChargingStation/'+ this.id +'/')
-            this.station = json
-  
+                this.id = this.$route.params.id
+                console.log("ID", this.id)
+                if (this.id == null)
+                    throw new Error("No ID provided")
+            
+                let {response, json} = await getRequest('CPMS', 'api/getChargingStation/'+ this.id +'/')
+                this.station = json
+
+                // append is_active to each dso in the list if station.active_dso == dso.id
+                for (let i = 0; i < this.station.connected_dsos.length; i++) {
+                    if (this.station.connected_dsos[i].id == this.station.active_dso)
+                        this.station.connected_dsos[i].is_active = true
+                    else
+                        this.station.connected_dsos[i].is_active = false
+                }
+
+                // count bookings
+                this.bookingLength = this.station.bookings.length
+    
+
             } catch (error) {
                 this.response = error
                 console.error(error)
