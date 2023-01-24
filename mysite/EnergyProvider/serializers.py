@@ -7,7 +7,7 @@ from rest_framework import serializers
 class DSO_Serializer(serializers.ModelSerializer):
     class Meta:
         model = DSO
-        fields = ('id', 'station', 'name', 'availability', 'price')
+        fields = ('id', 'name', 'availability', 'price')
 
 class BSS_Serializer(serializers.ModelSerializer):
     class Meta:
@@ -23,7 +23,7 @@ class EnergyProviderInterface_Serializer(serializers.ModelSerializer):
 class RegisterDSOSerializer(DSO_Serializer):
     class Meta:
         model = DSO
-        fields = ('station', 'name', 'availability', 'price')
+        fields = ('name', 'availability', 'price')
 
     def validate(self, attrs):
             
