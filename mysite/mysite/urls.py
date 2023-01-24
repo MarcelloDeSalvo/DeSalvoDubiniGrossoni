@@ -29,6 +29,7 @@ urlpatterns = [
     path('', include('Discount.urls')),
     path('', include('Socket.urls')),
     path('', include('Booking.urls')),
+    path('', include('OCPI.urls')),
     path('', include('ChargingStation.urls')),
     path('', include('EnergyProvider.urls')),
     path('polls/', include('polls.urls')),

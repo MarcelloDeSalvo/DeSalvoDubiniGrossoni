@@ -40,6 +40,7 @@ print("ALLOWED HOSTS: ", ALLOWED_HOSTS)
 # Application definition
 
 INSTALLED_APPS = [
+    'OCPI',
     'Booking',
     'User',
     'ChargingStation',
@@ -165,7 +166,7 @@ AUTH_USER_MODEL = 'User.User'
 
 # CORS SETTINGS
 CORS_ORIGIN_ALLOW_ALL = True
-CSRF_TRUSTED_ORIGINS = ['https://localhost','https://*.127.0.0.1', 'http://localhost:3000', 
+CSRF_TRUSTED_ORIGINS = ['https://localhost','https://*.127.0.0.1', 'http://localhost:3000', 'http://localhost:8000',
                         'https://de-salvo-dubini-grossoni.vercel.app']
 
 """ 

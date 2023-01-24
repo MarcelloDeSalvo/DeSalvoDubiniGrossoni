@@ -1,5 +1,5 @@
 from django.urls import path
-
+from .views import requestChargingStations
 urlpatterns = [
-  path("api/OCPI/")
+  path("OCPI/getChargingStations", requestChargingStations)
 ]
