@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { NuxtLayout } from '~~/.nuxt/components';
+
 
 const BookDate = "" //placeholder
 const BookingID = 12  //placeholder for delete
@@ -86,7 +86,7 @@ export default {
             //should handle delete functions
         }
     },
-    components: { NuxtLayout }
+    
 }
 </script>
 
