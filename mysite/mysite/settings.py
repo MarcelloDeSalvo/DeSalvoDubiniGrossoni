@@ -40,6 +40,8 @@ print("ALLOWED HOSTS: ", ALLOWED_HOSTS)
 # Application definition
 
 INSTALLED_APPS = [
+    'OCPI',
+    'CPMS',
     'Booking',
     'User',
     'corsheaders',  

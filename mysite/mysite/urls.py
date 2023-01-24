@@ -27,6 +27,8 @@ urlpatterns = [
     path('', debug.default_urlconf),
     path('', include('User.urls')),
     path('', include('Booking.urls')),
+    path('', include('CPMS.urls')),
+    path('', include('OCPI.urls')),
     path('polls/', include('polls.urls')),
     path('api-token-auth', views.obtain_auth_token),
     path('admin/', admin.site.urls),
