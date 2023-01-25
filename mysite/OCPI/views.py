@@ -18,20 +18,34 @@ from rest_framework.decorators import (
 @permission_classes([])
 def get_chargingStations(request):
     # Extract the relevant information from the request
-    
-
     # Create the booking request payload
     response = requests.get('http://127.0.0.1:8001/OCPI/getChargingStations')
     #print json content of the response
-    print(response.json())
-   
-    print ("fine response")
+    if response.status_code == 200:
+        # Process the response
+        
+        content = response.content
+        return HttpResponse(content)
+         # return the response
+    else:
+        return HttpResponse("failed to fetch charging stations", status=500)
+
+
+# sends booking data to cpms, return yes if booking is registerd, no otherwise.
+def validate_booking(request, mail):
+    newRequest={
+        "user": mail,
+        "chargingStation": request.data['stationID'],
+        "socket": request.data['socketID'],
+        "time": request.data['time'],
+        "date": request.data['date']
+    }
+    print(newRequest)
+    response = requests.post('http://127.0.0.1:8001/OCPI/makebooking/', data=newRequest)    
     if response.status_code == 200:
         # Process the response
         print(response.json()) # print the response
-        content = response.content
-        return HttpResponse(content)
-        
+        return "yes"
          # return the response
     else:
-        print("did not work :)")
+        return "no"
