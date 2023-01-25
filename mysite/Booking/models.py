@@ -32,7 +32,7 @@ class Booking(models.Model):
     user = models.EmailField(
         verbose_name='email address',
         max_length=255,
-        unique=True,
+        unique=False,
         default=None
     )
     date = models.DateField(default=None)
