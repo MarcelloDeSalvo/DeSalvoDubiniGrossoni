@@ -1,32 +1,28 @@
-export async function fetchApi(method='POST', endpoint, onOk, onKo) {
-    if (method == 'POST') {
-        return postRequest(endpoint, onOk, onKo).then((r) => {
-            let status = r.response.status
-            let json = r.json 
-            
-            if (status!= 201 && status != 200)
-                onKo(r, json)
-            else
-                onOk(r, json)
-            
-        }).catch( (error) => {
-            console.error('login form could not be sent', error.message)
-        });
-                
-    }else if (method == 'GET') {
-        return getRequest(endpoint, onOk, onKo).then((r) => {
-            let status = r.response.status
-            let json = r.json
+export async function request(method, backend, endpoint, formData) {
+    let config = useRuntimeConfig()
+    let serverUrl = null
+    if (backend == 'emsp' || backend == 'EMSP')
+        serverUrl = config.EMSP_URL
+    else if (backend == 'cpms' || backend == 'CPMS')
+        serverUrl = config.CPMS_URL
+    else
+        throw new Error("Invalid backend request");
+    
+    const r = await fetch(serverUrl+ "/" +endpoint, { 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: method,
+      body: JSON.stringify(formData)
+    } );
 
-            if (status!= 201 && status != 200)
-                onKo(r, json)
-            else
-                onOk(r, json)
-            
-        }).catch( (error) => {
-            console.error('login form could not be sent', error.message)
-        }); 
+    try {
+        const json = await r.json()
+        return { response: r, json: json }
+    }catch(e){
+        throw new Error("Invalid JSON request");
     }
+      
 }
 
 export async function postRequest(backend, endpoint, formData) {

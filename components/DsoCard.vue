@@ -7,6 +7,7 @@
           <p class="mt-1 text-sm text-slate-400">Available: {{ availability }}</p>
           <span v-if="is_active" class="bg-green-400 text-gray-50 rounded-md px-2">Active</span>
           <span v-else class="bg-red-400 text-gray-50 rounded-md px-2">Inactive</span>
+          <p v-if="response!=null" class="mt-1 text-sm text-slate-400">{{response}}</p>
 
           <div class="mt-3 flex items-end justify-between">
             <p>
@@ -26,19 +27,23 @@
 </template>
 
 <script>
-import { postRequest } from '~~/utils/fetchapi';
+import { request } from '~~/utils/fetchapi';
 export default {
     data() {
       return {
         formData: {
-          id: '',
+          active_dso: '',
         },
         response: ''
       }
     },
     props: {
         // ('id', 'name', 'availability', 'price')
-        id: {   //contains address and civic number
+        stationId:{
+            type: String,
+            required: true,
+        },
+        id: { 
             type: String,
             required: true,
         },
@@ -61,10 +66,14 @@ export default {
     },
     methods: {
         async activateDSO() {
-            await postRequest('CPMS', 'api/switchActiveDSO', this.formData)
-            // Page refresh
-            window.location.reload();
-      
+            try{
+              this.formData.active_dso = this.id
+              await request('PUT', 'CPMS', 'api/switchDSO/'+this.stationId+'/', this.formData)
+              // Page refresh
+              window.location.reload();
+            }catch(err){
+              this.response = err
+            }
         }
     }
 }
