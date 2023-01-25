@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 
-from Discount.models import Discount
-from .serializers import DSO_Serializer, RegisterDSOSerializer, BSS_Serializer, RegisterBSSSerializer
+from EnergyProvider.models import DSO, BSS
+from ChargingStation.models import ChargingStation
+from .serializers import DSO_Serializer, RegisterDSOSerializer, BSS_Serializer, RegisterBSSSerializer, ToggleBSSSerializer, SwitchDSOSerializer
 from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
@@ -43,3 +44,15 @@ class RegisterBSS(generics.CreateAPIView):
             "bss": RegisterBSSSerializer(bss, context=self.get_serializer_context()).data,
             "message": "BSS Registered Successfully.",
         })
+
+@authentication_classes([])
+@permission_classes([])
+class ToggleBSS(generics.UpdateAPIView):
+    queryset = BSS.objects.all()
+    serializer_class = ToggleBSSSerializer
+
+@authentication_classes([])
+@permission_classes([])
+class SwitchDSO(generics.UpdateAPIView):
+    queryset = ChargingStation.objects.all()
+    serializer_class = SwitchDSOSerializer
