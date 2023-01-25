@@ -36,7 +36,8 @@
             :StationName="station.id" 
             :Address="station.address" 
             :NumberSockets="station.nSockets" 
-            :AvailableSockets="station.AvailableSockets"
+            :NumberAvailable="station.AvailableSockets"
+            :Redirect="'/home' + station.id"
             >
         </SimpleCard>
     </div >   
@@ -60,11 +61,14 @@ export default {
     },
     async created() {
         try{
-            let {response, json} = await getRequest('CPMS', 'api/getChargingStations')
+            let {response, json} = await getRequest('emsp', 'OCPI/getChargingStations')
             this.stations = json
+            
             // count the number of elements inside 'sockets' for each station
             this.stations.forEach(station => {
-                station.AvaliableSockets = station.sockets.filter(socket => socket.status == 'Y').length
+                // count the number of available sockets for each
+                station.AvailableSockets = station.sockets.filter(socket => socket.status == 'Y').length
+                
                 station.nSockets = station.sockets.length
             });
 

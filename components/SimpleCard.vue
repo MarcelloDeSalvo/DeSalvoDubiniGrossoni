@@ -42,15 +42,16 @@
 export default {
     props: {
         StationName: {   //contains address and civic number
-            type: String,
+            //set type to int
+            type: Number,
             required: true,
         },
         NumberSockets: {
-            type: String,
+            type: Number,
             required: true,
         },
         NumberAvailable: {
-            type: String,
+            type: Number,
             required: true,
         },
         Address: { //Contains the date, Date was already present and might give errors due to ambiguity
