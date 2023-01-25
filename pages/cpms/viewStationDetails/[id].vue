@@ -24,6 +24,7 @@
     <h1 class="text-center text-4xl mt-16 tracking-wide relative">Energy Providers</h1>
     <div class="grid grid-flow-col mb-32 mx-64 mt-8 md:mt-16 ">
         <DsoCard v-for="dso in station.connected_dsos" 
+            :stationId="station.id"
             :id="dso.id" 
             :availability="dso.availability"
             :name="dso.name"

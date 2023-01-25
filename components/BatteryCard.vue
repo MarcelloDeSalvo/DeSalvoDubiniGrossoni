@@ -30,12 +30,12 @@
 </template>
 
 <script>
-import { postRequest } from '~~/utils/fetchapi';
+import { request } from '~~/utils/fetchapi';
 export default {
     data() {
       return {
         formData: {
-          id: '',
+          pk: '',
         },
         response: ''
       }
@@ -49,7 +49,8 @@ export default {
     },
     methods: {
         async toggleBSS() {
-            await postRequest('CPMS', 'api/toggleBSS', this.formData)
+            this.formData.pk = this.battery.id
+            await request('PUT', 'CPMS', 'api/toggleBSS/'+this.battery.id+'/', this.formData)
             window.location.reload();
         }
     }
