@@ -103,7 +103,6 @@ export default {
       this.selectableSockets = this.stations.find(station => station.id == e.target.value).sockets
       // Filter the sockets that are available
       this.formData.cpmsID = this.stations.find(station => station.id === e.target.value).cpmsID
-
     },
     onSelectionSocketChange(e) {
       this.formData.socketID = e.target.value

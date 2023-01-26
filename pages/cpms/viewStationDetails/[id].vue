@@ -40,7 +40,7 @@
         </p>
     </div>
     <div v-else>
-        <div class="grid grid-flow-col mb-64 mx-64 mt-8 mb-64 md:mt-16 ">
+        <div class="grid grid-flow-col mb-64 mt-8 mb-64 md:mt-16 ">
             <BookingCard v-for="booking in station.bookings" 
                 :booking="booking"
             />
@@ -101,3 +101,37 @@ export default {
     }
 };
 </script>
+
+<style>
+
+.grid-flow-col {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  grid-auto-flow: row;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+ /* leave margin on the left and right of the grid */
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+/* this settings change the number of cards per row based on how wide is the screen, it should never "overflow" on one side*/
+@media (max-width: 700px) {
+    .grid-flow-col {
+  grid-template-columns: repeat(1, 1fr);
+}
+}
+
+@media (min-width: 701px) and (max-width: 1000px) {
+    .grid-flow-col {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1001px) and (max-width: 1400px) {
+    .grid-flow-col {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+</style>

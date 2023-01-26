@@ -9,24 +9,14 @@
                             <p class="text-lg leading-10">N° Sockets: {{ NumberSockets }}</p>
                             <p class="text-lg leading-10">Currently Avaliable: {{ NumberAvailable }}</p>
                         </div>
-                        <div>
-
-                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
-                            </svg>
-
-                        </div>
+                    
                     </div>
                     <div class="border-t-2 border-white"></div>
                     <div class="flex justify-between items-center">
                         <p class="text-sm leading-10" v-text="Address"></p>
                         <i>
-                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            <svg  width="17" height="17" fill="currentColor" class="bi bi-pin-map-fill" viewBox="1 -2 18 18">
+                                <path fill-rule="evenodd" d="M3.1 11.2a.5.5 0 0 1 .4-.2H6a.5.5 0 0 1 0 1H3.75L1.5 15h13l-2.25-3H10a.5.5 0 0 1 0-1h2.5a.5.5 0 0 1 .4.2l3 4a.5.5 0 0 1-.4.8H.5a.5.5 0 0 1-.4-.8l3-4z"/> <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999z"/>
                             </svg>
                         </i>
                     </div>

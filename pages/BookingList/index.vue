@@ -49,7 +49,7 @@ export default {
       this.items = json
       //for each address in items, add a string in front of it
       this.items.forEach(item => {
-        item.stationAddress = "Indirizzo " + item.stationAddress
+        item.stationAddress = "Indirizzo: " + item.stationAddress
       });
       //for each stationID in items, change it with an increasing number
       this.items.forEach(item => {
@@ -58,6 +58,10 @@ export default {
       //add booking in front of each station ID in items
       this.items.forEach(item => {
         item.stationID = "Booking number " + item.stationID
+      });
+      //for each socketID in items, add a string in front of it
+      this.items.forEach(item => {
+        item.socketID = "Socket number: " + item.socketID
       });
       console.log(this.items)
     } catch (e) {
@@ -75,10 +79,14 @@ export default {
 /* sets the layout of each card as a grid, default is 4 columns, changes depending on the width of the screen (see settings below)*/
 .booking-container {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  grid-auto-flow: row;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+ /* leave margin on the left and right of the grid */
+  margin-left: 10%;
+  margin-right: 10%;
 
 }
 
@@ -91,19 +99,19 @@ export default {
 
 @media (min-width: 500px) and (max-width: 819px) {
   .booking-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
 @media (min-width: 820px) and (max-width: 1120px) {
   .booking-container {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1121px) and (max-width: 1400px) {
   .booking-container {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
