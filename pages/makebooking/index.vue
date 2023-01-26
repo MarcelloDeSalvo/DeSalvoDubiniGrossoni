@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { fetchApi } from '~~/utils/fetchapi'
+import { getRequest } from '~~/utils/fetchapi'
 definePageMeta({
   middleware: ['auth']
 })
