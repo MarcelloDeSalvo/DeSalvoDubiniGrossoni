@@ -2,17 +2,13 @@ export default defineNuxtRouteMiddleware(async (to) => {
     // Check if the user is authenticated by calling an API endpoint with nuxt 3's new fetch API
     let isAuthenticated = false
 
-/*     //If the user has a token, but the token is invalid, try to refresh the token
-    if (useCookie('token').value != null) {
-        isAuthenticated = await refreshToken()
-        if (!isAuthenticated){
-            const tokenCookie = useCookie('token')
-            tokenCookie.value = null
-        }
-    } */
-    
     // Ask the server if the user is authenticated
     isAuthenticated = await checkToken()
+
+    if (!isAuthenticated) {
+        // If the user has not a valid token, try to refresh the token
+        isAuthenticated = await refreshToken()
+    }
 
     const router = useRouter()
 
@@ -56,19 +52,28 @@ export async function checkToken() {
 }
   
 export async function refreshToken() {
-    const token = useCookie('refresh').value
+    const refresh = useCookie('refresh').value
     let config = useRuntimeConfig()
     let serverUrl = config.EMSP_URL
 
-    let resp = await fetch(serverUrl + '/api/refresh/',
+    let resp = await fetch(serverUrl + '/api/token/refresh/',
     { 
         headers: {
-            'Authorization': 'Bearer ' + token
+            "Content-Type": "application/json",
         },
         method: 'POST',
+        body: JSON.stringify({refresh: refresh})
     })
-    .then((res) => {
-        return (res.status == 200) ? true : false
+    .then(async (res) => {
+       if (res.status == 200){
+            const jsonResp = await res.json()
+            const token = jsonResp.access
+            console.log(token)
+            useCookie('token').value = token
+            return true
+        } else {
+            return false
+       }
     })
     .catch(() => false)
 
