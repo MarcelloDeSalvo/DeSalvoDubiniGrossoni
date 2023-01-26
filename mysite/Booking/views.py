@@ -5,7 +5,8 @@ from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
 from rest_framework.permissions import IsAuthenticated
-from OCPI.views import validate_booking
+from OCPI.views import validate_booking, validate_delete
+from .models import Booking
 from rest_framework.decorators import (
     api_view,
     authentication_classes,
@@ -51,4 +52,38 @@ class RegisterBookingAPIView(generics.CreateAPIView):
             })
         
       
+# Return bookings by user
+#problem, stations are stored as an ID, not with address.
+@api_view(['GET'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def getBookingsByUser(request):
+    User = request.user
+    reservations = Booking.objects.filter(user=User)
 
+    print (reservations)
+    serializer = BookingSerializer(reservations, many=True)
+    return Response(serializer.data)
+
+
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+class RemoveBookingAPIView(generics.DestroyAPIView):
+
+    def delete(self, request):
+        id = request.data['id']
+
+        reservation = Booking.objects.filter(id=id).first()
+        #extract user, station, socket, time, date from reservation
+        #send to OCPI interface to delete booking on cpms side
+        print (reservation)
+        serverAnswer = validate_delete(reservation.get_user().get_email(), reservation.get_stationID(), reservation.get_socketID(), reservation.get_time(), reservation.get_date())
+        if(serverAnswer == "yes"):
+            reservation.delete()
+            return Response({
+                "message": "Discount deleted Successfully.",
+            })
+        else:
+            return Response({
+                "message": "Discount deletion failed.",
+            })

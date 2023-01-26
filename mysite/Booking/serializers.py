@@ -5,21 +5,22 @@ from Booking.models import Booking, BookingManager
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields = ('id', 'user', 'date', 'time', 'stationID', 'socketID', 'cpmsID')
+        fields = ('id', 'user', 'date', 'time', 'stationID', 'socketID', 'cpmsID', 'stationAddress')
 
 class CreateBookingSerializer(serializers.ModelSerializer):
     _db = 'default'
 
     class Meta:
         model = Booking
-        fields = ('user', 'date', 'time', 'stationID', 'socketID', 'cpmsID')
+        fields = ('user', 'date', 'time', 'stationID', 'socketID', 'cpmsID', 'stationAddress')
         extra_kwargs = {
             'user': {'required': True},
             'date': {'required': True},
             'time': {'required': True},
             'stationID': {'required': True},
             'socketID': {'required': True},
-            'cpmsID': {'required': True}
+            'cpmsID': {'required': True},
+            'stationAddress': {'required': True}
         }
 
     def validate(self, attrs):
@@ -38,7 +39,8 @@ class CreateBookingSerializer(serializers.ModelSerializer):
                 validated_data['time'],
                 validated_data['stationID'],
                 validated_data['socketID'],
-                validated_data['cpmsID']
+                validated_data['cpmsID'],
+                validated_data['stationAddress']
             )
             return booking
         except Exception as e:

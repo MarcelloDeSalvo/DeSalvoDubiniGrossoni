@@ -2,7 +2,7 @@ from django.db import models
 
 class BookingManager(models.Model):
 
-    def create_booking(self, user, date, time, stationID, socketID, cpmsID):
+    def create_booking(self, user, date, time, stationID, socketID, cpmsID, stationAddress):
         #print("data in create booking", user, date, time, stationID, socketID, cpmsID)
         booking = Booking()
         booking.user = user
@@ -11,6 +11,7 @@ class BookingManager(models.Model):
         booking.stationID = stationID
         booking.socketID = socketID
         booking.cpmsID = cpmsID 
+        booking.stationAddress = stationAddress
         booking.save(using=self._db)
         return booking
     
@@ -33,12 +34,13 @@ class Booking(models.Model):
     date = models.DateField(default=None)
     time = models.TimeField(default=None)
     stationID = models.CharField(max_length=20, default=None)
+    stationAddress = models.CharField(max_length=100, default=None)
     socketID = models.CharField(max_length=20, default=None)
     cpmsID = models.CharField(max_length=20, default=None)
     objects = BookingManager()
     
 
-    REQUIRED_FIELDS = ['user', 'date', 'time', 'stationID', 'socketID', 'cpmsID']
+    REQUIRED_FIELDS = ['user', 'date', 'time', 'stationID', 'socketID', 'cpmsID', 'stationAddress']
 
     def get_id(self):
         return self.id
@@ -61,7 +63,10 @@ class Booking(models.Model):
     def get_cpmsID(self):
         return self.cpmsID
 
+    def get_stationAddress(self):
+        return self.stationAddress
+
     def __str__(self):
-        return "Booking: " + str(self.id) + " - " + str(self.date) + " - " + str(self.time) + " - " + str(self.stationID) + " - " + str(self.user) + " - " + str(self.socketID)
+        return "Booking: " + str(self.id) + " - " + str(self.date) + " - " + str(self.time) + " - " + str(self.stationID) + " - " + str(self.user) + " - " + str(self.socketID + " - " + str(self.stationAddress))
 
     

@@ -49,3 +49,23 @@ def validate_booking(request, mail):
          # return the response
     else:
         return "no"
+
+
+# delete booking from cpms, return yes if booking is deleted, no otherwise.
+def validate_delete(mail, stationId, socketId, time, date):
+    newRequest={
+        "email": mail,
+        "chargingStation": stationId,
+        "socket": socketId,
+        "time": time,
+        "date": date
+    }
+    print(newRequest)
+    response = requests.delete('http://127.0.0.1:8001/OCPI/deleteBooking/', data=newRequest)
+    if response.status_code == 200:
+        # Process the response
+        print(response.json()) # print the response
+        return "yes"
+         # return the response
+    else:
+        return "no"
