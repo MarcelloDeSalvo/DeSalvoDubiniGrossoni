@@ -68,7 +68,7 @@ export async function refreshToken() {
        if (res.status == 200){
             const jsonResp = await res.json()
             const token = jsonResp.access
-            console.log(token)
+            //console.log(token)
             useCookie('token').value = token
             return true
         } else {
