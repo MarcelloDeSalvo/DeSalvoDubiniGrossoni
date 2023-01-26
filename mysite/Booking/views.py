@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from .serializers import BookingSerializer, CreateBookingSerializer
 from rest_framework import generics
+from .models import Booking
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
 from rest_framework.permissions import IsAuthenticated
@@ -37,3 +38,16 @@ class RegisterBookingAPIView(generics.CreateAPIView):
             "message": "Booking Registered Successfully.",
         })
 
+
+@authentication_classes([])
+@permission_classes([])
+class RemoveBookingAPIView(generics.DestroyAPIView):
+
+    def delete(self, request):
+        
+        reservation = Booking.objects.filter(time=request.data['time'], date=request.data['date'], user=request.data['email'], chargingStation=request.data['chargingStation'], socket=request.data['socket']).first()
+        reservation.delete()
+        return Response({
+            "message": "Discount deleted Successfully.",
+        })
+    
