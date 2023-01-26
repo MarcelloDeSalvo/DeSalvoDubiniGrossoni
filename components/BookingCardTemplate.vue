@@ -12,7 +12,6 @@
                             <div class="flex items-center">
                                 <h2 tabindex="0" class="focus:outline-none text-lg font-semibold" v-text="Title"></h2>
                             </div>
-                            <p tabindex="0" class="focus:outline-none text-xs text-gray-600 mt-2" v-text="City"></p>
                             <p tabindex="0" class="focus:outline-none text-xs text-gray-600 mt-2" v-text="Street"></p>
                             <p tabindex="0" class="focus:outline-none text-xs text-gray-600 mt-2" v-text="Socket"></p>
                             <div class="flex mt-4">
@@ -27,7 +26,7 @@
                                         v-text="Time"></p>
                                 </div>
                                 <div class="pl-2">
-                                    <button class="font-semibold" @click="handleClick(item)">
+                                    <button class="font-semibold" @click="handleClick(BookingID)">
                                         <svg width="16" height="16" fill="#cc0000" class="bi bi-trash" 
                                             viewBox="0 0 16 16">
                                             <path
@@ -50,16 +49,15 @@
 
 <script>
 
-
+import {deleteRequestWithToken} from '~~/utils/fetchapi'
 const BookDate = "" //placeholder
-const BookingID = 12  //placeholder for delete
 export default {
     props: {
-        Street: {
-            type: String,
+        BookingID: {
+            type: Number,
             required: true,
         },
-        City: {
+        Street: {
             type: String,
             required: true,
         },
@@ -81,9 +79,10 @@ export default {
         },
     },
     methods: {
-        handleClick(item) {
-            console.log(2);
-            //should handle delete functions
+        async handleClick(BookingID) {
+            await deleteRequestWithToken('emsp', 'api/removeBooking', BookingID)
+            // Page refresh
+            window.location.reload();
         }
     },
     

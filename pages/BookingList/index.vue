@@ -1,8 +1,9 @@
 <template>
-        <div class="booking-container">
-          <BookingCardTemplate class="component-class" v-for="(item, index) in items" :key="index" :Street="item.Street" :DateBook="item.Date" :City="item.City"
-            :Time="item.Time" :Date="item.Date" :Socket="item.Socket" :Title="item.Title"></BookingCardTemplate>
-        </div>
+  <div class="booking-container">
+    <BookingCardTemplate class="component-class" v-for="(item, index) in items" :key="index" :Street="item.stationAddress"
+      :DateBook="item.date"  :Time="item.time" :Date="item.date" :Socket="item.socketID" :BookingID="item.id"
+      :Title="item.stationID"></BookingCardTemplate>
+  </div>
 </template>
 
 <script>
@@ -21,14 +22,49 @@ items:[
 */
 
 //ideally we get the data (complete list of bookings) as a JSON object, parse it, then we can just feed them to the 
-let jsonString = '{"items":[{"Street":"Via Napoli 66","City":"Milano","Time":"14:00","Date":"21/02/2022","Socket":"2","Title":"kek"},{"Street":"Via Milan 3","City":"Somma Lombardo","Time":"13:00","Date":"11/02/2022","Socket":"2","Title":"kek"},{"Street":"Via Milan 3","City":"Somma Lombardo","Time":"13:00","Date":"11/02/2022","Socket":"2","Title":"kek"},{"Street":"Via Milan 3","City":"Somma Lombardo","Time":"13:00","Date":"11/02/2022","Socket":"2","Title":"kek"},{"Street":"Via Milan 3","City":"Somma Lombardo","Time":"13:00","Date":"11/02/2022","Socket":"2","Title":"kek"}]}';
-let parsedObject = JSON.parse(jsonString);
 
+
+import { getRequest } from '~~/utils/fetchapi'
 export default {
   data() {
     return {
-      items: parsedObject.items
+      items: null,
     }
+  },
+  async created() {
+
+    let config = useRuntimeConfig()
+    let serverUrl = config.EMSP_URL
+    let token = useCookie('token').value
+    const r = await fetch(serverUrl + "/api/getBookings", {
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + token
+      },
+      method: 'GET',
+    });
+
+    try {
+      const json = await r.json()
+      this.items = json
+      //for each address in items, add a string in front of it
+      this.items.forEach(item => {
+        item.stationAddress = "Indirizzo " + item.stationAddress
+      });
+      //for each stationID in items, change it with an increasing number
+      this.items.forEach(item => {
+        item.stationID = this.items.indexOf(item) + 1
+      });
+      //add booking in front of each station ID in items
+      this.items.forEach(item => {
+        item.stationID = "Booking number " + item.stationID
+      });
+      console.log(this.items)
+    } catch (e) {
+      throw new Error("Invalid JSON response - Server Error");
+    }
+
+
   },
 };
 
@@ -46,33 +82,35 @@ export default {
 
 }
 
-/* this settings change the number of cards per row based on how wide is the screen, it should never "overflow" on one side*/ 
+/* this settings change the number of cards per row based on how wide is the screen, it should never "overflow" on one side*/
 @media (max-width: 499px) {
-    .booking-container {
-      grid-template-columns: repeat(1, 1fr);
-    }
+  .booking-container {
+    grid-template-columns: repeat(1, 1fr);
   }
-  @media (min-width: 500px) and (max-width: 819px) {
-    .booking-container {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  @media (min-width: 820px) and (max-width: 1120px) {
-    .booking-container {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  @media (min-width: 1121px) and (max-width: 1400px) {
-    .booking-container {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-/* IT CAN HIGHLIGHT THE BORDER OF EACH CARD, HIDDEN DUE TO COLOR SAME AS BG */
-  .component-class {
-  border: 5px solid rgb(255, 255, 255);
-  border-radius: 2%;
-  
 }
 
+@media (min-width: 500px) and (max-width: 819px) {
+  .booking-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 820px) and (max-width: 1120px) {
+  .booking-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1121px) and (max-width: 1400px) {
+  .booking-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* IT CAN HIGHLIGHT THE BORDER OF EACH CARD, HIDDEN DUE TO COLOR SAME AS BG */
+.component-class {
+  border: 5px solid rgb(255, 255, 255);
+  border-radius: 2%;
+
+}
 </style>

@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { fetchApi } from '~~/utils/fetchapi'
+import { getRequest } from '~~/utils/fetchapi'
 definePageMeta({
   middleware: ['auth']
 })
@@ -71,6 +71,7 @@ export default {
       formData: {
         user: null,
         stationID: null,
+        stationAddress: null,
         socketID: null,
         cpmsID: null,
         date: null,
@@ -98,6 +99,7 @@ export default {
       console.log(e.target.value)
       // Update the selected station and give it also the sockets
       this.formData.stationID = e.target.value
+      this.formData.stationAddress = this.stations.find(station => station.id == e.target.value).address
       this.selectableSockets = this.stations.find(station => station.id == e.target.value).sockets
       // Filter the sockets that are available
       this.formData.cpmsID = this.stations.find(station => station.id === e.target.value).cpmsID
