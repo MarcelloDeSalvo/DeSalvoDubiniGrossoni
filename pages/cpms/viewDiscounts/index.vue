@@ -28,7 +28,7 @@ export default {
     },
     async created() {
         try{
-            let {response, json} = await getRequest('CPMS', 'api/discounts')
+            let {response, json} = await getRequest('CPMS', 'api/discounts/')
             this.items = json
         } catch (error) {
             this.response = error

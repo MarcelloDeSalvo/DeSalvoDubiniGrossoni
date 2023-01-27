@@ -56,7 +56,8 @@ export default {
     },
     setup() {
         definePageMeta({
-            middleware: ['auth']
+            middleware: ['auth'],
+            layout: "emspnavlayout"
         })
     },
     async created() {

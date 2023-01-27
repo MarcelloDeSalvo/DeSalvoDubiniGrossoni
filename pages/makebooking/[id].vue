@@ -62,9 +62,7 @@
 
 <script>
 import { getRequest } from '~~/utils/fetchapi'
-definePageMeta({
-  middleware: ['auth']
-})
+
 // Export default data with a sample of the incoming json file from the OCPI, and a method to generate the list of selection for the form
 export default {
   data() {
@@ -88,6 +86,12 @@ export default {
       // Make a JSON example for the OCPI charging stations that contains sockets with their id
       stations: ""
     }
+  },
+  setup() {
+        definePageMeta({
+            middleware: ['auth'],
+            layout: "emspnavlayout"
+        })
   },
   async created() {
     try {
