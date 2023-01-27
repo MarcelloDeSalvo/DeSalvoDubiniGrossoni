@@ -50,6 +50,11 @@
             Submit
           </button>
         </div>
+        <div class="text-center mt-20">
+          <p class="w-full px-3 py-2 mb-3 text-lm leading-tight text-red-700 rounded appearance-none focus:outline-none focus:shadow-outline">
+            {{response}}
+          </p>
+			  </div>
       </form>
     </div>
   </div>
@@ -57,9 +62,7 @@
 
 <script>
 import { getRequest } from '~~/utils/fetchapi'
-definePageMeta({
-  middleware: ['auth']
-})
+
 // Export default data with a sample of the incoming json file from the OCPI, and a method to generate the list of selection for the form
 export default {
   data() {
@@ -84,11 +87,21 @@ export default {
       stations: ""
     }
   },
+  setup() {
+        definePageMeta({
+            middleware: ['auth'],
+            layout: "emspnavlayout"
+        })
+  },
   async created() {
     try {
       let { response, json } = await getRequest('emsp', 'OCPI/getChargingStations')
       this.stations = json
-
+      this.id = this.$route.params.id
+      if (this.id) {
+        this.stationIDs = this.id
+      }
+      
     } catch (error) {
       this.response = error
       console.error(error)
@@ -126,7 +139,8 @@ export default {
             throw new Error(error_str)
           }
 
-          this.response = "Account created successfully"
+          this.response = "Booking created successfully"
+          window.location.href = "/BookingList"
           
 
         }).catch((error) => {

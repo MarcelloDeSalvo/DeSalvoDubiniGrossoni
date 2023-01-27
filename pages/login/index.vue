@@ -6,7 +6,7 @@
           <LoginForm />
         </div>
       </div>
-      <div class="hidden min-h-screen flex-1 bg-gray-50 px-5 py-5 lg:flex">
+      <div class="hidden min-h-screen flex-1 pl-5 py-5 lg:flex">
         <div class="mx-auto flex h-full items-center">
           <NuxtLogo />
         </div>

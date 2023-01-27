@@ -167,7 +167,7 @@
 	},
 	async created() {
         try{
-            let {response, json} = await getRequest('CPMS', 'api/getChargingStations')
+            let {response, json} = await getRequest('CPMS', 'api/getChargingStations/')
             this.stations = json
         } catch (error) {
             this.response = error

@@ -10,14 +10,17 @@ export default defineNuxtRouteMiddleware(async (to) => {
         isAuthenticated = await refreshToken()
     }
 
+    // If the user is not authenticated, redirect to the login page and remove already set cookies
+    if (!isAuthenticated) {
+        useCookie('token').value = ''
+        useCookie('refresh').value = ''
+    }
+
     const router = useRouter()
 
     router.beforeResolve((to, from, next) => {
         // If the user is not authenticated, filter out these routes
-        if (to.path == '/home' && !isAuthenticated)
-            navigateTo('/')
-
-        if (to.path == '/makebooking' && !isAuthenticated)
+        if ((to.path == '/home' || to.path == '/makebooking' || to.path == '/BookingList' ) && !isAuthenticated)
             navigateTo('/')
 
         // If the user is authenticated, filter out this routes
