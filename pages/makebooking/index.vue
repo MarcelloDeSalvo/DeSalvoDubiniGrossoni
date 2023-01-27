@@ -50,6 +50,11 @@
             Submit
           </button>
         </div>
+        <div class="text-center mt-20">
+          <p class="w-full px-3 py-2 mb-3 text-lm leading-tight text-red-700 rounded appearance-none focus:outline-none focus:shadow-outline">
+            {{response}}
+          </p>
+			  </div>
       </form>
     </div>
   </div>
@@ -126,7 +131,8 @@ export default {
             throw new Error(error_str)
           }
 
-          this.response = "Account created successfully"
+          this.response = "Booking created successfully"
+          window.location.href = "/BookingList"
           
 
         }).catch((error) => {
