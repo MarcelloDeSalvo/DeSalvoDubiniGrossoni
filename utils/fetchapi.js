@@ -90,9 +90,9 @@ export async function getRequest( backend , endpoint ) {
     else
         throw new Error("Invalid backend request");
     
-    console.log("URL: " + serverUrl+ "/" +endpoint)
+    console.log("URL: " + serverUrl+ "/" +endpoint + "/")
     
-    const r = await fetch(serverUrl+ "/" +endpoint, { 
+    const r = await fetch(serverUrl+ "/" +endpoint + "/", { 
       headers: {
         "Content-Type": "application/json",
       },
