@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 import requests
+import os
 from django.http import JsonResponse, HttpResponse
 from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -17,13 +18,14 @@ from rest_framework.decorators import (
 @authentication_classes([])
 @permission_classes([])
 def get_chargingStations(request):
+    cpms_url = os.environ.get('CPMS_URL')
     # Extract the relevant information from the request
     # Create the booking request payload
-    response = requests.get('http://127.0.0.1:8001/OCPI/getChargingStations')
+    
+    response = requests.get(cpms_url + 'OCPI/getChargingStations')
     #print json content of the response
     if response.status_code == 200:
         # Process the response
-        
         content = response.content
         return HttpResponse(content)
          # return the response
@@ -40,11 +42,10 @@ def validate_booking(request, mail):
         "time": request.data['time'],
         "date": request.data['date']
     }
-    print(newRequest)
-    response = requests.post('http://127.0.0.1:8001/OCPI/makebooking/', data=newRequest)    
+    cpms_url = os.environ.get('CPMS_URL')
+    response = requests.post(cpms_url +'OCPI/makebooking/', data=newRequest)    
     if response.status_code == 200:
         # Process the response
-        print(response.json()) # print the response
         return "yes"
          # return the response
     else:
@@ -60,11 +61,10 @@ def validate_delete(mail, stationId, socketId, time, date):
         "time": time,
         "date": date
     }
-    print(newRequest)
-    response = requests.delete('http://127.0.0.1:8001/OCPI/deleteBooking/', data=newRequest)
+    cpms_url = os.environ.get('CPMS_URL')
+    response = requests.delete(cpms_url + 'OCPI/deleteBooking/', data=newRequest)
     if response.status_code == 200:
         # Process the response
-        print(response.json()) # print the response
         return "yes"
          # return the response
     else:
