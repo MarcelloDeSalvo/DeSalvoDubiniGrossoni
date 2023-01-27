@@ -156,8 +156,8 @@
                     <a
                       href="/"
                       class="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-orange-500 hover:bg-orange-700 focus:shadow-outline focus:outline-none"
-                      aria-label="Sign up"
-                      title="Sign up"
+                      aria-label="Log out"
+                      title="Log out"
                       @click="logout"
                     >
                       Log out
