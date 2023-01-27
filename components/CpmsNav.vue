@@ -193,7 +193,7 @@ export default {
     return { logout }
   },
   mounted(){
-    if (Cookies.get('token') != null)
+    if (Cookies.get('token') = '')
         this.logged = true;
     else
         this.logged = false;
