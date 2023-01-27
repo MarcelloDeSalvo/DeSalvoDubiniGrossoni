@@ -8,7 +8,7 @@
 					<!-- Col -->
 					<div
 						class="w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
-						style="background-image: url('https://source.unsplash.com/Mv9hjnEUHR4/600x800')"
+						style="background-image: url('/img/evImage.png');"
 					></div>
 					<!-- Col -->
 					<div class="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
@@ -55,12 +55,12 @@
 										Password
 									</label>
 									<input
-										class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+										class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700  rounded shadow appearance-none focus:outline-none focus:shadow-outline"
 										required v-model="formData.password"
 										type="password"
 										placeholder="******************"
 									/>
-									<p class="text-xs italic text-red-500">Please choose a password.</p>
+								
 								</div>
 								<div class="md:ml-2">
 									<label class="block mb-2 text-sm font-bold text-gray-700" for="c_password">
@@ -100,7 +100,7 @@
 								</a>
 							</div>
 							<div class="text-center">
-								<p class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 rounded shadow appearance-none focus:outline-none focus:shadow-outline">
+								<p class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 rounded appearance-none focus:outline-none focus:shadow-outline">
 									{{response}}
 								</p>
 							</div>
