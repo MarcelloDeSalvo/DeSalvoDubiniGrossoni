@@ -7,25 +7,25 @@
         <ul class="flex items-center hidden space-x-8 lg:flex">
           <li>
             <a
-              href="/cpms/home"
+              href="/home"
               aria-label="Your available charging stations"
               title="Cpms Home"
               class="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-orange-500"
-              >Stations</a
+              >Home</a
             >
           </li>
           <li>
             <a
-              href="/cpms/viewDiscounts"
+              href="/BookingList"
               aria-label="Your active discounts"
               title="Active discounts"
               class="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-orange-500"
-              >Discounts</a
+              >Your Bookings</a
             >
           </li>
         </ul>
         <a
-          href="/"
+          href="/home"
           aria-label="eMall"
           title="eMall"
           class="inline-flex items-center lg:mx-auto"

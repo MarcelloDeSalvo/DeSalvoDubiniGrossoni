@@ -7,30 +7,18 @@
 </template>
 
 <script>
-/*
-the structure of the json is the following
-items:[
-  {Street:
-   City:
-   Time:
-   Date:
-   Socket
-   Title:
-  },
-  {...}
-]
-*/
-
-//ideally we get the data (complete list of bookings) as a JSON object, parse it, then we can just feed them to the 
-
-
-import { getRequest } from '~~/utils/fetchapi'
 export default {
   data() {
     return {
       items: null,
     }
   },
+  setup() {
+        definePageMeta({
+            middleware: ['auth'],
+            layout: "emspnavlayout"
+        })
+    },
   async created() {
 
     let config = useRuntimeConfig()
