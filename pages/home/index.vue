@@ -37,7 +37,7 @@
             :Address="station.address" 
             :NumberSockets="station.nSockets" 
             :NumberAvailable="station.AvailableSockets"
-            :Redirect="'/home' + station.id"
+            :Redirect="'/makebooking/' + station.id + '/'"
             >
         </SimpleCard>
     </div >   

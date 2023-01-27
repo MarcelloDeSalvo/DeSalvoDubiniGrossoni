@@ -93,7 +93,11 @@ export default {
     try {
       let { response, json } = await getRequest('emsp', 'OCPI/getChargingStations')
       this.stations = json
-
+      this.id = this.$route.params.id
+      if (this.id) {
+        this.stationIDs = this.id
+      }
+      
     } catch (error) {
       this.response = error
       console.error(error)
