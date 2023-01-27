@@ -60,7 +60,7 @@ export default {
 <style>
 .card1 {
     border-radius: 20px;
-    background-color: #ff9e6d;
+    background-color: #ffab91;
     transition: all .3s;
     scale: .98;
     outline: none;
@@ -68,9 +68,9 @@ export default {
 
 .card1:hover {
     border-radius: 20px;
-    background: linear-gradient(145deg, #ff9e6d, #e6855c);
-    box-shadow: 10px 10px 20px #99593d,
-        -5px -5px 10px #ffcf8f;
+    background: linear-gradient(145deg, #ff8a65, #e6855c);
+    box-shadow: 7px 7px 2px #99593d,
+        -5px -5px 2px #ffcf8f;
     scale: 1;
     outline: none;
 

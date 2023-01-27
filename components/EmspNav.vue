@@ -23,6 +23,15 @@
               >Your Bookings</a
             >
           </li>
+          <li>
+            <a
+              href="/makebooking/0/"
+              aria-label="Your active discounts"
+              title="Active discounts"
+              class="font-medium tracking-wide text-gray-100 transition-colors duration-200 hover:text-orange-500"
+              >Make a booking</a
+            >
+          </li>
         </ul>
         <a
           href="/home"

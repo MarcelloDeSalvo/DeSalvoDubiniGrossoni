@@ -58,7 +58,7 @@ export default {
             console.log("Tokens received: ", response);
             Cookies.set('token', response.access);
             Cookies.set('refresh', response.refresh);
-            document.location.href = "/";
+            document.location.href = "/cpms/home";
       
         }).catch( (error) => {
             // Print every error message by deserializing every json field in response
