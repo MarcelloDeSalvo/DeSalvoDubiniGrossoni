@@ -186,14 +186,14 @@ export default {
   setup() {
     const logout = () => {
       // remove token cookie
-      Cookies.remove('token')
-      Cookies.remove('refresh')
+      Cookies.remove('tokenCPMS')
+      Cookies.remove('refreshCPMS')
     }
 
     return { logout }
   },
   mounted(){
-    if (Cookies.get('token') != '' && Cookies.get('token') != undefined)
+    if (Cookies.get('tokenCPMS') != '' && Cookies.get('tokenCPMS') != undefined)
         this.logged = true;
     else
         this.logged = false;

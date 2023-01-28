@@ -38,20 +38,6 @@ export default {
         sockets: {
             type: Array,
             required: true,
-            default: () => [
-              {
-                id: '1',
-                type: 'Fast',
-                price: '100',
-                status: 'Available',
-              },
-              {
-                id: '2',
-                type: 'Slow',
-                price: '200',
-                status: 'Unavailable',
-              }
-            ],
         },
     },
 }

@@ -145,20 +145,29 @@
                 <ul class="space-y-4">
                   <li>
                     <a
-                      href="/cpms/home"
+                      href="/home"
                       aria-label="Your available charging stations"
                       title="Cpms Home"
                       class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-orange-500"
-                      >Stations</a
+                      >Home</a
                     >
                   </li>
                   <li>
                     <a
-                      href="/cpms/viewDiscounts"
+                      href="/makebooking/0/"
                       aria-label="Your active discounts"
                       title="Active discounts"
                       class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-orange-500"
-                      >Discounts</a
+                      >Make a booking</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="/BookingList"
+                      aria-label="Your active discounts"
+                      title="Active discounts"
+                      class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-orange-500"
+                      >Your bookings</a
                     >
                   </li>
                   <li v-if="logged">

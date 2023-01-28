@@ -1,16 +1,22 @@
 export async function request(method, backend, endpoint, formData) {
     let config = useRuntimeConfig()
     let serverUrl = null
-    if (backend == 'emsp' || backend == 'EMSP')
+    let token = null
+    if (backend == 'emsp' || backend == 'EMSP'){
         serverUrl = config.EMSP_URL
-    else if (backend == 'cpms' || backend == 'CPMS')
+        token = useCookie('token').value
+    }
+    else if (backend == 'cpms' || backend == 'CPMS'){
         serverUrl = config.CPMS_URL
+        token = useCookie('tokenCPMS').value
+    }
     else
         throw new Error("Invalid backend request");
     
     const r = await fetch(serverUrl+ "/" +endpoint, { 
       headers: {
         "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + token
       },
       method: method,
       body: JSON.stringify(formData)
@@ -113,8 +119,10 @@ export async function deleteRequestWithToken(backend, endpoint, id) {
     let token = useCookie('token').value
     if (backend == 'emsp' || backend == 'EMSP')
         serverUrl = config.EMSP_URL
-    else if (backend == 'cpms' || backend == 'CPMS')
+    else if (backend == 'cpms' || backend == 'CPMS'){
+        token = useCookie('tokenCPMS').value
         serverUrl = config.CPMS_URL
+    }
     else
         throw new Error("Invalid backend request");
     
@@ -135,6 +143,66 @@ export async function deleteRequestWithToken(backend, endpoint, id) {
         throw new Error("Invalid JSON request");
     }
       
+}
+
+export async function getRequestWithToken( backend , endpoint ) {
+    let config = useRuntimeConfig()
+    let serverUrl = null
+    let token = useCookie('token').value
+    if (backend == 'emsp' || backend == 'EMSP')
+        serverUrl = config.EMSP_URL
+    else if (backend == 'cpms' || backend == 'CPMS'){
+        token = useCookie('tokenCPMS').value
+        serverUrl = config.CPMS_URL
+    }
+    else
+        throw new Error("Invalid backend request");
+
+    
+    const r = await fetch(serverUrl+ "/" +endpoint, { 
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + token
+      },
+      method: 'GET',
+    } );
+
+    try{
+        const json = await r.json()
+        return { response: r, json: json }
+    }catch(e){
+      throw new Error("Invalid JSON request");
+    }
+}
+
+export async function getRequestWithToken( backend , endpoint ) {
+    let config = useRuntimeConfig()
+    let serverUrl = null
+    let token = useCookie('token').value
+    if (backend == 'emsp' || backend == 'EMSP')
+        serverUrl = config.EMSP_URL
+    else if (backend == 'cpms' || backend == 'CPMS'){
+        token = useCookie('tokenCPMS').value
+        serverUrl = config.CPMS_URL
+    }
+    else
+        throw new Error("Invalid backend request");
+
+    
+    const r = await fetch(serverUrl+ "/" +endpoint, { 
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + token
+      },
+      method: 'GET',
+    } );
+
+    try{
+        const json = await r.json()
+        return { response: r, json: json }
+    }catch(e){
+      throw new Error("Invalid JSON request");
+    }
 }
 
 //post with token

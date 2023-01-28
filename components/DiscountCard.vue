@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { deleteRequest } from '~~/utils/fetchapi';
+import { deleteRequestWithToken } from '~~/utils/fetchapi';
 export default {
     props: {
         id: {   //contains address and civic number
@@ -55,7 +55,7 @@ export default {
     },
     methods: {
         async deleteDiscount() {
-            await deleteRequest('CPMS', 'api/removeDiscount', this.id)
+            await deleteRequestWithToken('CPMS', 'api/removeDiscount', this.id)
             // Page refresh
             window.location.reload();
       

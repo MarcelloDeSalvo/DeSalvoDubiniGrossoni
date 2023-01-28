@@ -24,6 +24,9 @@ export default defineNuxtRouteMiddleware(async (to) => {
             navigateTo('/')
 
         // If the user is authenticated, filter out this routes
+        if (to.path == '/' && isAuthenticated)
+            navigateTo('/home')
+
         if (to.path == '/login' && isAuthenticated)
             navigateTo('/')
             

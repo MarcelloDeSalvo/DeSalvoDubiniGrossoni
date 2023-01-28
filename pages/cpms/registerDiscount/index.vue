@@ -4,7 +4,7 @@
 	  <!-- Learn More: https://formbold.com -->
 	  <div class="mx-auto w-full max-w-[550px]">
 		<form @submit.prevent="formSubmit" id="bookingform" method="POST">
-  
+
 		  <div class="mb-5">
 			  <div class="mb-5">
 				  <label for="stations" class="mb-3 block text-base font-medium text-blue">Select a charging station</label>
@@ -87,93 +87,69 @@
 
 	  </div>
 	</div>
-  </template>
-  
-  <script>
-  definePageMeta({
-	middleware: ['auth'],
+</template>
+
+<script>
+import { getRequestWithToken, request } from '~~/utils/fetchapi'
+definePageMeta({
+	middleware: ['cpmsauth'],
 	layout: "cpmsnavlayout"
-  })
-  // Export default data with a sample of the incoming json file from the OCPI, and a method to generate the list of selection for the form
-  export default {
+})
+// Export default data with a sample of the incoming json file from the OCPI, and a method to generate the list of selection for the form
+export default {
 	  data() {
 		return {
 		  stationIDs: null,
-  
+
 		  formData: {
 			applied_stations: null,
 			start_date: null,
 			end_date: null,
 			discount_amount: null
 		  },
-  
+
 		  response: null,
 
-  		  stations: null,
+		  stations: null,
 
 		}
 	  },
-  
+
 	  methods: {
 		onSelectionStationChange(e) {
 		  console.log(e.target.value)
 		},
-  
-		formSubmit() {
-  
-		  this.formRequest()
-			.then((r) => {
-			  let status = r.response.status
-			  let json = r.json
-  
-			  if (status!= 201 && status != 200) {
-				let errors = json
-				let error_str = ""
-				for (let key in errors) {
-				  error_str += errors[key] + "\n"
+
+		async formSubmit() {
+			try {
+				const r = await request('POST', 'CPMS', "api/registerDiscount/", this.formData)
+				let status = r.response.status
+				console.log("STAT" + status)
+				if (status != 201 && status != 200) {
+					let errors = r.json
+					let error_str = ""
+					for (let key in errors)
+						error_str += errors[key] + "\n"
+
+					throw new Error(error_str)
 				}
-				throw new Error(error_str)
-			  }
-  
-			  this.response = "Account created successfully"
-			  document.location.href = "/cpms/viewDiscounts"
-  
-			}).catch((error) => {
-			  console.log(error.message)
-			  this.response = error.message
-			})
+			} catch(error){
+				this.response = error.message
+				return
+			}
+			this.response = "Discount created successfully"
+			document.location.href = "/cpms/viewDiscounts"
 		},
-  
-		async formRequest() {
-		  let config = useRuntimeConfig()
-		  let serverUrl = config.CPMS_URL
-		  let token = useCookie('token').value
-		  const r = await fetch(serverUrl+"/api/registerDiscount/", { 
-			headers: {
-			  "Content-Type": "application/json",
-			  'Authorization': 'Bearer ' + token
-			},
-			method: 'POST',
-			body: JSON.stringify(this.formData)
-		  } );
-  
-		  try{
-			const json = await r.json()
-			return { response: r, json: json }
-		  }catch(e){
-			throw new Error("Invalid JSON response - Server Error");
-		  }
-	  	}	
 	},
 	async created() {
-        try{
-            let {response, json} = await getRequest('CPMS', 'api/getChargingStations/')
-            this.stations = json
-        } catch (error) {
-            this.response = error
-            console.error(error)
-        }
-    }
-  
+      try{
+          let {response, json} = await getRequestWithToken('CPMS', 'api/getChargingStations/')
+          this.stations = json
+      } catch (error) {
+          this.response = error
+          console.error(error)
+      }
   }
-  </script>
+
+}
+</script>

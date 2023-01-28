@@ -60,7 +60,7 @@ export default {
     },
     setup() {
         definePageMeta({
-            middleware: ['auth'],
+            middleware: ['cpmsauth'],
             layout: "cpmsnavlayout"
         })
         const route = useRoute()// When accessing /posts/1, route.params.id will be 1
@@ -78,7 +78,7 @@ export default {
                 if (this.id == null)
                     throw new Error("No ID provided")
             
-                let {response, json} = await getRequest('CPMS', 'api/getChargingStation/'+ this.id +'/')
+                let {response, json} = await getRequestWithToken('CPMS', 'api/getChargingStation/'+ this.id +'/')
                 this.station = json
 
                 // append is_active to each dso in the list if station.active_dso == dso.id
