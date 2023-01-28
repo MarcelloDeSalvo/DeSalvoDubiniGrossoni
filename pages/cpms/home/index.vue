@@ -41,13 +41,13 @@ export default {
     },
     setup() {
         definePageMeta({
-            middleware: ['auth'],
+            middleware: ['cpmsauth'],
             layout: "cpmsnavlayout"
         })
     },
     async created() {
         try{
-            let {response, json} = await getRequest('CPMS', 'api/getChargingStations/')
+            let {response, json} = await getRequestWithToken('CPMS', 'api/getChargingStations/')
             this.stations = json
             // count the number of elements inside 'sockets' for each station
             this.stations.forEach(station => {

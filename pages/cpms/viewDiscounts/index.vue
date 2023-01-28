@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { getRequest } from '~~/utils/fetchapi';
+import { getRequestWithToken } from '~~/utils/fetchapi';
 
 export default {
     data() {
@@ -22,13 +22,13 @@ export default {
     },
     setup() {
         definePageMeta({
-            middleware: ['auth'],
+            middleware: ['cpmsauth'],
             layout: "cpmsnavlayout"
         })
     },
     async created() {
         try{
-            let {response, json} = await getRequest('CPMS', 'api/discounts/')
+            let {response, json} = await getRequestWithToken('CPMS', 'api/discounts/')
             this.items = json
         } catch (error) {
             this.response = error

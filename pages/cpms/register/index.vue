@@ -12,7 +12,8 @@
 					></div>
 					<!-- Col -->
 					<div class="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
-						<h3 class="pt-4 text-2xl text-center">This page is admin only</h3>
+						<h3 class="pt-4 text-2xl text-center">This page would admin only</h3>
+						<h3 class="pt-4 text-1xl text-center">(accessible just for the demo)</h3>
 						<form  @submit.prevent="formSubmit" class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
 							<div class="mb-4 md:flex md:justify-between">
 								<div class="mb-4 md:mr-2 md:mb-0">
@@ -98,7 +99,7 @@
   
 <script>
 definePageMeta({
-    middleware: ['auth'],
+    middleware: ['cpmsauth'],
 	layout: "cpmsnavlayout"
 })
 export default {
@@ -131,7 +132,7 @@ export default {
 			}
 
 			this.response = "Account created successfully"
-			document.location.href = "/cpms/home"
+			document.location.href = "/cpms/login"
 
 		}).catch((error) => {
 			console.log(error.message)
@@ -149,9 +150,12 @@ export default {
 			method: 'POST',
 			body: JSON.stringify(this.formData)
 		} );
-
-		const json = await r.json()
-		return { response: r, json: json }
+        try{
+          const json = await r.json()
+          return { response: r, json: json }
+        }catch(e){
+          throw new Error("Invalid JSON response - Server Error");
+        }
     }	
   }
 }
