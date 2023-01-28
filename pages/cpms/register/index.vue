@@ -99,7 +99,7 @@
   
 <script>
 definePageMeta({
-    middleware: ['cpmsauth'],
+    middleware: ['cpms-auth'],
 	layout: "cpmsnavlayout"
 })
 export default {

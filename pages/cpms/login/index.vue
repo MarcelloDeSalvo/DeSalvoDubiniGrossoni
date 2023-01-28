@@ -19,6 +19,6 @@
 import CPMSLoginForm from '~/components/CPMSLoginForm.vue'
 
   definePageMeta({
-    middleware: ['cpmsauth']
+    middleware: ['cpms-auth']
   })
 </script>

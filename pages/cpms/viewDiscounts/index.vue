@@ -22,7 +22,7 @@ export default {
     },
     setup() {
         definePageMeta({
-            middleware: ['cpmsauth'],
+            middleware: ['cpms-auth'],
             layout: "cpmsnavlayout"
         })
     },

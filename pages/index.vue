@@ -8,6 +8,6 @@
 
 <script setup>
 definePageMeta({
-  middleware: ['cpmsauth', 'auth']
+  middleware: ['cpms-auth', 'auth']
 })
 </script>
