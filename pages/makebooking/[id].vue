@@ -39,8 +39,11 @@
               <label for="time" class="mb-3 block text-base font-medium text-blue">
                 Time
               </label>
-              <input v-model="formData.time" type="time" name="time" id="time"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              <div>
+                <select v-model="formData.time">
+                  <option v-for="time in times" :key="time" :value="time">{{ time }}</option>   <!-- loads the time list, needs to be made fancier-->
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -70,6 +73,7 @@ export default {
       selectableSockets: null,
       selectedSockets: null,
       stationIDs: null,
+      times: [], //generates the list of time
 
       formData: {
         user: null,
@@ -78,7 +82,7 @@ export default {
         socketID: null,
         cpmsID: null,
         date: null,
-        time: null
+        time: null,
       },
 
       response: null,
@@ -88,10 +92,10 @@ export default {
     }
   },
   setup() {
-        definePageMeta({
-            middleware: ['auth'],
-            layout: "emspnavlayout"
-        })
+    definePageMeta({
+      middleware: ['auth'],
+      layout: "emspnavlayout"
+    })
   },
   async created() {
     try {
@@ -101,10 +105,16 @@ export default {
       if (this.id) {
         this.stationIDs = this.id
       }
-      
+
     } catch (error) {
       this.response = error
       console.error(error)
+    }
+    //loads hours in the half-hour format
+    for (let i = 0; i < 24; i++) {
+      let hour = i < 10 ? '0' + i : i;
+      this.times.push(`${hour}:00`);
+      this.times.push(`${hour}:30`);
     }
   },
   methods: {
@@ -141,7 +151,7 @@ export default {
 
           this.response = "Booking created successfully"
           window.location.href = "/BookingList"
-          
+
 
         }).catch((error) => {
           console.log(error.message)
@@ -172,5 +182,8 @@ export default {
     }
   },
 
+
 }
 </script>
+
+
