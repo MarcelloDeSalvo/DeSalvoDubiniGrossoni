@@ -49,7 +49,8 @@ def validate_booking(request, mail):
         return "yes"
          # return the response
     else:
-        return "no"
+        content = response.content
+        return HttpResponse(content, status=500)
 
 
 # delete booking from cpms, return yes if booking is deleted, no otherwise.
