@@ -13,8 +13,8 @@ from rest_framework.decorators import (
 )
 
 # Create your views here.
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
+@authentication_classes([])
+@permission_classes([])
 class BookingAPIView(generics.RetrieveAPIView):
     serializer_class = BookingSerializer
 
@@ -22,8 +22,8 @@ class BookingAPIView(generics.RetrieveAPIView):
         return self.request.user
 
 
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
+@authentication_classes([])
+@permission_classes([])
 class RegisterBookingAPIView(generics.CreateAPIView):
     serializer_class = CreateBookingSerializer
 
@@ -39,8 +39,8 @@ class RegisterBookingAPIView(generics.CreateAPIView):
         })
 
 
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
+@authentication_classes([])
+@permission_classes([])
 class RemoveBookingAPIView(generics.DestroyAPIView):
 
     def delete(self, request):
