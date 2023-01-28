@@ -45,6 +45,7 @@ DATABASE_NAME=your_db_name
 DATABASE_PORT=your_db_port
 DATABASE_USER=your_db_user
 DATABASE_PASSWORD=your_db_password
+CPMS_URL=your_cpms_url
 
 DATABASE_URL=your_db_url
 DEVELOPMENT_MODE=True if working locally, False otherwise
