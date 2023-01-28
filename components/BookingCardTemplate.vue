@@ -26,7 +26,7 @@
                                         v-text="Time"></p>
                                 </div>
                                 <div class="pl-2">
-                                    <button class="font-semibold" @click="handleClick(BookingID)">
+                                    <button class="font-semibold" @click="handleClick1(BookingID)">
                                         <svg width="16" height="16" fill="#cc0000" class="bi bi-trash" 
                                             viewBox="0 0 16 16">
                                             <path
@@ -35,6 +35,9 @@
                                                 d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                                         </svg>
                                     </button>
+                                    <button class=" " @click="handleClick2(BookingID)" style="margin-left: 20px;">
+                                    <svg width="16" height="16" fill="#fff176" stroke="#f9a825" class="bi bi-lightning-charge-fill" viewBox="0 0 16 16"> <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/> </svg>
+                                </button>
                                 </div>
                             </div>
                         </div>
@@ -50,6 +53,7 @@
 <script>
 
 import {deleteRequestWithToken} from '~~/utils/fetchapi'
+import {postRequestWithToken} from '~~/utils/fetchapi'
 const BookDate = "" //placeholder
 export default {
     props: {
@@ -79,11 +83,20 @@ export default {
         },
     },
     methods: {
-        async handleClick(BookingID) {
+        async handleClick1(BookingID) {
             await deleteRequestWithToken('emsp', 'api/removeBooking', BookingID)
             // Page refresh
             window.location.reload();
+        },
+        async handleClick2(BookingID) {
+            const id={
+                "id": BookingID
+            }
+            await postRequestWithToken('emsp', 'OCPI/startChargingFromBooking', id)
+            // Page refresh
+            
         }
+        
     },
     
 }

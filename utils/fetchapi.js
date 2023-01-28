@@ -136,3 +136,33 @@ export async function deleteRequestWithToken(backend, endpoint, id) {
     }
       
 }
+
+//post with token
+export async function postRequestWithToken(backend, endpoint, formData) {
+    let config = useRuntimeConfig()
+    let serverUrl = null
+    let token = useCookie('token').value
+    if (backend == 'emsp' || backend == 'EMSP')
+        serverUrl = config.EMSP_URL
+    else if (backend == 'cpms' || backend == 'CPMS')
+        serverUrl = config.CPMS_URL
+    else
+        throw new Error("Invalid backend request");
+    
+    const r = await fetch(serverUrl+ "/" +endpoint, { 
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + token
+      },
+      method: 'POST',
+      body: JSON.stringify(formData)
+    } );
+
+    try {
+        const json = await r.json()
+        return { response: r, json: json }
+    }catch(e){
+        throw new Error("Invalid JSON request");
+    }
+      
+}
