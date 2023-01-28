@@ -4,6 +4,7 @@ from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
 from ChargingStation.models import ChargingStation
+from Socket.models import Socket
 from ChargingStation.views import getChargingStations
 from ChargingStation.serializers import ChargingStationSerializer
 import requests
@@ -31,7 +32,14 @@ def requestChargingStations(request):
    
 
 
-    
+@api_view(['POST'])
+@authentication_classes([])
+@permission_classes([])
+def startChargeFromBooking(request):
+     socket=Socket.objects.filter(id=request.data['socket']).first()
+     socket.set_unavailable()
+     return Response("Charge started", status=200)
+
 
 
 

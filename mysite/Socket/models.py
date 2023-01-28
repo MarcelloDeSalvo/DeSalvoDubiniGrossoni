@@ -43,3 +43,12 @@ class Socket(models.Model):
 
     def get_price(self):
         return self.price
+
+    #function that if called changes the status of the socket to unavailable
+    def set_unavailable(self):
+        self.status = self.SocketStatus.UNAVAILABLE
+        self.save()
+
+    def set_available(self):
+        self.status = self.SocketStatus.AVAILABLE
+        self.save()    
