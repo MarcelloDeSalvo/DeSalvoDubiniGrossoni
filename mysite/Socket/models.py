@@ -3,6 +3,17 @@ from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 class SocketManager(models.Model):
+    
+    def create_socket(self, chargingStation, type, status, price):
+        
+        socket = Socket()
+        socket.chargingStation = chargingStation
+        socket.type = type
+        socket.status = status
+        socket.price = price
+        socket.save(using=self._db)
+        return socket
+
     pass
 
 class Socket(models.Model):

@@ -8,7 +8,7 @@ class SocketSerializer(serializers.ModelSerializer):
         model = Socket
         fields = ('id','chargingStation', 'type', 'status', 'price')
 
-class CreateBookingSerializer(serializers.ModelSerializer):
+class CreateSocketSerializer(serializers.ModelSerializer):
     _db = 'default'
 
     class Meta:
@@ -28,7 +28,7 @@ class CreateBookingSerializer(serializers.ModelSerializer):
         if attrs['type'] == None:
             raise serializers.ValidationError(
                 {"type": "You must select a socket type"})
-        if attrs['socketStatus'] == None:
+        if attrs['status'] == None:
             raise serializers.ValidationError(
                 {"status": "You must select a socket status"})
         if attrs['price'] <0:
@@ -42,14 +42,14 @@ class CreateBookingSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         # try to create user, if exception is raised, return it
         try:
-            booking = SocketManager.create_booking(
+            socket = SocketManager.create_socket(
                 self,
                 validated_data['chargingStation'],
                 validated_data['type'],
                 validated_data['status'],
                 validated_data['price'],
             )
-            return booking
+            return socket
         except Exception as e:
             error_message = e.__cause__
             print("EXEPTION", e)
