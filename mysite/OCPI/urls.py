@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import get_chargingStations
+from .views import get_chargingStations, start_charging_from_booking
 
 urlpatterns = [
-  path("OCPI/getChargingStations",get_chargingStations),
+  path("OCPI/getChargingStations", get_chargingStations),
+  path("OCPI/startChargingFromBooking", start_charging_from_booking),
 ]
