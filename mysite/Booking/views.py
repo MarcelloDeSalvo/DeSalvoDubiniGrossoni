@@ -38,18 +38,16 @@ class RegisterBookingAPIView(generics.CreateAPIView):
         request.data['user'] = request.user.id
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
+        valid =validate_booking(request, request.user.get_email())
         #use OCPI interface to send data to cpms, if validated completes booking registration, if not aborts.
-        if(validate_booking(request, request.user.get_email()) == "yes"):   #sends data to OCPI interface to register booking cpms-side
+        if( valid == "yes"):   #sends data to OCPI interface to register booking cpms-side
             booking = serializer.save()
             return Response({
                 "booking": BookingSerializer(booking, context=self.get_serializer_context()).data,
                 "message": "Booking Registered Successfully.",
             })
         else:
-            return Response({
-                "message": "Booking Failed.",
-            })
+            return valid
         
       
 # Return bookings by user
