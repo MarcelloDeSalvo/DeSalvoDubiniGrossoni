@@ -20,7 +20,12 @@ class CreateBookingSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         #if attrs['date'] < datetime.date.today():
         #    raise serializers.ValidationError(
-        #        {"date": "Date must be in the future."})
+        #        {"date": "Date must be in the future.
+        conflicting_bookings = Booking.objects.filter(date=attrs['date'], time=attrs['time'])
+        if conflicting_bookings.exists():
+            raise serializers.ValidationError(
+                {"booking ":"This time slot is already booked."})
+
         return attrs
     
     def create(self, validated_data):

@@ -53,6 +53,7 @@ class Booking(models.Model):
     
     def get_time(self):
         return self.time
+    
 
    # def __str__(self):
     #    return "Booking: " + str(self.id) + " - " + str(self.user) + " - " + str(self.date) + " - " + str(self.time)
