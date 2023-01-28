@@ -18,13 +18,12 @@
             <label for="sockets" class="mb-3 block text-base font-medium text-blue">Select a socket</label>
             <select v-model="selectedSockets" @change="onSelectionSocketChange" form="bookingform" id="sockets"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-grey-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <!-- TODO: Generate a list of selection based on the incoming json file from the OCPI-->
               <option v-for="socket in selectableSockets" :value="socket.id">{{ socket.id }}</option>
             </select>
           </div>
         </div>
 
-        <div class="-mx-3 flex flex-wrap">
+        <div class="-mx-3 flex flex-wrap"> 
           <div class="w-full px-3 sm:w-1/2">
             <div class="mb-5">
               <label for="date" class="mb-3 block text-base font-medium text-blue">
@@ -40,8 +39,10 @@
                 Time
               </label>
               <div>
-                <select v-model="formData.time">
-                  <option v-for="time in times" :key="time" :value="time">{{ time }}</option>   <!-- loads the time list, needs to be made fancier-->
+                <select v-model="formData.time" type="time" name="time" id="time"
+                  class=" rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                  <option v-for="time in times" :key="time" :value="time">{{ time }}</option>
+                  <!-- loads the time list, needs to be made fancier-->
                 </select>
               </div>
             </div>
@@ -54,10 +55,11 @@
           </button>
         </div>
         <div class="text-center mt-20">
-          <p class="w-full px-3 py-2 mb-3 text-lm leading-tight text-red-700 rounded appearance-none focus:outline-none focus:shadow-outline">
-            {{response}}
+          <p
+            class="w-full px-3 py-2 mb-3 text-lm leading-tight text-red-700 rounded appearance-none focus:outline-none focus:shadow-outline">
+            {{ response }}
           </p>
-			  </div>
+        </div>
       </form>
     </div>
   </div>
@@ -74,6 +76,7 @@ export default {
       selectedSockets: null,
       stationIDs: null,
       times: [], //generates the list of time
+
 
       formData: {
         user: null,
@@ -124,6 +127,7 @@ export default {
       this.formData.stationID = e.target.value
       this.formData.stationAddress = this.stations.find(station => station.id == e.target.value).address
       this.selectableSockets = this.stations.find(station => station.id == e.target.value).sockets
+
       // Filter the sockets that are available
       this.formData.cpmsID = this.stations.find(station => station.id == e.target.value).cpmsID
 
