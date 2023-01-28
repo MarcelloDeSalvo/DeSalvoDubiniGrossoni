@@ -13,8 +13,8 @@ from rest_framework.decorators import (
     permission_classes,
 )
 # Create your views here.
-@authentication_classes([])
-@permission_classes([])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 class ChargingStationAPIView(generics.RetrieveAPIView):
     serializer_class = ChargingStationSerializer
 
@@ -22,8 +22,8 @@ class ChargingStationAPIView(generics.RetrieveAPIView):
         return self.request.user
 
 
-@authentication_classes([])
-@permission_classes([])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 class RegisterChargingStationAPIView(generics.CreateAPIView):
     serializer_class = CreateChargingStationSerializer
 
@@ -41,8 +41,8 @@ class RegisterChargingStationAPIView(generics.CreateAPIView):
 # Return all charging stations
 # Suitable for the EMSP read only view
 @api_view(['GET'])
-@authentication_classes([])
-@permission_classes([])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 def getChargingStations(request):
     stations = ChargingStation.objects.all()
     serializer = ChargingStationSerializer(stations, many=True)
@@ -51,8 +51,8 @@ def getChargingStations(request):
 # Return a specific charging station
 # Suitable for the EMSP read only view
 @api_view(['GET'])
-@authentication_classes([])
-@permission_classes([])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 def getChargingStation(request, pk):
     station = ChargingStation.objects.get(id=pk)
     serializer = ChargingStationSerializer(station, many=False)

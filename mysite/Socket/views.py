@@ -11,8 +11,8 @@ from rest_framework.decorators import (
     permission_classes,
 )
 
-@authentication_classes([])
-@permission_classes([])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 class RegisterSocketAPIView(generics.CreateAPIView):
     serializer_class = CreateSocketSerializer
 

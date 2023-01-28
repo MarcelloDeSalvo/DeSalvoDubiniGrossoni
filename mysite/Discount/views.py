@@ -14,8 +14,8 @@ from rest_framework.decorators import (
 )
 
 # Create your views here.
-@authentication_classes([])
-@permission_classes([])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 class DiscountAPIView(generics.RetrieveAPIView):
     serializer_class = DiscountSerializer
 
@@ -23,8 +23,8 @@ class DiscountAPIView(generics.RetrieveAPIView):
         return self.request.user
 
 
-@authentication_classes([])
-@permission_classes([])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 class RegisterDiscountAPIView(generics.CreateAPIView):
     serializer_class = CreateDiscountSerializer
 
@@ -40,8 +40,8 @@ class RegisterDiscountAPIView(generics.CreateAPIView):
         })
 
 
-@authentication_classes([])
-@permission_classes([])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 class RemoveDiscountAPIView(generics.DestroyAPIView):
 
     def delete(self, request):

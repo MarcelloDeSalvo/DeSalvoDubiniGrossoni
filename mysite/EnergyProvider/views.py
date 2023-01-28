@@ -15,8 +15,8 @@ from rest_framework.decorators import (
 )
 
 # Create your views here.
-@authentication_classes([])
-@permission_classes([])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 class RegisterDSO(generics.CreateAPIView):
     serializer_class = RegisterDSOSerializer
 
@@ -31,8 +31,8 @@ class RegisterDSO(generics.CreateAPIView):
             "message": "DSO Registered Successfully.",
         })
 
-@authentication_classes([])
-@permission_classes([])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 class RegisterBSS(generics.CreateAPIView):
     serializer_class = RegisterBSSSerializer
 
@@ -45,14 +45,14 @@ class RegisterBSS(generics.CreateAPIView):
             "message": "BSS Registered Successfully.",
         })
 
-@authentication_classes([])
-@permission_classes([])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 class ToggleBSS(generics.UpdateAPIView):
     queryset = BSS.objects.all()
     serializer_class = ToggleBSSSerializer
 
-@authentication_classes([])
-@permission_classes([])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 class SwitchDSO(generics.UpdateAPIView):
     queryset = ChargingStation.objects.all()
     serializer_class = SwitchDSOSerializer
