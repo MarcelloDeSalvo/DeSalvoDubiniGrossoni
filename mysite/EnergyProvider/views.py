@@ -40,6 +40,7 @@ class RegisterBSS(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         bss = serializer.save()
+        bss.get_station().update_prices()
         return Response({
             "bss": RegisterBSSSerializer(bss, context=self.get_serializer_context()).data,
             "message": "BSS Registered Successfully.",

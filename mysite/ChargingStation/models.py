@@ -43,9 +43,11 @@ class ChargingStation(models.Model):
         return self.active_dso
 
     def is_battery_powered(self):
+        if(not hasattr(self,"connected_bss")):
+            return False
         return self.connected_bss.isActive
 
     def update_prices(self):
         #function that updates the prices of all the sockets
         for socket in self.sockets.all():
-            socket.assign_price()
+            socket.update_price()

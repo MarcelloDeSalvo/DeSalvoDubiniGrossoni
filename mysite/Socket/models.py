@@ -10,7 +10,7 @@ class SocketManager(models.Model):
         socket.chargingStation = chargingStation
         socket.type = type
         socket.status = status
-        socket.price = socket.assign_price(type)
+        socket.price = socket.assign_price()
         socket.save(using=self._db)
         return socket
 
@@ -41,7 +41,7 @@ class Socket(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2) #price is meant to be in kwh and is supposed to be a base price
 
 
-    REQUIRED_FIELDS = ['chargingStation', 'type', 'status', 'price']
+    REQUIRED_FIELDS = ['chargingStation', 'type', 'status']
 
     def get_id(self):
         return self.id
@@ -59,7 +59,7 @@ class Socket(models.Model):
         return self.status == self.SocketStatus.AVAILABLE
     
     def assign_price(self):
-        #function that assigns a price to the socket based on the type of socket
+        #function that assigns a price to the socket based on the type of socket, doesn't save it 
         tempPrice = 0
         if self.chargingStation.is_battery_powered():
             tempPrice = self.chargingStation.connected_bss.get_price()
@@ -67,12 +67,17 @@ class Socket(models.Model):
             tempPrice = self.chargingStation.get_active_dso().get_price()
 
         if self.type == self.SocketType.FAST:
-            self.price = 1.5 * tempPrice
+            tempPrice = 1.5 * tempPrice
         elif self.type == self.SocketType.RAPID:
-            self.price = 1.3 * tempPrice
+            tempPrice = 1.3 * tempPrice
         elif self.type == self.SocketType.SLOW:
-            self.price = 1.1 * tempPrice
-        self.save()
+            tempPrice = 1.1 * tempPrice
+        return tempPrice
+
+    def update_price(self):
+        #function that updates the price of the socket
+        self.price = self.assign_price()
+        self.save() 
 
     #function that if called changes the status of the socket to unavailable
     def set_unavailable(self):
