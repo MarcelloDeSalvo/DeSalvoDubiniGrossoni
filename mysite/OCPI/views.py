@@ -79,7 +79,6 @@ def validate_delete(mail, stationId, socketId, time, date):
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
 def start_charging_from_booking(request):
-    print(request.body)
     reservation=Booking.objects.get(id=request.data['id'])
 
     newRequest={
@@ -89,11 +88,12 @@ def start_charging_from_booking(request):
         "time": reservation.get_time(),
         "date": reservation.get_date()
     }
+    
     cpms_url = os.environ.get('CPMS_URL')
     response = requests.post(cpms_url + 'OCPI/startChargeFromBooking', data=newRequest)
     if response.status_code == 200:
         # Process the response
-        return HttpResponse("started charging", status=200)
+        return HttpResponse(response.content, status=200)
          # return the response
     else:
-        return HttpResponse(response.content, status=500)
+        return HttpResponse(response.content, status=response.status_code)
