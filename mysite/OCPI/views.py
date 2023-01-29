@@ -8,6 +8,7 @@ from Socket.models import Socket
 from ChargingStation.views import getChargingStations
 from ChargingStation.serializers import ChargingStationSerializer
 import requests
+from datetime import datetime, timedelta
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import (
     api_view,
@@ -36,9 +37,24 @@ def requestChargingStations(request):
 @authentication_classes([])
 @permission_classes([])
 def startChargeFromBooking(request):
-     socket=Socket.objects.filter(id=request.data['socket']).first()
-     socket.set_unavailable()
-     return Response("Charge started", status=200)
+
+    chargeStatus=""
+    date=request.data['date']
+    time=request.data['time']
+    currentDateTime = datetime.now()
+    timeDifference= abs(time - currentDateTime.time())
+
+    if (date==currentDateTime.date() and timeDifference<=timedelta(minutes=5) and socket.is_available()):
+        socket=Socket.objects.filter(id=request.data['socket']).first()
+        socket.set_unavailable()
+        chargeStatus="Charge Started"
+        return Response(chargeStatus, status=200)
+    elif(not socket.is_available()):
+        chargeStatus="There are problems with the socket, sorry for the inconvinience"
+        return Response(chargeStatus, status=500)
+    else:
+        chargeStatus="Charge not started, please try again later"
+        return Response(chargeStatus, status=500)
 
 
 
