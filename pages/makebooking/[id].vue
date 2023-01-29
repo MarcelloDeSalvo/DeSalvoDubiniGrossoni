@@ -110,7 +110,11 @@ export default {
         this.formData.stationID = this.id
         this.formData.stationAddress = this.stations.find(station => station.id == this.id).address
         this.selectableSockets = this.stations.find(station => station.id == this.id).sockets
-        this.formData.socketID = selectableSockets[0]
+        // Select the first socket by default if there are sockets
+        if (this.selectableSockets.length > 0) {
+          this.selectedSockets = this.selectableSockets[0].id
+          this.formData.socketID = this.selectableSockets[0].id
+        }
 
         // Filter the sockets that are available
         this.formData.cpmsID = this.stations.find(station => station.id == this.id).cpmsID
