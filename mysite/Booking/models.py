@@ -53,6 +53,13 @@ class Booking(models.Model):
     
     def get_time(self):
         return self.time
+
+    def get_chargingStation(self):
+        return self.chargingStation
+    
+    def get_socket(self):
+        return self.socket
+    
     
 
    # def __str__(self):

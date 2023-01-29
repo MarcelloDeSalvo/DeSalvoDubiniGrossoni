@@ -5,6 +5,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
 from ChargingStation.models import ChargingStation
 from Socket.models import Socket
+from Booking.models import Booking
 from ChargingStation.views import getChargingStations
 from ChargingStation.serializers import ChargingStationSerializer
 import requests
@@ -37,25 +38,56 @@ def requestChargingStations(request):
 @authentication_classes([])
 @permission_classes([])
 def startChargeFromBooking(request):
-
+    #initialize response
     chargeStatus=""
-    date=request.data['date']
-    time=request.data['time']
+    #load booking
+    reservation = Booking.objects.filter(time=request.data['time'], date=request.data['date'], user=request.data['email'], chargingStation=request.data['chargingStation'], socket=request.data['socket']).first()
+    #check if the booking exists
+    if(reservation==None):
+        chargeStatus="Booking does not exist"
+        return Response(chargeStatus, status=400)
+
+    #get the booking details
+    date = reservation.get_date()
+    time = reservation.get_time()
+    
+    #load socket
+    socket=Socket.objects.filter(id=request.data['socket']).first()
+
+    #find the time difference
+    bookingDateTime = datetime.combine(date, time)
     currentDateTime = datetime.now()
-    timeDifference= abs(time - currentDateTime.time())
+    timeDifference= abs(bookingDateTime - currentDateTime)
+    #check if the booking starting time has arrived
+    if(currentDateTime>bookingDateTime):    
+        #check if the socket is available and if the booking is not expired
+        if ( timeDifference<=timedelta(minutes=5) and socket.is_available()):
+            socket.set_unavailable()
+            chargeStatus="Charge Started"
+            message = {
+                "chargingStation": request.data['chargingStation'],
+                "socket": request.data['socket'],
+                "user": request.data['email'],
+                "date": request.data['date'],
+                "time": request.data['time'],
+                "status": chargeStatus
+            }
+            return Response(message, status=200)
 
-    if (date==currentDateTime.date() and timeDifference<=timedelta(minutes=5) and socket.is_available()):
-        socket=Socket.objects.filter(id=request.data['socket']).first()
-        socket.set_unavailable()
-        chargeStatus="Charge Started"
-        return Response(chargeStatus, status=200)
-    elif(not socket.is_available()):
-        chargeStatus="There are problems with the socket, sorry for the inconvinience"
-        return Response(chargeStatus, status=500)
+        #check if the problem is with the socket
+        elif( not socket.is_available() and timeDifference<=timedelta(minutes=5)):
+            chargeStatus="There are problems with the socket, sorry for the inconvinience"
+            return Response(chargeStatus, status=500)
+
+        #the booking is expired if we reach this point
+        else:
+            chargeStatus="your booking has expired"
+            return Response(chargeStatus, status=400)
+
+    #the booking time has not yet arrived
     else:
-        chargeStatus="Charge not started, please try again later"
-        return Response(chargeStatus, status=500)
-
+        chargeStatus="Booking time has not yet arrived"
+        return Response(chargeStatus, status=400)
 
 
 
