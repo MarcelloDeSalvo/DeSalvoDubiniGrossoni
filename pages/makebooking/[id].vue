@@ -107,11 +107,11 @@ export default {
       this.id = this.$route.params.id
       if (this.id) {
         this.stationIDs = this.id
-        this.formData.stationAddress = this.stations.find(station => station.id == e.target.value).address
-        this.selectableSockets = this.stations.find(station => station.id == e.target.value).sockets
+        this.formData.stationAddress = this.stations.find(station => station.id == this.id).address
+        this.selectableSockets = this.stations.find(station => station.id == this.id).sockets
 
         // Filter the sockets that are available
-        this.formData.cpmsID = this.stations.find(station => station.id == e.target.value).cpmsID
+        this.formData.cpmsID = this.stations.find(station => station.id == this.id).cpmsID
       }
 
     } catch (error) {
