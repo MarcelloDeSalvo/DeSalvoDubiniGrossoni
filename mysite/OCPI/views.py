@@ -18,8 +18,8 @@ from rest_framework.decorators import (
 # Create your views here.
 
 @api_view(['GET'])
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
+@authentication_classes([])
+@permission_classes([])
 def requestChargingStations(request):
     stations = ChargingStation.objects.all()
     serializer = ChargingStationSerializer(stations, many=True)
