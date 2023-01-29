@@ -33,7 +33,7 @@
         {\large Professor\par
             Elisabetta \textsc{Di Nitto}}
         \vfill
-        {\large \textbf{Version 1.0}\\ \today \par}
+        {\large \textbf{Version 1.1}\\ \today \par}
     \end{titlepage}
     
     \thispagestyle{plain}
@@ -209,6 +209,13 @@
             \item Version 1.0: First version published
             \begin{itemize}
                 \item[--] First complete version of the document
+            \end{itemize}
+            \item Version 1.1: Corrections and additions
+            \begin{itemize}
+                \item[--] Changed a wrong png path in the document (Fig \ref{fig: View nearby stations})
+                \item[--] Modified the Bpmn of Battery and navigation system suggestions to show the correct interaction between the eMSP and the EV (Fig \ref{fig: Battery and navigation suggestions}) 
+                \item[--] Small clarification about the OCPI protocol in the communication interface section
+                \item[--] Added missing CAR API interface in the eMSP UML (Fig \ref{fig: UML EMSP})
             \end{itemize}
         \end{itemize}
 
@@ -543,7 +550,7 @@
     Internet connections will be mandatory since the web application must communicate with the web server and the system APIs.\\
     \begin{itemize}
         \item \textbf{Communication between the EMSP and the CPMS:}\\
-              Will be done through the OCPI protocol that allows the exchange of data in real time (synchronous RTC) and supports both peer-to-peer (P2P) and roaming hub connections.\\
+              Will be done through the OCPI protocol that allows synchronous (Real Time Protocol RTC) and asynchronous operations between the two parties, and supports both peer-to-peer (P2P) and roaming hub connections.\\
               In P2P roaming, CPOs and EMSPs have direct bilateral connections via which they exchange data. Meanwhile, in hub-based roaming, a charge point operator or mobility service provider can access many roaming partners via a single, standardised connection.\\
         \item \textbf{Communication between the CPMS and the Charging stations:}\\
               Will be done through the asynchronous OCPP protocol that allows charging stations to communicate with a central management system (CPMS) in order to exchange information.
@@ -1531,6 +1538,7 @@ R12
                 \end{figure}
             \end{center}
 
+            \newpage
             \textbf{Make a booking}
             \begin{center}
                 \begin{figure}[H]
