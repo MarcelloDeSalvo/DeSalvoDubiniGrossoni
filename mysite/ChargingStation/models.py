@@ -38,3 +38,14 @@ class ChargingStation(models.Model):
 
     def get_bookings(self):
         return self.bookings.all()
+
+    def get_active_dso(self):
+        return self.active_dso
+
+    def is_battery_powered(self):
+        return self.connected_bss.isActive
+
+    def update_prices(self):
+        #function that updates the prices of all the sockets
+        for socket in self.sockets.all():
+            socket.assign_price()

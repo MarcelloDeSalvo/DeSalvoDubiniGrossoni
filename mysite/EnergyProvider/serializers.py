@@ -87,6 +87,7 @@ class ToggleBSSSerializer(BSS_Serializer):
                 raise serializers.ValidationError("Cannot activate a provider that is not available")
 
             instance.isActive = not instance.isActive
+            instance.station.update_prices()
             instance.save()
             return instance
         except:

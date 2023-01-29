@@ -4,13 +4,13 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 class SocketManager(models.Model):
     
-    def create_socket(self, chargingStation, type, status, price):
+    def create_socket(self, chargingStation, type, status):
         
         socket = Socket()
         socket.chargingStation = chargingStation
         socket.type = type
         socket.status = status
-        socket.price = price
+        socket.price = socket.assign_price(type)
         socket.save(using=self._db)
         return socket
 
@@ -38,7 +38,7 @@ class Socket(models.Model):
         choices=SocketStatus.choices,
         default=SocketStatus.AVAILABLE,
     )
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2) #price is meant to be in kwh and is supposed to be a base price
 
 
     REQUIRED_FIELDS = ['chargingStation', 'type', 'status', 'price']
@@ -57,6 +57,22 @@ class Socket(models.Model):
 
     def is_avalaible(self):
         return self.status == self.SocketStatus.AVAILABLE
+    
+    def assign_price(self):
+        #function that assigns a price to the socket based on the type of socket
+        tempPrice = 0
+        if self.chargingStation.is_battery_powered():
+            tempPrice = self.chargingStation.connected_bss.get_price()
+        else:
+            tempPrice = self.chargingStation.get_active_dso().get_price()
+
+        if self.type == self.SocketType.FAST:
+            self.price = 1.5 * tempPrice
+        elif self.type == self.SocketType.RAPID:
+            self.price = 1.3 * tempPrice
+        elif self.type == self.SocketType.SLOW:
+            self.price = 1.1 * tempPrice
+        self.save()
 
     #function that if called changes the status of the socket to unavailable
     def set_unavailable(self):
