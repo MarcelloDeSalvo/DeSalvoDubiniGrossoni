@@ -117,6 +117,7 @@ class SwitchDSOSerializer(serializers.ModelSerializer):
         try :
             instance.active_dso = validated_data['active_dso']
             instance.save()
+            instance.update_prices()
             return instance
         except:
             raise serializers.ValidationError("Error finding DSO")
