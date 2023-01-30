@@ -117,3 +117,37 @@ def get_ChargingSocket(request, pk):
          # return the response
     else:
         return HttpResponse("failed to fetch socket", status=500)
+
+@api_view(['GET'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def get_ChargingStationByID(request, pk):
+    cpms_url = os.environ.get('CPMS_URL')
+    # Extract the relevant information from the request
+    # Create the booking request payload
+    
+    response = requests.get(cpms_url + 'OCPI/requestChargingStationById/'+ pk + '/')
+    #print json content of the response
+    if response.status_code == 200:
+        # Process the response
+        content = response.content
+        return HttpResponse(content, status=200)
+         # return the response
+    else:
+        return HttpResponse("failed to fetch socket", status=500)
+
+@api_view(['POST'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def start_charge(request):
+    newRequest={
+        "socket": request.data['socketID'], 
+    }
+    cpms_url = os.environ.get('CPMS_URL')
+    response = requests.post(cpms_url + 'OCPI/startCharge', data=newRequest)
+    if response.status_code == 200:
+        # Process the response
+        return HttpResponse(response.content, status=200)
+         # return the response
+    else:
+        return HttpResponse(response.content, status=response.status_code)
