@@ -1,5 +1,10 @@
 <template>
     <h1 v-text="station.address" class="text-center text-5xl mt-16 tracking-wide relative"></h1>
+    <div class="flex mt-4 justify-center items-center">
+        <button @click="refreshStation" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+            Select automatically the best Energy Providers
+        </button>
+    </div>
     <div>
         <StationSocketDetail :sockets="station.sockets"/>
     </div>
@@ -50,12 +55,14 @@
 </template>
 
 <script>
+import { request, getRequestWithToken } from '~~/utils/fetchapi'
 export default {
     data() {
         return {
             station: "",
             id: "",
             bookingLength: 0,
+            response: "",
         }
     },
     setup() {
@@ -93,6 +100,26 @@ export default {
                 this.bookingLength = this.station.bookings.length
     
 
+            } catch (error) {
+                this.response = error
+                console.error(error)
+            }
+        },
+        async refreshStation() {
+            try{
+                this.id = this.$route.params.id
+                console.log("ID", this.id)
+                if (this.id == null)
+                    throw new Error("No ID provided")
+            
+                let {response, json} = await request('PUT', 'CPMS', 'api/selectBestProviderAuto/'+this.id+'/', {"id": this.id})
+                if (response.status == 200)
+                    this.response = "Best Providers Selected"
+                else
+                    throw new Error("Error selecting best provider")
+                
+                window.location.reload()
+                
             } catch (error) {
                 this.response = error
                 console.error(error)

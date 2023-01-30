@@ -105,6 +105,9 @@ export default {
       let { response, json } = await getRequest('emsp', 'OCPI/getChargingStations')
       this.stations = json
       this.id = this.$route.params.id
+      if (this.id == null)
+          throw new Error("No ID provided")
+          
       let station = this.stations.find(station => station.id == this.id)
 
       if(station != undefined)
