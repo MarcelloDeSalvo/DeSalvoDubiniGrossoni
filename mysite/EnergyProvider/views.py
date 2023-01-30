@@ -3,7 +3,7 @@ from rest_framework.response import Response
 
 from EnergyProvider.models import DSO, BSS
 from ChargingStation.models import ChargingStation
-from .serializers import DSO_Serializer, RegisterDSOSerializer, BSS_Serializer, RegisterBSSSerializer, ToggleBSSSerializer, SwitchDSOSerializer
+from .serializers import DSO_Serializer, RegisterDSOSerializer, BSS_Serializer, RegisterBSSSerializer, ToggleBSSSerializer, SwitchDSOSerializer, SelectBestProviderAutoSerializer
 from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
@@ -57,3 +57,9 @@ class ToggleBSS(generics.UpdateAPIView):
 class SwitchDSO(generics.UpdateAPIView):
     queryset = ChargingStation.objects.all()
     serializer_class = SwitchDSOSerializer
+
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+class SelectBestProviderAuto(generics.UpdateAPIView):
+    queryset = ChargingStation.objects.all()
+    serializer_class = SelectBestProviderAutoSerializer

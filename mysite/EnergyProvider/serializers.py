@@ -122,4 +122,16 @@ class SwitchDSOSerializer(serializers.ModelSerializer):
         except:
             raise serializers.ValidationError("Error finding DSO")
 
+class SelectBestProviderAutoSerializer(serializers.ModelSerializer):
+    # Change current DSO on the Charging Station
+    class Meta:
+        model = ChargingStation
+        fields = ('id',)
+
+    def update(self, instance, validated_data):
+        try :
+            instance.select_best_provider_auto()
+            return instance
+        except:
+            raise serializers.ValidationError("Error selecting best provider")
 
