@@ -26,6 +26,7 @@ class Socket(models.Model):
     class SocketStatus(models.TextChoices):
         AVAILABLE = 'Y', _('Available')
         UNAVAILABLE = 'N', _('Unavailable')
+        CHARGING = 'C', _('Charging')
 
     chargingStation = models.ForeignKey('ChargingStation.ChargingStation', on_delete=models.CASCADE, related_name='sockets')
     type = models.CharField(
@@ -87,3 +88,7 @@ class Socket(models.Model):
     def set_available(self):
         self.status = self.SocketStatus.AVAILABLE
         self.save()    
+
+    def set_charging(self):
+        self.status = self.SocketStatus.CHARGING
+        self.save() 

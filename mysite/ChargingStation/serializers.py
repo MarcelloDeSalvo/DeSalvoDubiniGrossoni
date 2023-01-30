@@ -21,6 +21,7 @@ class ChargingStationSerializer(serializers.ModelSerializer):
 #Same as above, but with less details (suitable for the EMSP)
 class ChargingStationBookingsSerializer(serializers.ModelSerializer):
     bookings = BookingSerializer(many=True, read_only=True)
+    sockets = SocketSerializer(many=True, read_only=True)
     class Meta:
         model = ChargingStation
         fields = ('id', 'address', 'sockets', 'bookings')
