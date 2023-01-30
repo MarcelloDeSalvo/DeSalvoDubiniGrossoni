@@ -17,8 +17,9 @@
                             <div class="flex mt-4">
                                 <div>
                                     <p tabindex="0"
-                                        class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 py-1 " v-text="DateBook">
-                                        </p>
+                                        class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 py-1 "
+                                        v-text="DateBook">
+                                    </p>
                                 </div>
                                 <div class="pl-2">
                                     <p tabindex="0"
@@ -27,7 +28,7 @@
                                 </div>
                                 <div class="pl-2">
                                     <button class="font-semibold" @click="handleClick1(BookingID)">
-                                        <svg width="16" height="16" fill="#cc0000" class="bi bi-trash" 
+                                        <svg width="16" height="16" fill="#cc0000" class="bi bi-trash"
                                             viewBox="0 0 16 16">
                                             <path
                                                 d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
@@ -36,13 +37,18 @@
                                         </svg>
                                     </button>
                                     <button class=" " @click="handleClick2(BookingID)" style="margin-left: 20px;">
-                                    <svg width="16" height="16" fill="#fff176" stroke="#f9a825" class="bi bi-lightning-charge-fill" viewBox="0 0 16 16"> <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/> </svg>
-                                </button>
+                                        <svg width="16" height="16" fill="#fff176" stroke="#f9a825"
+                                            class="bi bi-lightning-charge-fill" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z" />
+                                        </svg>
+                                    </button>
                                 </div>
+
                             </div>
+                            <div v-if="errorMessage" class="error-mex">{{ errorMessage }}</div>
                         </div>
                     </div>
-
                 </div>
                 <!-- END TEMPLATE -->
             </div>
@@ -52,8 +58,8 @@
 
 <script>
 
-import {deleteRequestWithToken} from '~~/utils/fetchapi'
-import {postRequestWithToken} from '~~/utils/fetchapi'
+import { deleteRequestWithToken } from '~~/utils/fetchapi'
+import { postRequestWithToken } from '~~/utils/fetchapi'
 const BookDate = "" //placeholder
 export default {
     props: {
@@ -82,6 +88,11 @@ export default {
             required: true,
         },
     },
+    data() {
+        return {
+            errorMessage: ''
+        }
+    },
     methods: {
         async handleClick1(BookingID) {
             await deleteRequestWithToken('emsp', 'api/removeBooking', BookingID)
@@ -89,22 +100,39 @@ export default {
             window.location.reload();
         },
         async handleClick2(BookingID) {
-            const id={
+            const id = {
                 "id": BookingID
             }
-            await postRequestWithToken('emsp', 'OCPI/startChargingFromBooking', id)
-            // Page refresh
-            
+            const result = await postRequestWithToken('emsp', 'OCPI/startChargingFromBooking', id)
+            if (result.status == 200) {
+                console.log(result.json)
+                this.$router.push('/chargingStatus/' + result.json.socket)
+            }
+            else {
+                this.errorMessage = result.json
+                setTimeout(() => {
+                    this.errorMessage = ''
+                }, 10000)
+            }
+            // Page refresh   
         }
-        
     },
-    
 }
 </script>
 
 <style>
 /* IF NEEDED IT CAN CHANGE THE WHOLE "CARD" BACKGROUND-COLOR, IT'S NOT PRESENT FOR THE DATE AND TIME SECTION */
 .bg-color {
-  background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
+}
+
+.error-mex {
+    color: rgb(211, 0, 0);
+    /**set the outside to black */
+    font-weight: 600;
+    font-size: 10px;
+    margin-top: 5px;
+    margin-left: 10px;
+    text-align: left;
 }
 </style>
