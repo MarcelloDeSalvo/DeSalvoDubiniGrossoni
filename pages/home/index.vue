@@ -11,7 +11,7 @@
             :Address="station.address" 
             :NumberSockets="station.nSockets" 
             :NumberAvailable="station.AvailableSockets"
-            :Redirect="'/makebooking/' + station.id + '/'"
+            :Redirect="'/stationDetails/' + station.id + '/'"
             >
         </SimpleCard>
     </div >

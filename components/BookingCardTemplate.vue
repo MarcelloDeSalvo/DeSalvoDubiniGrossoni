@@ -99,12 +99,13 @@ export default {
             // Page refresh
             window.location.reload();
         },
+        //handles startcharge button
         async handleClick2(BookingID) {
             const id = {
                 "id": BookingID
             }
             const result = await postRequestWithToken('emsp', 'OCPI/startChargingFromBooking', id)
-            if (result.status == 200) {
+            if (result.response.status == 200) {
                 console.log(result.json)
                 this.$router.push('/chargingStatus/' + result.json.socket)
             }
