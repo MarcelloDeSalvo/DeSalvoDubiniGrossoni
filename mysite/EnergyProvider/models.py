@@ -51,3 +51,6 @@ class BSS(EnergyProviderInterface):
 
     def get_capacity(self):
         return self.capacity
+
+    def get_station(self):
+        return self.station

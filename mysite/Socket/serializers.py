@@ -13,12 +13,11 @@ class CreateSocketSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Socket
-        fields = ('chargingStation', 'type', 'status', 'price')
+        fields = ('chargingStation', 'type', 'status')
         extra_kwargs = {
             'chargingStation' : {'required' : True},
             'type': {'required': True},
             'status': {'required': True},
-            'price': {'required': True},
         }
 
     def validate(self, attrs):
@@ -31,12 +30,6 @@ class CreateSocketSerializer(serializers.ModelSerializer):
         if attrs['status'] == None:
             raise serializers.ValidationError(
                 {"status": "You must select a socket status"})
-        if attrs['price'] <0:
-            raise serializers.ValidationError(
-                {"price": "You can't have a negative price"})
-        if attrs['price'] == None:
-            raise serializers.ValidationError(
-                {"price": "You must select a price"})
         return attrs
     
     def create(self, validated_data):
@@ -47,7 +40,6 @@ class CreateSocketSerializer(serializers.ModelSerializer):
                 validated_data['chargingStation'],
                 validated_data['type'],
                 validated_data['status'],
-                validated_data['price'],
             )
             return socket
         except Exception as e:

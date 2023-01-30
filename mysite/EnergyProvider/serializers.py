@@ -87,6 +87,7 @@ class ToggleBSSSerializer(BSS_Serializer):
                 raise serializers.ValidationError("Cannot activate a provider that is not available")
 
             instance.isActive = not instance.isActive
+            instance.station.update_prices()
             instance.save()
             return instance
         except:
@@ -116,6 +117,7 @@ class SwitchDSOSerializer(serializers.ModelSerializer):
         try :
             instance.active_dso = validated_data['active_dso']
             instance.save()
+            instance.update_prices()
             return instance
         except:
             raise serializers.ValidationError("Error finding DSO")
