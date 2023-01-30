@@ -2,6 +2,8 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from .serializers import CreateSocketSerializer
 from rest_framework import generics
+from .models import Socket
+from .serializers import  SocketSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
 from rest_framework.permissions import IsAuthenticated
@@ -26,4 +28,6 @@ class RegisterSocketAPIView(generics.CreateAPIView):
             "socket": CreateSocketSerializer(socket, context=self.get_serializer_context()).data,
             "message": "Socket Registered Successfully.",
         })
+
+
 

@@ -5,6 +5,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
 from ChargingStation.models import ChargingStation
 from Socket.models import Socket
+from Socket.serializers import SocketSerializer
 from Booking.models import Booking
 from ChargingStation.views import getChargingStations
 from ChargingStation.serializers import ChargingStationSerializer
@@ -90,10 +91,24 @@ def startChargeFromBooking(request):
         return Response(chargeStatus, status=400)
 
 
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([])
+def getSocket(request, pk):
+    socket = Socket.objects.get(id=pk)
+    serializer = SocketSerializer(socket, many=False)
+    return Response(serializer.data)
 
-
-
-
+#utils method to hard reset the socket for test purposes
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([])
+def resetSocket(request, pk):
+    socket = Socket.objects.get(id=pk)
+    socket.set_available()
+    return Response(status=200)
+    
+    
 
 
 
