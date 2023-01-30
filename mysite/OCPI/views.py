@@ -97,3 +97,23 @@ def start_charging_from_booking(request):
          # return the response
     else:
         return HttpResponse(response.content, status=response.status_code)
+
+
+
+@api_view(['GET'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def get_ChargingSocket(request, pk):
+    cpms_url = os.environ.get('CPMS_URL')
+    # Extract the relevant information from the request
+    # Create the booking request payload
+    
+    response = requests.get(cpms_url + 'OCPI/getSocket/'+ pk + '/')
+    #print json content of the response
+    if response.status_code == 200:
+        # Process the response
+        content = response.content
+        return HttpResponse(content)
+         # return the response
+    else:
+        return HttpResponse("failed to fetch socket", status=500)
