@@ -105,20 +105,10 @@ export default {
       let { response, json } = await getRequest('emsp', 'OCPI/getChargingStations')
       this.stations = json
       this.id = this.$route.params.id
-      if (this.id) {
-        this.stationIDs = this.id
-        this.formData.stationID = this.id
-        this.formData.stationAddress = this.stations.find(station => station.id == this.id).address
-        this.selectableSockets = this.stations.find(station => station.id == this.id).sockets
-        // Select the first socket by default if there are sockets
-        if (this.selectableSockets.length > 0) {
-          this.selectedSockets = this.selectableSockets[0].id
-          this.formData.socketID = this.selectableSockets[0].id
-        }
+      let station = this.stations.find(station => station.id == this.id)
 
-        // Filter the sockets that are available
-        this.formData.cpmsID = this.stations.find(station => station.id == this.id).cpmsID
-      }
+      if(station != undefined)
+        this.fillForm()
 
     } catch (error) {
       this.response = error
@@ -132,6 +122,23 @@ export default {
     }
   },
   methods: {
+    fillForm() {
+      this.stationIDs = this.id
+      this.formData.stationID = this.id
+      
+      this.formData.stationAddress = this.stations.find(station => station.id == this.id).address
+      
+      this.selectableSockets = this.stations.find(station => station.id == this.id).sockets
+      // Select the first socket by default if there are sockets
+      if (this.selectableSockets.length > 0) {
+        this.selectedSockets = this.selectableSockets[0].id
+        this.formData.socketID = this.selectableSockets[0].id
+      }
+
+      // Filter the sockets that are available
+      this.formData.cpmsID = this.stations.find(station => station.id == this.id).cpmsID
+    },
+
     onSelectionStationChange(e) {
       console.log(e.target.value)
       // Update the selected station and give it also the sockets
