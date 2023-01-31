@@ -151,3 +151,19 @@ def start_charge(request):
          # return the response
     else:
         return HttpResponse(response.content, status=response.status_code)
+
+@api_view(['GET'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def stop_charge(request, pk):
+    newRequest={
+        "socket": pk, 
+    }
+    cpms_url = os.environ.get('CPMS_URL')
+    response = requests.post(cpms_url + 'OCPI/stopCharge', data=newRequest)
+    if response.status_code == 200:
+        # Process the response
+        return HttpResponse(response.content, status=200)
+         # return the response
+    else:
+        return HttpResponse(response.content, status=response.status_code)
