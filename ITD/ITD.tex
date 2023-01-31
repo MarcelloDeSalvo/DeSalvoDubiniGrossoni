@@ -1,0 +1,280 @@
+\documentclass[table, 12pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{float}
+\usepackage[export]{adjustbox}
+\usepackage{longtable}
+\usepackage{mathtools}
+\usepackage[most]{tcolorbox}
+\newcounter{testexample}
+\usepackage{xparse}
+\usepackage{subcaption}
+\usepackage{amsmath}
+
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+\NewDocumentEnvironment{testexample}{ O{} }
+{
+\colorlet{colexam}{teal!60!black} % Global example color
+\newtcolorbox[use counter=testexample]{testexamplebox}{%
+    % Example Frame Start
+    empty,% Empty previously set parameters
+    title={\exampletext #1},% use \thetcbcounter to access the testexample counter text
+    % Attaching a box requires an overlay
+    attach boxed title to top left,
+       % Ensures proper line breaking in longer titles
+       minipage boxed title,
+    % (boxed title style requires an overlay)
+    boxed title style={empty,size=minimal,toprule=0pt,top=4pt,left=3mm,overlay={}},
+    coltitle=colexam,fonttitle=\bfseries,
+    before=\par\medskip\noindent,parbox=false,boxsep=0pt,left=3mm,right=0mm,top=2pt,breakable,pad at break=0mm,
+       before upper=\csname @totalleftmargin\endcsname0pt, % Use instead of parbox=true. This ensures parskip is inherited by box.
+    % Handles box when it exists on one page only
+    overlay unbroken={\draw[colexam,line width=.5pt] ([xshift=-0pt]title.north west) -- ([xshift=-0pt]frame.south west); },
+    % Handles multipage box: first page
+    overlay first={\draw[colexam,line width=.5pt] ([xshift=-0pt]title.north west) -- ([xshift=-0pt]frame.south west); },
+    % Handles multipage box: middle page
+    overlay middle={\draw[colexam,line width=.5pt] ([xshift=-0pt]frame.north west) -- ([xshift=-0pt]frame.south west); },
+    % Handles multipage box: last page
+    overlay last={\draw[colexam,line width=.5pt] ([xshift=-0pt]frame.north west) -- ([xshift=-0pt]frame.south west); },%
+    }
+\begin{testexamplebox}}
+{\end{testexamplebox}\endlist}
+
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    {\scshape\large AY 2022/2023 \par}
+    \vfill
+    \includegraphics[width=100pt]{assets/logo_polimi.jpg}\par\vspace{1cm}
+    {\scshape\LARGE Politecnico di Milano \par}
+    \vspace{1.5cm}
+    {\huge\bfseries DD\@: Design Document \par}
+    \vspace{2cm}
+    {\Large {Marcello De Salvo\quad Riccardo Grossoni \par Francesco Dubini}\par}
+    \vfill
+    {\large Professor\par
+        Elisabetta \textsc{Di Nitto}}
+    \vfill
+    {\large \textbf{Version 1.0}\\ \today \par}
+\end{titlepage}
+
+\hypersetup{%
+    pdfborder = {0 0 0}
+}
+
+\thispagestyle{plain}
+\pagenumbering{gobble}
+\mbox{}
+\newpage
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\section{Introduction}
+
+\subsection{Purpose}
+
+The objective of this document is the realization of a full technical description of the system presented in the RASD document.
+Here we will analyze both hardware and software architectures, focussing on the interaction between components that constitute the system.
+Additionally, we will also delve into the implementation, testing and integration process.
+This document will use technical language as it's aimed for programmers, but stakeholders are also invited to read as it can be useful to understand the characteristics of the development.
+
+\subsection{Definitions, acronyms, abbreviations}
+\subsubsection*{Acronyms}
+\begin{itemize}
+    \item \textbf{RASD}: Requirement Analysis and Specification Document
+    \item \textbf{DD}: Design Document
+    \item \textbf{ITD}: Implementation Document
+    \item \textbf{API}: Application Programming Interface
+    \item \textbf{DBMS}: Database Management System
+    \item \textbf{DMZ}: Demilitarized Zone
+    \item \textbf{OCPP}: Open Charge Point Protocol
+    \item \textbf{UML}: Unified Modeling Language
+    \item \textbf{GPS}: Global Positioning System
+    \item \textbf{IT}: Information Technology
+    \item \textbf{GUI}: Graphic User Interface
+    \item \textbf{UI}: User Interface
+    \item \textbf{HTTPS}:HyperText Transfer Protocol Security
+    \item \textbf{HTML}: HyperText Markup Language
+    \item \textbf{CSS}: Cascade Style Sheet
+    \item \textbf{JS}: JavaScript
+\end{itemize}
+
+\subsection{Revision history}
+\begin{itemize}
+    \item Version 1.0: first release
+    
+\end{itemize}
+
+\subsection{References}
+\begin{itemize}
+    \item Django Framework: \url{https://www.djangoproject.com/}
+    \item REST Framework: \url{https://www.django-rest-framework.org/}
+    \item Vue.js: \url{https://vuejs.org/}
+    \item PostgreSQL: \url{https://www.postgresql.org/docs/14/index.html}
+    \item Vercel: \url{https://vercel.com/docs}
+    \item 
+\end{itemize}
+
+\newpage
+\section{Development}
+\subsection{Implemented Functionalities}
+Qua ci mettiamo le cose implementate
+
+\subsection{Functionalities not implemented}
+Qua ci mettiamo le cose non implementate
+
+\subsection{Implemented requirements}
+Requirement implemenmtati
+\newcounter{RequirementCtr}
+\begin{itemize}
+    \stepcounter{RequirementCtr}
+    \item[\textbf{R\arabic{RequirementCtr}.}] Matching dei requirement. NON VEDO L'ORA!!!! \checkmark
+    \stepcounter{RequirementCtr}
+    \item[\textbf{R\arabic{RequirementCtr}.}] The system shall allow users to be identified by an email of their choosing. \checkmark
+    \stepcounter{RequirementCtr}
+\end{itemize}
+
+\subsection{Design Choices}
+Bho la droga
+
+\subsection{Adopted Development Frameworks}
+Mvmm o link al DD
+
+\subsection{Programming languages}
+natural language per chatgpt, python per tutto il resto \\
+Loro mettono pro e contro, imo evitabili ?
+
+
+\subsubsection{Django Framework}
+descrivilo
+
+
+\paragraph{Django Middlewares}
+To manage the communication between backend and frontend, we mainly use the following Django middlewares:
+\begin{itemize}
+    \item \textit{SecurityMiddleware}
+    \item \textit{SessionMiddleware}
+    \item \textit{CsrfViewMiddleware}
+    \item \textit{AuthenticationMiddleware}
+\end{itemize}
+
+\subsubsection{Django REST Framework}
+\label{REST}
+We decided to pair REST framework to our Django backend since REST allows even more security features.
+Boh il cringe di django rest framework
+
+
+\subsubsection{Vue.js}
+\label{Vue}
+Vue fa vomitare odia le lettere maiuscole 
+
+\subsection{API Integration}
+Ne abbiamo messe 0 lmao. Qua potremmo discutere il perchè era poco fattibile farle 
+\subsubsection{Maps API}
+\subsubsection{Car APi}
+Scuffed
+
+\subsection{DataBase}
+Abbiamo usato postgre wow
+
+
+\subsection{Vercel}
+Spiegazione di vercel come scelta, mettere i link per accedere
+
+\section{Source Code}
+\subsection{Backend Structure}
+Spiegazione ella struttura del progetto. Direi di spiegare qua la cosa del doppio backend e magari di stare attenti alle varie env.\\
+TBH la parte sotto si può lasciare cosi com'è, non è che sia una cosa che cambia molto. Il problema forse è il filtro anti plagio.
+\begin{itemize}
+    \item \textbf{ITD}: da vedere
+    \item \textbf{dream\_backend}: da vedere
+    \item \textbf{\_\_init.py\_\_}: it tells the Python interpreter that the directory is a Python package
+    \item \textbf{settings.py}: main setting file for the Django project, used to configure all the applications and middleware, it also handles the database settings
+    \item \textbf{urls.py}: URL declarations for the Django project, it contains all the endpoints that the website should have
+    \item \textbf{wsgi.py}: entry-point for WSGI-compatible web servers to serve your project, it describes the way in which servers interact with the applications
+    \item \textbf{asgi.py}: entry-point for ASGI-compatible web servers to serve your project, ASGI works similar to WSGI but comes with some additional functionality
+    \item \textbf{migrations}: Django's way of propagating changes to the models into the database schema, when changes occur this folder is populated with the records of them
+    \item \textbf{admin.py}: used for registering the Django models into the Django administration, it allows to display them in the Django admin panel
+    \item \textbf{apps.py}: common configuration file for all Django apps, used to configure the attributes of the app
+    \item \textbf{models.py}: it defines the structure of the database, it allows the user to create database tables for the app with proper relationships using Python classes. It tells about the actual design, relationships between the data sets and their attribute constraints
+    \item \textbf{tests.py}: used to test the overall functionality of the app through unit tests
+    \item \textbf{views.py}: provide an interface through which a user interacts with a Django website, it contains the business logic of the app
+    \item \textbf{manage.py}: command-line utility for executing Django commands; these includes debugging, deploying and running
+\end{itemize}
+
+
+\subsubsection{Apps}
+Lista delle varie app e funzionalità (opterei per metterla in una subsubsection)
+
+\subsection{Frontend Structure}
+Spiegare la struttura della repo del frontend, simile a quella di vercel
+
+
+\newpage
+\section{Testing}
+AHAHAAHAHAHA
+
+\subsection{Unit Testing}
+Segue una eterna lista di test che non abbiamo fatto
+
+\subsection{System Testing}
+Testing as a whole done throughout
+
+\subsection{Post-deployment Testing}
+Testing post deployment
+
+\section{Installation}
+As a web application we chose to deploy it on Heroku, so
+a fully running version of the software is available at:\newline
+\url{https://de-salvo-dubini-grossoni.vercel.app}.
+
+Spiegare nel caso di seguire il readme 
+
+\subsection{Requirements}
+dire che server python di una certa versione, abbastanza copiabile dal Loro
+
+\subsection{Installation}
+Riscrivere a roba già detta nel readme
+\subsubsection{EMSP backend}
+\subsubsection{CPMS backend}
+\subsubsection{Frontend}
+
+
+\newpage
+\section{Effort Spent}
+    \begin{tabular}{|c||c|}
+        \hline
+        Student & Time for implementation\\ \hline
+        Marcello De Salvo & 20000h  \\
+        Francesco Dubini & 0 h (licenziato) \\
+        Riccardo Grossoni & 3 KW/h \\
+        \hline
+    \end{tabular}
+
+
+\section{References}
+
+
+\begin{thebibliography}{9}
+    \bibitem{reference1}
+    MDN Web Docs Glossary: Definitions of Web-related terms -> MVC
+    \url{https://developer.mozilla.org/en-US/docs/Glossary/MVC}
+
+    
+\end{thebibliography}
+
+\end{document}
