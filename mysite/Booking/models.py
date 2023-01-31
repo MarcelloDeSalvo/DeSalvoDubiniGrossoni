@@ -12,19 +12,20 @@ class BookingManager(models.Model):
         booking.socketID = socketID
         booking.cpmsID = cpmsID 
         booking.stationAddress = stationAddress
-        booking.save(using=self._db)
+        booking.save()
         return booking
     
     def get_booking_by_id(self, id):
-        return self.get(id=id)
+        return self.filter(id=id)[0]
     
-    def get_bookings_by_userID(self, userID):
-        return self.filter(userID=userID)
+    def get_bookings_by_user(self, user):
+        return self.filter(user=user)
     
     def get_bookings_by_cpmsID(self, cpmsID):
         return self.filter(cpmsID=cpmsID)
     
-    pass
+    def filter(self, **kwargs):
+        return Booking.objects.filter(**kwargs)
 
 # Create your models here.
 class Booking(models.Model):
