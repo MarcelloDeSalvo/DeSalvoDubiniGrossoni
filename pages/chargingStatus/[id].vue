@@ -50,7 +50,7 @@ export default {
 
         let { response, json } = await getRequestWithToken('emsp', 'OCPI/getSocket/' + this.id + '/')
         this.socket = json
-    
+
       } catch (error) {
         this.response = error
         console.error(error)
@@ -58,7 +58,15 @@ export default {
     },
     async stopCharge(id) {
       let { response, json } = await getRequestWithToken('emsp', 'OCPI/stopCharge/' + this.id + '/')
-      //handles stopcharge button
+      if (response.status == 200) {
+        location.reload()
+      }
+      else if (response.status == 400) {
+        location.reload()
+      }
+      else {
+        alert("Error")
+      }
     }
   }
 };
@@ -67,6 +75,5 @@ export default {
 <style>
 .button {
   margin-top: 20px;
-  margin-left: 8%;
 }
 </style>
