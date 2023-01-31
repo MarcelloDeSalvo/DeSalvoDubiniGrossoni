@@ -16,7 +16,7 @@ class ChargingStationSerializer(serializers.ModelSerializer):
     bookings = BookingSerializer(many=True, read_only=True)
     class Meta:
         model = ChargingStation
-        fields = ('id', 'address', 'active_dso', 'sockets', 'connected_dsos', 'connected_bss', 'bookings')
+        fields = ('id', 'address', 'active_dso', 'sockets', 'connected_dsos', 'connected_bss', 'bookings', 'city')
 
 #Same as above, but with less details (suitable for the EMSP)
 class ChargingStationBookingsSerializer(serializers.ModelSerializer):
@@ -24,7 +24,7 @@ class ChargingStationBookingsSerializer(serializers.ModelSerializer):
     sockets = SocketSerializer(many=True, read_only=True)
     class Meta:
         model = ChargingStation
-        fields = ('id', 'address', 'sockets', 'bookings')
+        fields = ('id', 'address', 'sockets', 'bookings', 'city')
 
 class CreateChargingStationSerializer(serializers.ModelSerializer):
     _db = 'default'
@@ -58,7 +58,8 @@ class CreateChargingStationSerializer(serializers.ModelSerializer):
                 self,
                 validated_data['address'],
                 validated_data['connected_dsos'],
-                validated_data['active_dso']
+                validated_data['active_dso'],
+                validated_data['city']
             )
             return station
             

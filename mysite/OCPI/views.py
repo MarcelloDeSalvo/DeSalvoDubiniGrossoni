@@ -165,6 +165,13 @@ def startCharge(request):
             print(bookings)
             chargeStatus="Sorry this socket is booked for this time Frame"
 
+    if(socket.is_charging() and socket.get_email()==request.data['email']):
+        message = {
+                "socket": request.data['socket'],
+                "status": "you are already charging"
+            }
+        return Response(message, status=200)
+
     return Response(chargeStatus, status=400)
 
 
