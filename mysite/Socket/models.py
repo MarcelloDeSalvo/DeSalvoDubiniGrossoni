@@ -58,6 +58,12 @@ class Socket(models.Model):
 
     def is_available(self):
         return self.status == self.SocketStatus.AVAILABLE
+
+    def is_unavailable(self):
+        return self.status == self.SocketStatus.UNAVAILABLE
+    
+    def is_charging(self):
+        return self.status == self.SocketStatus.CHARGING
     
     def assign_price(self):
         #function that assigns a price to the socket based on the type of socket, doesn't save it 

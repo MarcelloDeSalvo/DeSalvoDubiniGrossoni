@@ -136,7 +136,7 @@ def startCharge(request):
     chargeStatus="Sorry this socket is not available for charging at the moment"
     #load socket
     socket=Socket.objects.filter(id=request.data['socket']).first()
-    print(socket.is_available())
+    
     if(socket.is_available()):
         currentDateTime = datetime.now()
         delta=timedelta(minutes=10)
@@ -147,7 +147,7 @@ def startCharge(request):
                 "status": "Charge Started"
             }
             socket.set_charging()
-            print(socket.get_availability())
+            
             def update_status():    #FAKE OCPP
                 socket.set_available()
             timer = Timer(60, update_status)    #TIMER FOR SOCKET RESET
@@ -163,7 +163,29 @@ def startCharge(request):
 def update_status(socket):    #FAKE OCPP
                 socket.set_available()
 
+@api_view(['POST'])
+@authentication_classes([])
+@permission_classes([])
+def stopCharge(request):
+    #initialize response
+    
+    response=""
+    #load socket
+    socket=Socket.objects.filter(id=request.data['socket']).first()
+    if(socket.is_available()):
+        response="Charge already finished" 
+        return Response(response, status=200)
+    elif(socket.is_charging()):
+        response="charge finished" 
+        socket.set_available()   
+        return Response(response, status=200)
+    else:
+        response="there were problems terminating the charge" 
+        return Response(response, status=400)
+           
+            
 
+    
 
 
 
