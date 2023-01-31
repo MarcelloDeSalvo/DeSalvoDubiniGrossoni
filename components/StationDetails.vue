@@ -84,7 +84,7 @@ export default {
             const result = await postRequestWithToken('emsp', 'OCPI/startCharge', socketID)
             if (result.response.status == 200) {
                 console.log(result.json)
-                this.$router.push('/chargingStatus/' + result.json.socket)
+                this.$router.push('/chargingStatus/' + result.json.socket + '/')
             }
             else {
                 this.errorMessage = result.json

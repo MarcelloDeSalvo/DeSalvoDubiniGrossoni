@@ -24,6 +24,7 @@
         <SimpleCard class="component-class" v-for="station in stations" 
             :StationName="station.id" 
             :Address="station.address" 
+            :City="station.city"
             :NumberSockets="station.nSockets" 
             :NumberAvailable="station.AvaliableSockets" 
             :Redirect="'/cpms/viewStationDetails/' + station.id">

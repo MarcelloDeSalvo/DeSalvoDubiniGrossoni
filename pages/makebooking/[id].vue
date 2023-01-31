@@ -11,7 +11,7 @@
             <select v-model="stationIDs" required @change="onSelectionStationChange" form="bookingform" id="stations"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-grey-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
               <!-- TODO: Generate a list of selection based on the incoming json file from the OCPI-->
-              <option v-for="station in stations" :value="station.id">{{ station.address }}</option>
+              <option v-for="station in stations" :value="station.id">{{ station. city + ' - ' + station.address }}</option>
             </select>
           </div>
           <div class="mb-5">
@@ -107,7 +107,15 @@ export default {
       this.id = this.$route.params.id
       if (this.id == null)
           throw new Error("No ID provided")
-          
+      
+      const sortedStations = Object.values(this.stations).sort((a, b) => {
+          if (a.city < b.city) return -1;
+          if (a.city > b.city) return 1;
+          return 0;
+      });
+      this.stations = sortedStations    
+
+
       let station = this.stations.find(station => station.id == this.id)
 
       if(station != undefined)
