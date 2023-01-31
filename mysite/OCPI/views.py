@@ -77,6 +77,7 @@ def startChargeFromBooking(request):
         #check if the socket is available and if the booking is not expired
         if ( timeDifference<=timedelta(minutes=15) and socket.is_available()):
             socket.set_charging()
+            socket.set_email(request.data['email'])
             chargeStatus="Charge Started"
             message = {
                 "chargingStation": request.data['chargingStation'],
@@ -87,7 +88,9 @@ def startChargeFromBooking(request):
                 "status": chargeStatus
             }
             def update_status():    #FAKE OCPP
-                socket.set_available()
+                if(socket.is_charging()):
+                    socket.remove_email()
+                    socket.set_available()
             timer = Timer(60, update_status)    #TIMER FOR SOCKET RESET
             timer.start() 
             
@@ -109,11 +112,13 @@ def startChargeFromBooking(request):
         return Response(chargeStatus, status=400)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 @authentication_classes([])
 @permission_classes([])
 def getSocket(request, pk):
     socket = Socket.objects.get(id=pk)
+    if (socket.get_email() != request.data['email'] and socket.is_charging()):
+        return Response("You are not allowed to access this socket", status=403)
     serializer = SocketSerializer(socket, many=False)
     return Response(serializer.data)
 
@@ -136,8 +141,9 @@ def startCharge(request):
     chargeStatus="Sorry this socket is not available for charging at the moment"
     #load socket
     socket=Socket.objects.filter(id=request.data['socket']).first()
-    
+
     if(socket.is_available()):
+        
         currentDateTime = datetime.now()
         delta=timedelta(minutes=10)
         bookings=Booking.objects.filter(socket=socket.get_id(), date=currentDateTime.date(), time__range=((currentDateTime-delta).time(), (currentDateTime+delta).time()))
@@ -147,9 +153,11 @@ def startCharge(request):
                 "status": "Charge Started"
             }
             socket.set_charging()
-            
+            socket.set_email(request.data['email'])
             def update_status():    #FAKE OCPP
-                socket.set_available()
+                if(socket.is_charging()):                    
+                    socket.remove_email()
+                    socket.set_available()
             timer = Timer(60, update_status)    #TIMER FOR SOCKET RESET
             timer.start()    
             return Response(message, status=200)
@@ -172,15 +180,19 @@ def stopCharge(request):
     response=""
     #load socket
     socket=Socket.objects.filter(id=request.data['socket']).first()
-    if(socket.is_available()):
+    if(socket.is_available() and socket.get_email()==request.data['email']):
         response="Charge already finished" 
+        socket.remove_email()
         return Response(response, status=200)
-    elif(socket.is_charging()):
+    elif(socket.is_charging() and socket.get_email()==request.data['email']):
         response="charge finished" 
+        socket.remove_email()
         socket.set_available()   
         return Response(response, status=200)
     else:
         response="there were problems terminating the charge" 
+        if(socket.get_email()==request.data['email']):
+            socket.remove_email()
         return Response(response, status=400)
            
             
