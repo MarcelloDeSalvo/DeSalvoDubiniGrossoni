@@ -107,8 +107,10 @@ def get_ChargingSocket(request, pk):
     cpms_url = os.environ.get('CPMS_URL')
     # Extract the relevant information from the request
     # Create the booking request payload
-    
-    response = requests.get(cpms_url + 'OCPI/getSocket/'+ pk + '/')
+    newRequest={ 
+        "email": request.user.get_email(),
+    }
+    response = requests.post(cpms_url + 'OCPI/getSocket/'+ pk + '/', data=newRequest)
     #print json content of the response
     if response.status_code == 200:
         # Process the response
@@ -142,7 +144,9 @@ def get_ChargingStationByID(request, pk):
 def start_charge(request):
     newRequest={
         "socket": request.data['socketID'], 
+        "email": request.user.get_email(),
     }
+    print(newRequest)
     cpms_url = os.environ.get('CPMS_URL')
     response = requests.post(cpms_url + 'OCPI/startCharge', data=newRequest)
     if response.status_code == 200:
@@ -158,6 +162,7 @@ def start_charge(request):
 def stop_charge(request, pk):
     newRequest={
         "socket": pk, 
+        "email": request.user.get_email(),
     }
     cpms_url = os.environ.get('CPMS_URL')
     response = requests.post(cpms_url + 'OCPI/stopCharge', data=newRequest)
