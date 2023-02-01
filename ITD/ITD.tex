@@ -60,7 +60,7 @@
     \includegraphics[width=100pt]{assets/logo_polimi.jpg}\par\vspace{1cm}
     {\scshape\LARGE Politecnico di Milano \par}
     \vspace{1.5cm}
-    {\huge\bfseries DD\@: Design Document \par}
+    {\huge\bfseries ITD\@: Implementation Document \par}
     \vspace{2cm}
     {\Large {Marcello De Salvo\quad Riccardo Grossoni \par Francesco Dubini}\par}
     \vfill
@@ -84,6 +84,8 @@
 \pagenumbering{arabic}
 
 \section{Introduction}
+The code can be found in the official project repository on GitHub at the link:
+https://github.com/MarcelloDeSalvo/DeSalvoDubiniGrossoni.git.
 
 \subsection{Purpose}
 
@@ -100,17 +102,26 @@ This document will use technical language as it's aimed for programmers, but sta
     \item \textbf{ITD}: Implementation Document
     \item \textbf{API}: Application Programming Interface
     \item \textbf{DBMS}: Database Management System
-    \item \textbf{DMZ}: Demilitarized Zone
     \item \textbf{OCPP}: Open Charge Point Protocol
+    \item \textbf{OCPI}: Open Charge Point Interface
+    \item \textbf{CPOW}: Charge Point Operator Worker
     \item \textbf{UML}: Unified Modeling Language
     \item \textbf{GPS}: Global Positioning System
-    \item \textbf{IT}: Information Technology
-    \item \textbf{GUI}: Graphic User Interface
     \item \textbf{UI}: User Interface
     \item \textbf{HTTPS}:HyperText Transfer Protocol Security
+    \item \textbf{CSRF}: Cross Site Request Forgery
     \item \textbf{HTML}: HyperText Markup Language
     \item \textbf{CSS}: Cascade Style Sheet
     \item \textbf{JS}: JavaScript
+    \item \textbf{MVVM}: Model View View-Model
+    \item \textbf{MVC}: Model View Controller
+    \item \textbf{REST}: Representational State Transfer
+    \item \textbf{JSON}: JavaScript Object Notation
+    \item \textbf{JWT}: JSON Web Token
+    \item \textbf{URL}: Uniform Resource Locator
+    \item \textbf{TS}: TypeScript
+    \item \textbf{DRF}: Django REST Framework
+    \item \textbf{ACID}: Atomicity-Consistency-Isolation-Durability
 \end{itemize}
 
 \subsection{Revision history}
@@ -123,64 +134,213 @@ This document will use technical language as it's aimed for programmers, but sta
 \begin{itemize}
     \item Django Framework: \url{https://www.djangoproject.com/}
     \item REST Framework: \url{https://www.django-rest-framework.org/}
+    \item Nuxt 3 Framework: \url{https://nuxt.com}
     \item Vue.js: \url{https://vuejs.org/}
     \item PostgreSQL: \url{https://www.postgresql.org/docs/14/index.html}
     \item Vercel: \url{https://vercel.com/docs}
-    \item 
+    \item Digital Ocean: \url{https://www.digitalocean.com}
+    \item Tailwindcss: \url{https://tailwindcss.com/docs}
 \end{itemize}
 
 \newpage
 \section{Development}
 \subsection{Implemented Functionalities}
-Qua ci mettiamo le cose implementate
+We implemented the following functionalities for emsp users and cpo's operators:
+
+\subsubsection*{User}
+\begin{itemize}
+    \item Visualization of nearby stations and their status
+    \item Make a booking
+    \item Delete a booking
+    \item Visualization of all bookings
+    \item Start charging session
+\end{itemize}
+
+\subsubsection*{CPOW}
+\begin{itemize}
+    \item Access informations on the stations
+    \item Change the power Source of the stations (battery and DSO)
+    \item Add and remove discounts
+\end{itemize}
 
 \subsection{Functionalities not implemented}
-Qua ci mettiamo le cose non implementate
+For the eMSP we didn't implement the payment system as it wasn't required and a mail service that notifies the user when the charging process is finished
+(but it gets notified while inside the page). 
+For the CPMS a lot of functions required a real communication with a DSO and the ChargingStation, so it was not possible to truly implement them. We inserted data relative to the DSOs and the batteries in the database based on our discretion.
+
+
 
 \subsection{Implemented requirements}
-Requirement implemenmtati
+Here it follows the list of requirements taken from the RASD.
+The implemented ones are checked with a checkmark.
+\subsubsection*{Shared requirements}
 \newcounter{RequirementCtr}
 \begin{itemize}
-    \stepcounter{RequirementCtr}
-    \item[\textbf{R\arabic{RequirementCtr}.}] Matching dei requirement. NON VEDO L'ORA!!!! \checkmark
-    \stepcounter{RequirementCtr}
-    \item[\textbf{R\arabic{RequirementCtr}.}] The system shall allow users to be identified by an email of their choosing. \checkmark
-    \stepcounter{RequirementCtr}
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The system must allow registered and logged-in users to use the app. \checkmark
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The system must respect the GDPR and the user's privacy. \checkmark
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The system must allow registered users to log-in using their e-mail. \checkmark
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] Both the CMPS and the eMSP subsystem must abide to the OCPI 2.2.1 protocol. $\sim$
+\end{itemize}
+%emsp
+\subsubsection*{EMSP requirements}
+\begin{itemize}
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The eMSP subsystem must show the user the nearby charging stations through an interactive map. $\sim$
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The eMSP subsystem must be allowed to use the user's GPS location in order to view the nearby charging stations, if given permission. $\times$
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The eMSP subsystem must notify the user when the charge has finished. \checkmark
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The eMSP subsystem must show the user the discounted prices. \checkmark
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The eMSP subsystem must show the user the prices of the charging stations. \checkmark
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The eMSP subsystem must access the User calendar schedule in order to suggest the best charging timeframes, if given permission. $\times$
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The eMSP subsystem must suggest the user on which charging stations to go based on the EV battery and his daily schedule. $\times$
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The eMSP subsystem must communicate with the CPMSs in order to exchange all needed information about the charging stations. \checkmark
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The eMSP subsystem must allow the user to book a charging spot for a future date. \checkmark
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The eMSP subsystem must allow the user to cancel a future reservation for a charging spot. \checkmark
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The eMSP subsystem must allow the user to pay for the charge through an external payment service. $\times$
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The eMSP subsystem must allow the user to start or stop the charge via the application. \checkmark
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The eMSP subsystem must notify the user of the upcoming booked sessions. $\times$
+\end{itemize}
+%cpms
+\subsubsection*{CPMS requirements}
+\begin{itemize}
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The CPMS subsystem must communicate with the DSO according to a standard protocol. $\times$
+
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The CPMS subsystem must retrieve the DSO current energy price. \checkmark
+
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The CPMS subsystem must automatically decide from which DSO to acquire energy. $\sim$
+
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The CPMS subsystem must retrieve the charging station's battery status. \checkmark
+
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The CPMS subsystem must dynamically change the energy source depending on the internal station's battery status and the available DSOs' prices. $\sim$
+
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The CPMS subsystem must communicate the location of the charging stations to all connected eMSPs. \checkmark
+
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The CPMS subsystem must retrieve the internal status of the sockets through the OCPP standard protocol. $\sim$
+
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The CPMS subsystem must retrieve and communicate to all connected eMSPs the external status of the sockets through the OCPP and the OCPI standard protocols. \checkmark
+
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The CPMS subsystem must allow to start or stop a charging session through the OCPP standard protocol. \checkmark
+
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The CPMS subsystem must retrieve the battery status of the EV through the DIN/ISO specifications. $\times$
+
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The CPMS subsystem must allow the CPOW to add or change the current special offer. \checkmark
+
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The CPMS subsystem must allow the CPOW to change the energy provider of a charging station. \checkmark
+
+\stepcounter{RequirementCtr}
+\item[\textbf{R\arabic{RequirementCtr}.}] The CPMS subsystem must unlock the reserved charging spot if the user doesn't show up. \checkmark
 \end{itemize}
 
 \subsection{Design Choices}
-Bho la droga
+By using TailwindCSS, we efficiently created a UI that is both scalable and optimized for mobile devices.
+However, during the development and testing process, the focus was primarily on the desktop version of the web application.
 
 \subsection{Adopted Development Frameworks}
-Mvmm o link al DD
+Framework selection was based on factors such as ease of use, availability of support, and alignment with commonly used design patterns in current real-world applications.
+For the front-end we opted for Nuxt 3 and Vue, which utilizes the Model-View-ViewModel (MVVM) design pattern (an evolution of the traditional MVC).
+For the back-end we chose Django, which enforces a standard Model-View-Controller (MVC) pattern for the API.
+
+\subsubsection*{MVC}
+In the MVC pattern, the View handles user requests and returns a response, the Model manages the data access and manipulation logic, and the Controller acts as an intermediary between the Model and View to process user requests and manage the flow of data.
+
+\subsubsection*{MVVM}
+As previously said, the MVVM is and extension of MVC mainly used in web development.
+MVVM separates the different components of the development process into three categories, model, view and ViewModel.
+The ViewModel serves a similar role as the Controller in MVC, but with some key differences: the ViewModel is responsible for exposing data from the Model in a form that can be easily consumed by the View thanks to a binder that automates their communication.
+With respect to the MVC, the MVVM pattern makes it easier to manage and test large applications, but it lacks standardization and increase the complexity of the architecture.
 
 \subsection{Programming languages}
-natural language per chatgpt, python per tutto il resto \\
-Loro mettono pro e contro, imo evitabili ?
-
+The programming languages used in the project are Python and JavaScript. For both the backends (CPMS and EMSP) Python was chosen since it is a very versatile language that is easy to learn and use.
+For the front-end, TypeScript was chosen since it is a superset of JavaScript that adds static typing and object-oriented programming to the language. 
 
 \subsubsection{Django Framework}
-descrivilo
+We used Django as the backend framework for the CPMS and EMSP subsystems.
+Django is a widely-used high-level Python web framework that provides a clean and pragmatic design. It has several advantages that make it a great choice for web development projects:
 
+\begin{itemize}
+\item \textbf{Rapid Development:} Django has a lot of built-in functionality, including a powerful admin interface, which makes it possible to develop web applications very quickly.
+
+\item \textbf{Scalability:} Django is designed to handle high traffic, which makes it a great choice for large-scale projects. It provides a solid foundation for scaling up your application as your needs change.
+
+\item \textbf{Security:} Django provides robust security features, including protection against cross-site scripting (XSS), cross-site request forgery (CSRF), and SQL injection attacks.
+
+\item \textbf{Ease of use:} Django has a straightforward syntax and follows the Model-View-Controller (MVC) architectural pattern, making it easy for developers to understand and work with.
+
+\item \textbf{Large Community:} Django has a large and active community of developers who contribute to the development of the framework, provide support and share best practices.
+
+\item \textbf{Third-party Packages:} Django has a large number of third-party packages, which makes it easy to add additional functionality to your application, such as authentication, payment processing, and more.
+
+\end{itemize}
+
+Overall, Django is a robust and reliable framework that provides a lot of built-in functionality, security, scalability, and ease of use, making it a good choice for web development projects.
 
 \paragraph{Django Middlewares}
-To manage the communication between backend and frontend, we mainly use the following Django middlewares:
+To manage the communication between the two backends and frontend, we mainly use the following Django middlewares:
 \begin{itemize}
     \item \textit{SecurityMiddleware}
     \item \textit{SessionMiddleware}
     \item \textit{CsrfViewMiddleware}
     \item \textit{AuthenticationMiddleware}
+    \item \textit{MessageMiddleware}
+    \item \textit{CorsMiddleware}
 \end{itemize}
 
 \subsubsection{Django REST Framework}
 \label{REST}
-We decided to pair REST framework to our Django backend since REST allows even more security features.
-Boh il cringe di django rest framework
+We decided to pair REST framework to our Django backends since REST allows even more security features.
+Django Rest Framework (DRF) is a powerful and flexible toolkit for building Web APIs. It is built on top of the Django web framework, which makes it easy to integrate with existing Django applications. DRF provides a number of features that make it a good choice for building RESTful APIs, including:
 
+\begin{itemize}
+\item \textbf{Serialization:} DRF provides a simple and flexible way to serialize and deserialize data, which helps to convert complex data structures into a format that can be easily transmitted over the web.
+\item \textbf{Authentication and Permissions:} DRF provides a range of authentication and permission classes, which can be easily configured to secure your APIs. This allows you to control who has access to your data and what actions they can perform. We chose \textit{JWTauthentication} and \textit{IsAuthenticated} as the authentication and permission classes.
+\item \textbf{URL Routing:} DRF provides a simple and powerful URL routing mechanism, which makes it easy to map URLs to views and handle different HTTP methods (such as GET, POST, PUT, and DELETE).
+\item \textbf{Extensibility:} DRF is highly extensible, which means that you can easily add custom functionality to meet the specific needs of your project. There are a wide range of third-party packages available that can be used to add additional features to your APIs.
+\end{itemize}
 
-\subsubsection{Vue.js}
+\subsubsection{Nuxt 3 Vue}
 \label{Vue}
-Vue fa vomitare odia le lettere maiuscole 
+Nuxt.js is a JavaScript framework built on top of the popular Vue.js framework. Nuxt.js is often used to build modern and powerful web applications, including Single Page Applications (SPAs) and Server-Side Rendered (SSR) applications. Some of the benefits of using Nuxt.js include:
+
+\begin{itemize}
+\item \textbf{Easy setup and deployment}: Nuxt.js makes it easy to set up and deploy your applications, with a simple configuration file and easy-to-use command-line tools.
+
+\item \textbf{Automatic code splitting}: Nuxt.js automatically splits your code into smaller chunks, making it easier for users to load your application quickly.
+
+\item \textbf{Built-in support for Vue.js}: Nuxt.js is built on top of Vue.js, so you can take advantage of the powerful features and tools that Vue.js provides, such as reactive data bindings and a component-based architecture.
+
+\item \textbf{Modular and reusable code}: Nuxt.js allows you to easily write modular and reusable code, making it easier to maintain and scale your application.
+
+\item \textbf{SSR capabilities}: Nuxt.js provides built-in support for server-side rendering, making it easy to create fast and scalable applications that are optimized for search engines.
+
+\item \textbf{Integration with other tools and technologies}: Nuxt.js can be easily integrated with other tools and technologies, such as APIs and databases, making it a versatile and flexible choice for web development.
+\end{itemize} 
 
 \subsection{API Integration}
 Ne abbiamo messe 0 lmao. Qua potremmo discutere il perchè era poco fattibile farle 
@@ -189,11 +349,25 @@ Ne abbiamo messe 0 lmao. Qua potremmo discutere il perchè era poco fattibile fa
 Scuffed
 
 \subsection{DataBase}
-Abbiamo usato postgre wow
-
+For our database we opted for PostgreSQL, a well known object-relational
+database that provides a reliable, robust and ACID-compliant system and that guarantees high performance and support with Django.
 
 \subsection{Vercel}
-Spiegazione di vercel come scelta, mettere i link per accedere
+We chose to host our front-end with Vercel, a platform as a service (PaaS) that allows
+to build, run, and host applications entirely in the cloud for free.
+\begin{itemize}
+    \item \url{de-salvo-dubini-grossoni.vercel.app}
+\end{itemize}
+
+
+\subsection{Digital Ocean}
+In order to host both the CPMS and the eMSP backends in a simple way, we decided to 
+use Digital Ocean, another platform as a service (PaaS) that allows to host and run django applications and postgres databases on the cloud.
+We created a domain for each backend system that can be used to make HTTP request and access django rest framework API views:
+\begin{itemize}
+    \item \url{https://sea-lion-app-4fmmp.ondigitalocean.app}
+    \item \url{https://sea-lion-app-4fmmp.ondigitalocean.app/cpms/}
+\end{itemize}
 
 \section{Source Code}
 \subsection{Backend Structure}
@@ -219,6 +393,12 @@ TBH la parte sotto si può lasciare cosi com'è, non è che sia una cosa che cam
 
 \subsubsection{Apps}
 Lista delle varie app e funzionalità (opterei per metterla in una subsubsection)
+\begin{itemize}
+    \item \textbf{app}: implements common functionalities that cover the entire application, it has one endpoint:
+    \begin{itemize}
+        \item[--] \textbf{farms\_list}: handled by \textit{FarmView} view, it manages GET requests by returning a list of farms
+    \end{itemize}
+\end{itemize}
 
 \subsection{Frontend Structure}
 Spiegare la struttura della repo del frontend, simile a quella di vercel
