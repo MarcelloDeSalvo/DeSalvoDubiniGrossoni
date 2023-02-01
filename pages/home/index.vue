@@ -40,6 +40,7 @@ export default {
         try {
             let { response, json } = await getRequest('emsp', 'OCPI/getChargingStations')
             this.stations = json
+            
 
             // count the number of elements inside 'sockets' for each station
             this.stations.forEach(station => {

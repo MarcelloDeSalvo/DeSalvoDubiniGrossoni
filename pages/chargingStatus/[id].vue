@@ -33,6 +33,7 @@ export default {
   },
   setup() {
     definePageMeta({
+      middleware :['auth'],
       layout: "emspnavlayout"
     })
   },
