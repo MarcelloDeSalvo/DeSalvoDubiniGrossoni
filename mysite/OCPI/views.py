@@ -6,6 +6,8 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
 from ChargingStation.models import ChargingStation
 from Socket.models import Socket
+from Discount.models import Discount
+from Discount.serializers import DiscountSerializer
 from Socket.serializers import SocketSerializer
 from Booking.models import Booking
 from ChargingStation.views import getChargingStations
@@ -39,12 +41,17 @@ def requestChargingStations(request):
 def requestChargingStationById(request, pk):
     stations = ChargingStation.objects.filter(id=pk).first()
     serializer = ChargingStationBookingsSerializer(stations)
-    
+    discounts = stations.applied_stations.all()
+    serializerDiscount = DiscountSerializer(discounts, many=True)
+    response={
+        'station': serializer.data,
+        'discounts': serializerDiscount.data
+    }
     if stations==None:
         return Response("there are no stations", status=200)
     print("OCPI sendStations here")
     #return serializer.data in a response format
-    return  Response(serializer.data, status=200)
+    return  Response(response, status=200)
    
 
 

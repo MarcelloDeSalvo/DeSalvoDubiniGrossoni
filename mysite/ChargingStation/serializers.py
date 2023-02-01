@@ -3,6 +3,8 @@ import datetime
 from rest_framework import serializers
 from ChargingStation.models import ChargingStation, ChargingStationManager
 from Socket.serializers import SocketSerializer
+from Discount.serializers import DiscountSerializer
+from Discount.models import Discount
 from EnergyProvider.serializers import DSO_Serializer, BSS_Serializer
 from Booking.serializers import BookingSerializer
 # keep in mind that there won't be an actual form available for the user to add a station
