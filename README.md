@@ -10,53 +10,52 @@ mettere link host
 Make sure to have the dependencies and Python (>= 3.9.12) installed:
 
 ```bash
-# 0] Upgrade pip if necessary
+# Upgrade pip if necessary
 python -m pip install --upgrade pip
 
-# 1] create a virtual environment with your favourite env. manager (in this ex. venv)
-python -m venv django
+# Optional: create a virtual environment named "django" with your favourite env. manager (in this ex. venv)
+python -m venv /path/to/new/virtual/environment/django
 
-# 2] activate the environment
-django\Scripts\activate.bat [WINDOWS]
-source django/bin/activate [LINUX]
+# Optional: activate the environment
+path\django\Scripts\activate.bat [WINDOWS]
+source path/django/bin/activate [LINUX]
 
-# 3] clone the repo and switch to the Back-end branch
+# 0] clone the repo and switch to the Back-end branch
 git clone https://github.com/MarcelloDeSalvo/DeSalvoDubiniGrossoni
 git worktree add ../cpms-back-end cpms-back-end
-open the new folder
+open the new folder inside a terminal or your favourite IDE
 
-# 4] Install the requirements
+# 1] Install the requirements
 pip install -r requirements.txt
 
-# 5] Make a .env file inside 'mysite/mysite' (see the next chapter)
+# 2] Make a .env file inside 'mysite/mysite' (see the next chapter)
 
-# 6] run the server
+# 3] run the server
 python manage.py runserver
 
-# 7] test it
-http://127.0.0.1:8000
+# 4] test it
+http://127.0.0.1:8001
 
 ```
 ## Environment Variables
-Inside /mysite/mysite you need to create a .env file containing the following informations
+Inside /mysite/mysite you need to create a .env file containing the following informations (see .env.example for details)
 
 ```bash
-SECRET_KEY=your_backend_secret_key
-DATABASE_NAME=your_db_name
-DATABASE_PORT=your_db_port
-DATABASE_USER=your_db_user
-DATABASE_PASSWORD=your_db_password
-
-DATABASE_URL=your_db_url
-DEVELOPMENT_MODE=True if working locally, False otherwise
-DEBUG=True/False
-ALLOWED_HOSTS=[your_allowed_hosts]
+    SECRET_KEY=your_backend_secret_key
+    DATABASE_NAME=your_db_name
+    DATABASE_PORT=your_db_port
+    DATABASE_USER=your_db_username
+    DATABASE_PASSWORD=your_db_password
+    DATABASE_URL=your_cloud_db_link
+    DEVELOPMENT_MODE=true_or_false
+    DEBUG=true_or_false
+    ALLOWED_HOSTS=string_list
 ```
 
 
 ## Development Server
 
-Start the development server on http://127.0.0.1:8000
+Start the development server on http://127.0.0.1:8001
 
 ```bash
 python manage.py runserver
@@ -80,4 +79,4 @@ manage.py migrate
 manage.py createsuperuser -> follow instructions
 ```
 
-now you can connect with superuser credentials on http://localhost:8000/admin/
+now you can connect with superuser credentials on http://localhost:8001/admin/
