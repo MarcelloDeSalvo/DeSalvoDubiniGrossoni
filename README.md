@@ -10,14 +10,15 @@ mettere link host
 Make sure to have the dependencies and Python (>= 3.9.12) installed:
 
 ```bash
-# 0] Upgrade pip if necessary
+# Upgrade pip if necessary
 python -m pip install --upgrade pip
 
-# 1] create a virtual environment with your favourite env. manager (in this ex. venv)
-python -m venv django
+# Optional: create a virtual environment named "django" with your favourite env. manager (in this ex. venv)
+python -m venv /path/to/new/virtual/environment/django
 
-# 2] activate the environment
-django\Scripts\activate.bat
+# Optional: activate the environment
+path\django\Scripts\activate.bat [WINDOWS]
+source path/django/bin/activate [LINUX]
 
 # 3] clone the repo and switch to the Back-end branch
 git clone https://github.com/MarcelloDeSalvo/DeSalvoDubiniGrossoni
@@ -37,20 +38,19 @@ http://127.0.0.1:8000
 
 ```
 ## Environment Variables
-Inside /mysite/mysite you need to create a .env file containing the following informations
+Inside /mysite/mysite you need to create a .env file containing the following informations (see .env.example for details)
 
 ```bash
-SECRET_KEY=your_backend_secret_key
-DATABASE_NAME=your_db_name
-DATABASE_PORT=your_db_port
-DATABASE_USER=your_db_user
-DATABASE_PASSWORD=your_db_password
-CPMS_URL=your_cpms_url
-
-DATABASE_URL=your_db_url
-DEVELOPMENT_MODE=True if working locally, False otherwise
-DEBUG=True/False
-ALLOWED_HOSTS="localhost domain1 domain2 etc.." or "*" to allow all possible domains
+    SECRET_KEY=your_backend_secret_key
+    DATABASE_NAME=your_db_name
+    DATABASE_PORT=your_db_port
+    DATABASE_USER=your_db_username
+    DATABASE_PASSWORD=your_db_password
+    CPMS_URL=your_cpms_backend_link
+    DATABASE_URL=your_cloud_db_link
+    DEVELOPMENT_MODE=true_or_false
+    DEBUG=true_or_false
+    ALLOWED_HOSTS=string_list
 ```
 
 
