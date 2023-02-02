@@ -16,6 +16,22 @@
 \usepackage{subcaption}
 \usepackage{amsmath}
 
+\definecolor{background}{HTML}{EEEEEE}
+\lstdefinelanguage{shell}{
+    basicstyle=\small\ttfamily,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background},
+    literate=
+     *{:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1}
+      {>}{{{\color{delim}{>}}}}{1},
+}
 
 \titleformat{\paragraph}
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
@@ -122,6 +138,7 @@ This document will use technical language as it's aimed for programmers, but sta
     \item \textbf{TS}: TypeScript
     \item \textbf{DRF}: Django REST Framework
     \item \textbf{ACID}: Atomicity-Consistency-Isolation-Durability
+    \item \textbf{IDE}: Integrated Development Environment
 \end{itemize}
 
 \subsection{Revision history}
@@ -164,12 +181,14 @@ We implemented the following functionalities for emsp users and cpo's operators:
 \end{itemize}
 
 \subsection{Functionalities not implemented}
-For the eMSP we didn't implement the payment system as it wasn't required and a mail service that notifies the user when the charging process is finished
-(but it gets notified while inside the page). 
-For the CPMS a lot of functions required a real communication with a DSO and the ChargingStation, so it was not possible to truly implement them. We inserted data relative to the DSOs and the batteries in the database based on our discretion.
-
-
-
+For what concerns the eMSP, we didn't implement neither the payment nor the suggestion system as they weren't required. We didn't fully implement the charging process initiated by start charge, as many 
+features were impossible for us to implement (the user gets notified after a bit while inside the page as a prototype). We also couldn't implement the connection to multiple CPMSs, as the only one we had available was ours.
+To emulate it, we created a CPMS app that would save their various CPMS links to the database and would fix the posts and gets basing on the saved urls. \\
+In the CPMS subsytem a lot of functions required a real communication with a DSO and the ChargingStation, so it was not possible to truly implement them. We inserted mocked data relative to the DSOs and the batteries in the database based on our discretion.
+We also didn't fully implement the discount activation feature, as it was hard to test how the discounts and daily checks would behave with days passing. We thought of a 
+daily check in pseudocode the machine would run, placed inside Discount/Management/Commands, that in an ideal setting would be run every day by the server. This could be done by setting a scheduled 24 hour run of "manage.py check\_for\_discounts".\\
+A similar reasoning was applied to the dynamic DSO decision, given that our data was static. We implemented a button that displays the funcionlity on the CPMS portal, but in reality it would be activated by a trigger
+placed on the DSO price database.
 \subsection{Implemented requirements}
 Here it follows the list of requirements taken from the RASD.
 The implemented ones are checked with a checkmark.
@@ -343,10 +362,10 @@ Nuxt.js is a JavaScript framework built on top of the popular Vue.js framework. 
 \end{itemize} 
 
 \subsection{API Integration}
-Ne abbiamo messe 0 lmao. Qua potremmo discutere il perchè era poco fattibile farle 
-\subsubsection{Maps API}
-\subsubsection{Car APi}
-Scuffed
+For what concerns the integration of APIs, we ended up not implementing any of them. Car API, Google calendar and Payment API weren't implemented as they weren't required.\\
+Google Calendar and the Car API were key in the suggestion module and the payment API was likely unpractical for us to implement. The only one that was actually feasible was 
+the Maps API, but we decided to invest our time into more meaningful features as the live position of the user could be later implemented at no cost.
+
 
 \subsection{DataBase}
 For our database we opted for PostgreSQL, a well known object-relational
@@ -371,68 +390,280 @@ We created a domain for each backend system that can be used to make HTTP reques
 
 \section{Source Code}
 \subsection{Backend Structure}
-Spiegazione ella struttura del progetto. Direi di spiegare qua la cosa del doppio backend e magari di stare attenti alle varie env.\\
-TBH la parte sotto si può lasciare cosi com'è, non è che sia una cosa che cambia molto. Il problema forse è il filtro anti plagio.
+Following the project structure described in the RASD and DD documents, we opted to make two subsystems for the eMSP and the CPMS.
+By doing so, we had to separate the two subsystems' backends inside two different Django projects, both with the same structure:
 \begin{itemize}
-    \item \textbf{ITD}: da vedere
-    \item \textbf{dream\_backend}: da vedere
+    \item \textbf{mysite}: root folder
     \item \textbf{\_\_init.py\_\_}: it tells the Python interpreter that the directory is a Python package
     \item \textbf{settings.py}: main setting file for the Django project, used to configure all the applications and middleware, it also handles the database settings
-    \item \textbf{urls.py}: URL declarations for the Django project, it contains all the endpoints that the website should have
-    \item \textbf{wsgi.py}: entry-point for WSGI-compatible web servers to serve your project, it describes the way in which servers interact with the applications
+    \item \textbf{urls.py}: URL mapping declaration for the API. Maps each View to an url endpoint
+    \item \textbf{wsgi.py}: is the entry point for WSGI-compatible web servers to serve your Django application. It sets up the environment for the Django application to run and serves as a bridge between the web server and Django.
     \item \textbf{asgi.py}: entry-point for ASGI-compatible web servers to serve your project, ASGI works similar to WSGI but comes with some additional functionality
-    \item \textbf{migrations}: Django's way of propagating changes to the models into the database schema, when changes occur this folder is populated with the records of them
+    \item \textbf{migrations}: folder that contains all the operations that should be applied to the database in order to create models' tables, updates and inserted data
     \item \textbf{admin.py}: used for registering the Django models into the Django administration, it allows to display them in the Django admin panel
     \item \textbf{apps.py}: common configuration file for all Django apps, used to configure the attributes of the app
-    \item \textbf{models.py}: it defines the structure of the database, it allows the user to create database tables for the app with proper relationships using Python classes. It tells about the actual design, relationships between the data sets and their attribute constraints
-    \item \textbf{tests.py}: used to test the overall functionality of the app through unit tests
+    \item \textbf{models.py}: defines the structure of your database tables by creating Django model including the relationships between them, as well as any custom methods you want to add to your models to encapsulate business logic
+    \item \textbf{tests.py}: it defines all the unit tests that can be run to test the application's functionalities
     \item \textbf{views.py}: provide an interface through which a user interacts with a Django website, it contains the business logic of the app
-    \item \textbf{manage.py}: command-line utility for executing Django commands; these includes debugging, deploying and running
+    \item \textbf{manage.py}: command-line utility for executing Django commands for debugging, deploying, running and testing
 \end{itemize}
 
 
 \subsubsection{Apps}
-Lista delle varie app e funzionalità (opterei per metterla in una subsubsection)
+\subsection{eMSP backend}
 \begin{itemize}
-    \item \textbf{app}: implements common functionalities that cover the entire application, it has one endpoint:
-    \begin{itemize}
-        \item[--] \textbf{farms\_list}: handled by \textit{FarmView} view, it manages GET requests by returning a list of farms
-    \end{itemize}
+    \item \textbf{User}: contains all the models and views related to the user, from logging to authentication and account creation.
+    \item \textbf{Booking}: contains all the models and views related to bookings, from booking creation to booking cancellation.
+    \item \textbf{Cpms}: contains all the models and views related for saving the different CPMS the user will be able to interact with.
+    \item \textbf{OCPI}: contains the views relative to the OCPI protocol, it allows to send and receive OCPI messages to and from the CPMSs.
+\end{itemize}
+
+\subsection{CPMS backend}
+\begin{itemize}
+    \item \textbf{User}: contains model and views related to the CPOW, from logging to account creation.
+    \item \textbf{Booking}: contains all the models and views related to bookings, so the stations can see their associated bookings.
+    \item \textbf{ChargingStation}: contains all the models and views related to bookings, allowing it to interact with the OCPI and showing the CPOW useful information.
+    \item \textbf{Socket}: contains all the models and views related to the sockets, allowing the CPOW to create them and assign them to a specific station.
+    \item \textbf{EnergyProvider}: contains all the models and views related to both the internal BSS and the DSOs, handles all the requests related to the energy providers.
+    \item \textbf{OCPI}: handles all the views relative to the OCPI protocol, allowing it to send and receive OCPI messages to and from the eMSP.
 \end{itemize}
 
 \subsection{Frontend Structure}
-Spiegare la struttura della repo del frontend, simile a quella di vercel
 
+Here is represented the structure of the web app:
+\begin{itemize}
+    \item \textbf{.nuxt}: contains everything needed to generate your vue application. It's hidden by default and should not be touched since it will be generated after e build.
+    \item \textbf{.output}: holds all build files when building your Nuxt application to production (nuxt build). It's hidden by default and should not be touched since it will be generated after e build.
+    \item \textbf{node\_modules}: contains all installed dependencies of the project, listed in the \textit{package.json} file.
+    It's generated automatically every time the project is set up.
+    \item \textbf{assets}: contains by convention every asset that you want the build tool (Vite or webpack) to process.
+    \item \textbf{components}: contains all the vue components that can be imported inside the pages.
+    \item \textbf{layouts}: contains all vue layouts that can be applied to the pages.
+    \item \textbf{middleware}: contains middlewares' scripts that can intercept the users requests before serving a page. For instance, contains the authorization script that blocks access to unauthorized pages. 
+    \item \textbf{pages}: holds every application's View. Nuxt reads all the .vue files inside this directory and automatically creates the router configuration.
+    \item \textbf{public}: stores static files (images, audio etc.) that should not be processed by the build tool (Vite or webpack). 
+    \item \textbf{utils}: holds useful javascript files that can be imported to avoid code repetition.
+
+\end{itemize}
+
+There are other several files needed by Nuxt 3 to run the project. The most important are:
+\begin{itemize}
+    \item \textbf{package.json}: it contains the list of all the dependencies installed in the project.
+    \item \textbf{tailwind.config.js}: it contains themes and configurations used by TailwindCSS.
+    \item \textbf{.env.example}: example file to know what environment variables KEY=VALUE pairs you need for the project to run.
+\end{itemize}
 
 \newpage
 \section{Testing}
-AHAHAAHAHAHA
+While devepoling, we noticed many component functionalities were codependent on the other server running. As a result we decided to emphasize system testing over
+unit testing.
 
 \subsection{Unit Testing}
-Segue una eterna lista di test che non abbiamo fatto
+For unit testing we used django built-in tests framwork that allows to run every test cases inside each app's tests.py file.
+\subsubsection*{Emsp Booking}
+\begin{itemize}
+    \item Tested if booking insertion was done correctly
+    \item Tested if booking deletion was done correctly
+    \item Tested if \textit{getBookings} endpoint returned correctly the requested bookings.
+    \item Tested if method \textit{get\_bookings\_by\_user} returned correctly the requested bookings.
+\end{itemize}
 
 \subsection{System Testing}
-Testing as a whole done throughout
+The testing phase included manual testing of the app through a web browser and with Reqbin, 
+an online API testing tool for REST and SOAP APIs, for forging custom HTTP GET/POST requests and evaluating the server's response. 
+This approach allowed us to verify the authentication process and all other backends' views. 
 
 \subsection{Post-deployment Testing}
-Testing post deployment
+The deployment of the application was followed by an extensive testing phase. 
+This comprehensive testing approach allowed for a thorough examination of the entire system, including both the front-end and back-end components,
+ and their interactions with each other. 
+The testing was conducted in order to identify any potential issues and ensure that the system was functioning as intended. 
+
+
 
 \section{Installation}
-As a web application we chose to deploy it on Heroku, so
-a fully running version of the software is available at:\newline
-\url{https://de-salvo-dubini-grossoni.vercel.app}.
-
-Spiegare nel caso di seguire il readme 
+Since the web application is already deployed on Verecel at:\newline
+\url{https://de-salvo-dubini-grossoni.vercel.app} we suggest to use that instead of proceeding with the local installation.
+If you instead want to proceed with a local set-up you can follow below instructions.
 
 \subsection{Requirements}
-dire che server python di una certa versione, abbastanza copiabile dal Loro
+In order to install every needed dependency and have a working \textbf{PostgreSQL} databse you have to install:
+\begin{itemize}
+    \item \textbf{Node.js} >= 16.0
+    \begin{itemize}
+        \item Download the latest version of Node.js \url{https://nodejs.org/it/download/}
+    \end{itemize}
 
-\subsection{Installation}
-Riscrivere a roba già detta nel readme
-\subsubsection{EMSP backend}
+    \item \textbf{Python} >= 3.9
+    \begin{itemize}
+        \item Download Python 3.10 or equivalent from \url{https://www.python.org/downloads/}
+    \end{itemize}
+
+    \item \textbf{PostgreSQL}
+    \begin{itemize}
+        \item Download the installer of the latest version from \url{https://www.postgresql.org/download/} for your OS, that comes also with \textbf{PGadmin}, 
+        a web-based GUI used to communicate easily with Postgre
+    \end{itemize}
+
+    \item \textbf{Git}
+    \begin{itemize}
+        \item Download the installer of the latest version from \url{https://git-scm.com/downloads}
+    \end{itemize}
+
+\end{itemize}
+
+\subsection{Initial installation}
+The repository was subdivided in four main branches, one for each required module and the documentation.
+\begin{itemize}
+    \item[1)] main
+    \begin{itemize}
+        \item contains the project's documentation, including RASD, DD and the ITD.
+    \end{itemize}
+    \item[2)] front-end  
+    \begin{itemize}
+        \item web application, used for both the eMSP and the CPMS.
+    \end{itemize}
+    \item[2)] emsp-back-end
+    \begin{itemize}
+        \item contains the Django backend project for the eMSP.
+    \end{itemize}
+    \item[2)] cpms-back-end
+    \begin{itemize}
+        \item contains the Django backend project for the CPMS.
+    \end{itemize}
+\end{itemize}
+
+Instructions:
+\begin{itemize}
+    \item[1)] Clone the git repository at \url{https://github.com/MarcelloDeSalvo/DeSalvoDubiniGrossoni.git}
+    \item[2)] Open a terminal and cd into the root folder of the project
+    \item[3)] Execute these git worktree commands. At the end of the process you should have four folders, one for each branch, that can be opened independently inside your favourite IDE.
+    \begin{lstlisting}[language=shell]
+    git worktree add ../emall_frontend front-end
+    git worktree add ../emsp_backend emsp-back-end
+    git worktree add ../cpms_backend cpms-back-end
+    \end{lstlisting}
+\end{itemize}
+Now you can open each folder inside your IDE and start following the next instructions.
+
+
+\subsubsection{Backend}
+\textbf{Optional:} create a virtual environment to install all the required dependencies.
+You can use any virtual environment managers like venv, conda or virtualenv.
+For this example we will use venv:
+\begin{itemize}
+    \item[1)] create a virtual environment named "django"
+    \begin{lstlisting}[language=shell]
+        python -m venv /path/to/new/virtual/environment/django
+    \end{lstlisting}
+    
+    \item[2)] activate the environment in WINDOWS
+    \begin{lstlisting}[language=shell]
+        path\django\Scripts\activate.bat
+    \end{lstlisting}
+    or in LINUX
+    \begin{lstlisting}[language=shell]
+        source path/django/bin/activate
+    \end{lstlisting}
+
+Then, remember to link the path to the environment inside your IDE settings.
+\end{itemize}
+
 \subsubsection{CPMS backend}
-\subsubsection{Frontend}
+Once inside the cpms backend folder, you can install the requirements by running
+\begin{lstlisting}[language=shell]
+    pip install -r requirements.txt
+\end{lstlisting}
+Make sure to make a .env file inside mysite/mysite containing the following informations:
+\begin{itemize}
+    \item  \textbf{SECRET\_KEY} key used by Django to manage authentication and hashing messages. You can set your own.
+    \item   \textbf{DATABASE\_PORT}, \textbf{DATABASE\_USER}, \textbf{DATABASE\_PASSWORD} credentials for the PostgreSQL database
+    \item   \textbf{DATABASE\_URL} credentials to the database if deployed on the cloud. You can set a random placeholder or igore it if the database is running locally.
+    \item   \textbf{DEVELOPMENT\_MODE} tells Django if your database is running locally or not, and selects the correct credentials for the database. Could also be used for other checks.
+    \item   \textbf{DEBUG} checks if debug mode is enabled
+    \item   \textbf{ALLOWED\_HOST} a list of strings representing the host/domain names that this Django site can serve. This is a security measure to prevent HTTP Host header attacks.\
+\end{itemize}
 
+Example:
+\begin{lstlisting}[language=shell]
+    SECRET_KEY=secret_key
+    DATABASE_PORT=5432
+    DATABASE_USER=postgres
+    DATABASE_PASSWORD=password
+    DATABASE_URL=link
+    DEVELOPMENT_MODE=True
+    DEBUG=True
+    ALLOWED_HOSTS="*"
+\end{lstlisting}
+
+\newpage
+To then setup your database, install postgresSQL and make a DB with
+\begin{itemize}
+    \item  \textbf{Name} Your\_db\_name, must match with the one in the .env file
+    \item  \textbf{Passwrod} The passord with which you will access your db 
+    \item  \textbf{User} Name of the user that is going to access the db
+    \item  \textbf{Host} Url of the local database
+    \item  \textbf{Port} Port the database is listening to
+\end{itemize}
+Example:
+\begin{lstlisting}[language=shell]
+    name = your_db_name
+    password = your_db_password
+    user = your_db_user_name
+    host = your_db_local_url
+    port = your_db_port
+\end{lstlisting}
+
+
+Finally, to run the server
+\begin{lstlisting}[language=shell]
+    cd /mysite
+    manage.py makemigrations
+    manage.py migrate
+    python manage.py runserver
+\end{lstlisting}
+
+
+\subsubsection{EMSP backend}
+To correctly setup the eMSP backend, repeat all the steps of the CPMS backend, but inside the emsp backend folder and changing the db name.
+Every step can also be found inside the README.md files.\\
+For the EMSP setup an additional argument in the .env is needed:\\
+\textbf{CPMS\_URL} the url for the CPMS backend.\\
+Example:
+\begin{lstlisting}[language=shell]
+    CPMS_URL = your_cpms_url
+\end{lstlisting}
+
+
+
+\subsubsection{Frontend}
+\begin{itemize}
+    \item[1)] Open the 'emall\_frontend' folder inside your IDE
+    \item[2)] Create a .env file following .env.example
+    \begin{itemize}
+        \item[--]   \textbf{EMSP\_URL}, is the url of the eMSP backend. 
+        \item[--]   Ex: EMSP\_URL=\url{http://127.0.0.1:8000}
+        \item[--]   \textbf{CPMS\_URL}, is the url of the CPMS backend.
+        \item[--]   Ex: CPMS\_URL=\url{http://127.0.0.1:8001}
+    \end{itemize}
+    \begin{itemize}
+        \item[3)] Open a terminal and execute
+        \begin{lstlisting}[language=shell]
+        npm install --global yarn
+        \end{lstlisting}
+        This will install the \texttt{yarn} package manager that will be used to install and manage our web application.
+        Alternatively you can just use \texttt{npm}.
+        \begin{lstlisting}[language=shell]
+        yarn
+        \end{lstlisting}
+        This will install all the dependencies listed inside the \textbf{package.json} file.\\
+        Finally you can run:
+        \begin{lstlisting}[language=shell]
+        yarn run dev
+        \end{lstlisting}
+        to start the development server at \url{http://127.0.0.1:3000}
+    \end{itemize}
+\end{itemize}
 
 \newpage
 \section{Effort Spent}
