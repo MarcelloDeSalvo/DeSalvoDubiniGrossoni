@@ -12,8 +12,16 @@ class SocketManager(models.Model):
         socket.status = status
         socket.price = socket.assign_price()
         socket.connectedUserEmail = None
-        socket.save(using=self._db)
+        socket.save()
         return socket
+
+    def get_socket_by_id(self, id):
+        return self.get(id=id)
+
+    def filter(self, **kwargs):
+        return Socket.objects.filter(**kwargs)
+    def get(self, **kwargs):
+        return Socket.objects.get(**kwargs)
 
     pass
 
@@ -114,3 +122,9 @@ class Socket(models.Model):
     def remove_email(self):
         self.connectedUserEmail = None
         self.save()
+
+    def get_status(self):
+        return self.status
+
+    def get_station(self):
+        return self.chargingStation
