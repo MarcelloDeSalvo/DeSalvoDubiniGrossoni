@@ -9,17 +9,19 @@ Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introdu
 Make sure to install the dependencies:
 
 ```bash
+# 0] clone the repo
+git clone https://github.com/MarcelloDeSalvo/DeSalvoDubiniGrossoni.git
+git worktree add ../emall_frontend front-end
+open the new folder
+
 # 1] install Node
-install Node https://nodejs.org/it/
+install Node https://nodejs.org/it/download/
 
-# 2] clone the repo
-git clone https://github.com/MarcelloDeSalvo/SE2nuxtjs.git
+# 3] make a .env file in the root directory following the .env.example file:
+EMSP_URL=http://127.0.0.1:8000
+CPMS_URL=http://127.0.0.1:8001
 
-# 3] make a .env file in the root directory and write
-EMSP_URL = your EMSP url
-ex: EMSP_URL=http://127.0.0.1:8000
-
-# 4] install Yarn while inside the root folder
+# 4] install Yarn
 npm install --global yarn
 
 # 5] install all dependencies
