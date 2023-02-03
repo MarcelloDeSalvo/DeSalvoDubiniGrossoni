@@ -36,6 +36,14 @@ class TestSocket(TestCase):
 
         self.assertEqual(responseSocket["chargingStation"], socket.get_station().get_id())
 
+    def test_reset_socket(self):
+        socket=Socket.objects.filter(type='S', status="Y", chargingStation=ChargingStation.objects.get(address='Via Roma 1')).first()
+        socket.set_charging()
+        self.assertEqual(socket.get_status(), 'C')
+        response=self.client.get('/OCPI/resetSocket/' + str(socket.get_id()) + '/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(socket.get_status(), 'Y')
+
 
     #this next test works fine, but the creation of an additional thread that changes one of the socket's variable causes problems with the deletion of the mock database
     #the test results is OK, but the database deletion causes an error
