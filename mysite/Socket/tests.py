@@ -8,10 +8,10 @@ from Socket.models import Socket, SocketManager
 class TestSocket(TestCase):
 
     def setUp(self):
-        Dsocool=DSOManager()
+        dsoManag=DSOManager()
         chargingManager=ChargingStationManager()
         socketManager=SocketManager()
-        Dsocool.create_dso(name="DSO1", availability=True, price="1.0")
+        dsoManag.create_dso(name="DSO1", availability=True, price="1.0")
         chargingManager.create_station(address='Via Roma 1', connected_dsos=[DSO.objects.get(name='DSO1')], active_dso=DSO.objects.get(name='DSO1'))
         socketManager.create_socket(chargingStation=ChargingStation.objects.get(address='Via Roma 1'), type='S', status="Y")
         socket=Socket.objects.filter(type='S', status="Y", chargingStation=ChargingStation.objects.get(address='Via Roma 1')).first()
