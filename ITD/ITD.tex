@@ -462,12 +462,29 @@ unit testing.
 For unit testing we used django built-in tests framwork that allows to run every test cases inside each app's tests.py file.
 \subsubsection*{Emsp Booking}
 \begin{itemize}
-    \item Tested if booking insertion was done correctly
-    \item Tested if booking deletion was done correctly
+    \item Tested if booking insertion was done correctly.
+    \item Tested if booking deletion was done correctly.
     \item Tested if \textit{getBookings} endpoint returned correctly the requested bookings.
     \item Tested if method \textit{get\_bookings\_by\_user} returned correctly the requested bookings.
 \end{itemize}
-
+\subsubsection*{CPMS Charging Station}
+\begin{itemize}
+    \item Tested if charging station insertion was done correctly.
+    \item Tested if \textit{requestChargingStationById} endpoint returned correctly the requested charging station.
+    \item Tested if \textit{getChargingStations} endpoint returned correctly all the charging stations.
+\end{itemize}
+\subsubsection*{CPMS Socket}
+\begin{itemize}
+    \item Tested if Socket insertion was done correctly, including the relation with its charging station.
+    \item Tested if \textit{getSocket} endpoint returned correctly the requested Socket.
+    \item Tested if \textit{resetSocket} endpoint returned a correct status.
+\end{itemize}
+\subsubsection*{CPMS Discount}
+\begin{itemize}
+    \item Tested if Discount insertion was done correctly, including the relation with its charging stations.
+    \item Tested if Discount deletion worked correctly.
+    \item Tested if \textit{requestChargingStationById}, which includes the applied discounts in the data returned, returns all the valid discounts for that charging station.
+\end{itemize}
 \subsection{System Testing}
 The testing phase included manual testing of the app through a web browser and with Reqbin, 
 an online API testing tool for REST and SOAP APIs, for forging custom HTTP GET/POST requests and evaluating the server's response. 
