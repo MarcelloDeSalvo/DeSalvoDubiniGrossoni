@@ -5,8 +5,17 @@
         <h1 class="text-3xl font-bold">Charging Stations</h1>
         <p class="mt-2 text-gray-600">Select a station to make a booking</p>
     </div>
+    <div class="flex ml-12 mt-12 w-80 justify-center">
+        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
+        <div class="relative">
+            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+            <input v-on:input="refreshStation" v-model="cityFilter" type="search" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 " placeholder="Search City..." required>
+        </div>
+    </div>
     <div class="grid grid-flow-col  gap-8 mt-4 md:mt-6 ">
-        <SimpleCard class="component-class" v-for="station in stations" :StationName="station.id"
+        <SimpleCard class="component-class" v-for="station in filteredStations" :StationName="station.id"
             :Address="station.address" :City="station.city" :NumberSockets="station.nSockets"
             :NumberAvailable="station.AvailableSockets" :Redirect="'/stationDetails/' + station.id + '/'">
         </SimpleCard>
@@ -28,6 +37,8 @@ export default {
     data() {
         return {
             stations: "",
+            cityFilter: "",
+            filteredStations: "",
         }
     },
     setup() {
@@ -56,10 +67,22 @@ export default {
                 return 0;
             });
             this.stations = sortedStations
+            this.filteredStations = this.stations
 
         } catch (error) {
             this.response = error
             console.error(error)
+        }
+    },
+    methods: {
+        refreshStation() {
+            console.log(this.cityFilter)
+            // filter the stations based on the city, even partially
+            this.filteredStations = this.stations.filter(station => station.city.toLowerCase().includes(this.cityFilter.toLowerCase()))
+            // prevent the page from going to the top when the user is typing
+            window.scrollTo(0, 1200);
+
+
         }
     }
 };
