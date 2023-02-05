@@ -24,9 +24,9 @@
         <p class="text-sm font-semibold text-gray-500">Remember me</p>
         <span class="flex-1" />
         <a
-          href="#"
+          href="register/"
           class="text-sm font-semibold text-orange-600 hover:text-orange-600"
-          >Forgot password?</a
+          >Not yet registered?</a
         >
       </div>
       <button

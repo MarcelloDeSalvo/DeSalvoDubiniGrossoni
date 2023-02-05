@@ -85,7 +85,7 @@
 							</div>
 							<hr class="mb-6 border-t" />
 							<div class="text-center">
-								<p class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 rounded shadow appearance-none focus:outline-none focus:shadow-outline">
+								<p class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 rounded appearance-none focus:outline-none ">
 									{{response}}
 								</p>
 							</div>
@@ -100,7 +100,6 @@
 <script>
 definePageMeta({
     middleware: ['cpms-auth'],
-	layout: "cpmsnavlayout"
 })
 export default {
   data() {
