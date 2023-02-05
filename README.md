@@ -2,7 +2,7 @@
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-[de-salvo-dubini-grossoni.vercel.app](https://de-salvo-dubini-grossoni.vercel.app)
+Deployed at [de-salvo-dubini-grossoni.vercel.app](https://de-salvo-dubini-grossoni.vercel.app)
 
 ## Local Setup
 
@@ -32,6 +32,7 @@ yarn run dev
 ```
 
 ## Error fix
+Check this out if you encounters these errors
 - about_Execution_Policies: https://bobbyhadz.com/blog/yarn-cannot-be-loaded-running-scripts-disabled]
 
 ## Development Server
