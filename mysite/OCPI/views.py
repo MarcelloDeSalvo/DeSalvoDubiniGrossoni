@@ -82,8 +82,9 @@ def startChargeFromBooking(request):
     rome = pytz.timezone("Europe/Rome")
     currentDateTime = datetime.now(rome)
     bookingDateTime = rome.localize(bookingDateTime)
-    print(currentDateTime.time())
+    print(currentDateTime)
     print(bookingDateTime)
+    
     timeDifference= abs(bookingDateTime - currentDateTime)
     #check if the booking starting time has arrived
     if(currentDateTime>bookingDateTime):    
