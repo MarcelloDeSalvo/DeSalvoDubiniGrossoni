@@ -1,9 +1,9 @@
 # Django Minimal Starter
 
-Look at https://docs.djangoproject.com/en/4.1/intro/tutorial01/ to learn more.
+Look at https://docs.djangoproject.com/en/4.1/intro/tutorial01/ to learn more.  
 Look at https://docs.digitalocean.com/tutorials/app-deploy-django-app/ to learn how to deploy django on Digital Ocean
 
-mettere link host
+Deployed at https://sea-lion-app-4fmmp.ondigitalocean.app/cpms
 
 ## Local Setup
 
@@ -66,17 +66,17 @@ python manage.py runserver
 Install postgresSQL
 make a DB with
 
-name = your_db_name
-password = your_db_password
-user = your_db_user_name
-host = your_db_local_url
-port = your_db_port
+name = your_db_name  
+password = your_db_password  
+user = your_db_user_name  
+host = your_db_local_url  
+port = your_db_port  
 
 
 ```bash
 manage.py makemigrations
 manage.py migrate
-manage.py createsuperuser -> follow instructions
+manage.py createsuperuser
 ```
 
 now you can connect with superuser credentials on http://localhost:8001/admin/
