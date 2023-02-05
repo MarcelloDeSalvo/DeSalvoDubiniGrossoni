@@ -6,6 +6,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import authentication_classes
 from ChargingStation.models import ChargingStation
 from Socket.models import Socket
+import pytz
 from Discount.models import Discount
 from Discount.serializers import DiscountSerializer
 from Socket.serializers import SocketSerializer
@@ -78,6 +79,10 @@ def startChargeFromBooking(request):
     #find the time difference
     bookingDateTime = datetime.combine(date, time)
     currentDateTime = datetime.now()
+    rome = pytz.timezone("Europe/Rome")
+    currentDateTime = rome.localize(currentDateTime)
+    bookingDateTime = rome.localize(bookingDateTime)
+    
     timeDifference= abs(bookingDateTime - currentDateTime)
     #check if the booking starting time has arrived
     if(currentDateTime>bookingDateTime):    
@@ -152,6 +157,8 @@ def startCharge(request):
     if(socket.is_available()):
         
         currentDateTime = datetime.now()
+        rome = pytz.timezone("Europe/Rome")
+        currentDateTime = rome.localize(currentDateTime)
         delta=timedelta(minutes=10)
         bookings=Booking.objects.filter(socket=socket.get_id(), date=currentDateTime.date(), time__range=((currentDateTime-delta).time(), (currentDateTime+delta).time()))
         if(len(bookings)==0):
