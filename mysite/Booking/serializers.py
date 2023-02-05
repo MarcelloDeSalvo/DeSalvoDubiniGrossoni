@@ -1,5 +1,5 @@
 from django.shortcuts import render
-import datetime
+from datetime import datetime
 from rest_framework import serializers
 from Booking.models import Booking, BookingManager
 
@@ -18,9 +18,13 @@ class CreateBookingSerializer(serializers.ModelSerializer):
            
 
     def validate(self, attrs):
-        #if attrs['date'] < datetime.date.today():
-        #    raise serializers.ValidationError(
-        #        {"date": "Date must be in the future.
+        date = attrs['date']
+        time = attrs['time']
+        currentDateTime = datetime.now()
+        reservationDate = datetime.combine(date,time)
+        if reservationDate < currentDateTime:
+            raise serializers.ValidationError({"date": "You cannot book in the past"})
+
         conflicting_bookings = Booking.objects.filter(date=attrs['date'], time=attrs['time'])
         if conflicting_bookings.exists():
             raise serializers.ValidationError(

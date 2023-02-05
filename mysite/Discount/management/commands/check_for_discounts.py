@@ -6,8 +6,19 @@ class Command(BaseCommand):
     help = 'Checks for active discounts each day'
 
     def handle(self, *args, **kwargs):
-        now = timezone.now()
-        activating_discounts = Discount.objects.filter(start_date=now)
+        today = timezone.now().date()
+        print("WE IN")
+        activating_discounts = Discount.objects.filter(start_date=today)
         for discount in activating_discounts:
-            # Perform action for active discount
-            print("Discount {discount.id} needs activation")
+            #check if discount is expired
+            if discount.end_date < today:
+                discount.active = False
+                discount.save()
+                print("Discount expired")   
+
+            # Activate the discounts and delete the ones that are replaced    
+            #Se 
+            
+
+
+
