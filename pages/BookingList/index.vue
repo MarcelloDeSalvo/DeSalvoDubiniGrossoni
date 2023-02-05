@@ -4,6 +4,12 @@
       :DateBook="item.date"  :Time="item.time" :Date="item.date" :Socket="item.socketID" :BookingID="item.id"
       :Title="item.stationID"></BookingCardTemplate>
   </div>
+  <div class="text-center mt-20">
+        <p
+            class="w-full px-3 py-2 mb-3 text-lm leading-tight text-red-700 rounded appearance-none focus:outline-none focus:shadow-outline">
+            {{ response }}
+        </p>
+  </div>
 </template>
 
 <script>
@@ -11,6 +17,7 @@ export default {
   data() {
     return {
       items: null,
+      response: "",
     }
   },
   setup() {
@@ -54,6 +61,10 @@ export default {
       console.log(this.items)
     } catch (e) {
       throw new Error("Invalid JSON response - Server Error");
+    }
+
+    if (this.items == null || this.items.length == 0) {
+      this.response = "No bookings found"
     }
 
 
