@@ -6,7 +6,7 @@ from Socket.models import Socket, SocketManager
 class SocketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Socket
-        fields = ('id','chargingStation', 'type', 'status', 'price')
+        fields = ('id','chargingStation', 'type', 'status', 'price', 'connectedUserEmail')
 
 class CreateSocketSerializer(serializers.ModelSerializer):
     _db = 'default'
@@ -18,6 +18,7 @@ class CreateSocketSerializer(serializers.ModelSerializer):
             'chargingStation' : {'required' : True},
             'type': {'required': True},
             'status': {'required': True},
+            'connectedUserEmail': {'required': False},
         }
 
     def validate(self, attrs):
@@ -40,6 +41,7 @@ class CreateSocketSerializer(serializers.ModelSerializer):
                 validated_data['chargingStation'],
                 validated_data['type'],
                 validated_data['status'],
+                validated_data['connectedUserEmail']
             )
             return socket
         except Exception as e:

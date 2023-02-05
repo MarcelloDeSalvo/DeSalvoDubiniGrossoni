@@ -7,7 +7,7 @@ def create_example_dso(apps, schema_editor):
     dsoB = DSO(name="DSOB", availability=True, price=0.35)
     dsoC = DSO(name="DSOC", availability=True, price=0.60)
     dsoD = DSO(name="DSOD", availability=False, price=0.70)
-    dsoE = DSO(name="DSOD", availability=False, price=0.80)
+    dsoE = DSO(name="DSOE", availability=False, price=0.80)
     enel.save()
     dsoA.save()
     dsoB.save()

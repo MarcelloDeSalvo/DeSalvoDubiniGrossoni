@@ -17,14 +17,23 @@ class DiscountManager(models.Model):
         discount.start_date=start_date
         discount.end_date=end_date
         discount.discount_amount=discount_amount
-        discount.save(using=self._db)
+        discount.save()
         discount.applied_stations.set(applied_stations)
         return discount
 
     def delete_discount(self, discount):
-        discount.delete(using=self._db)
+        discount.delete()
         return discount
     
+    def get_discout_by_id(self, id):
+        return Discount.objects.get(id=id)
+
+    def filter(self, **kwargs):
+        return Discount.objects.filter(**kwargs)
+    def get(self, **kwargs):
+        return Discount.objects.get(**kwargs)
+
+
     pass
         
 
@@ -50,6 +59,12 @@ class Discount(models.Model):
 
     def get_discount_amount(self):
         return self.discount_amount
+
+    def get_applied_stations(self):
+        return self.applied_stations
+
+    def get_id(self):
+        return self.id
 
 
 

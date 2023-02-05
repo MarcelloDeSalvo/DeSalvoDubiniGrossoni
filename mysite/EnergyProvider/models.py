@@ -28,7 +28,9 @@ class EnergyProviderInterface(models.Model):
 
 class DSOManager(models.Manager):
     def create_dso(self, name, availability, price):
-        dso = self.create(name=name, availability=availability, price=price)
+        dso=DSO(name=name, availability=availability, price=price)
+        dso.save()
+        
         return dso
 
 class DSO(EnergyProviderInterface):

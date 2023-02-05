@@ -11,8 +11,17 @@ class SocketManager(models.Model):
         socket.type = type
         socket.status = status
         socket.price = socket.assign_price()
-        socket.save(using=self._db)
+        socket.connectedUserEmail = None
+        socket.save()
         return socket
+
+    def get_socket_by_id(self, id):
+        return self.get(id=id)
+
+    def filter(self, **kwargs):
+        return Socket.objects.filter(**kwargs)
+    def get(self, **kwargs):
+        return Socket.objects.get(**kwargs)
 
     pass
 
@@ -40,6 +49,7 @@ class Socket(models.Model):
         default=SocketStatus.AVAILABLE,
     )
     price = models.DecimalField(max_digits=10, decimal_places=2) #price is meant to be in kwh and is supposed to be a base price
+    connectedUserEmail = models.CharField(max_length=255, null=True, blank=True) 
 
 
     REQUIRED_FIELDS = ['chargingStation', 'type', 'status']
@@ -58,6 +68,18 @@ class Socket(models.Model):
 
     def is_available(self):
         return self.status == self.SocketStatus.AVAILABLE
+
+    def is_unavailable(self):
+        return self.status == self.SocketStatus.UNAVAILABLE
+    
+    def is_charging(self):
+        return self.status == self.SocketStatus.CHARGING
+
+    def get_charging_station(self):
+        return self.chargingStation
+    
+    def get_email(self):
+        return self.connectedUserEmail
     
     def assign_price(self):
         #function that assigns a price to the socket based on the type of socket, doesn't save it 
@@ -92,3 +114,17 @@ class Socket(models.Model):
     def set_charging(self):
         self.status = self.SocketStatus.CHARGING
         self.save() 
+
+    def set_email(self, email):
+        self.connectedUserEmail = email
+        self.save()
+
+    def remove_email(self):
+        self.connectedUserEmail = None
+        self.save()
+
+    def get_status(self):
+        return self.status
+
+    def get_station(self):
+        return self.chargingStation

@@ -7,16 +7,24 @@ class ChargingStationManager(models.Model):
         station = ChargingStation()
         station.address = address
         station.active_dso = active_dso
-        station.save(using=self._db)
+        station.save()
         station.connected_dsos.set(connected_dsos)
         return station
     
     def get_station_by_id(self, id):
         return self.get(id=id)
 
+    def get_station_by_address(self, address):
+        return self.get(address=address)
+           
+
     def get_sockets(self, id):
         return self.get(id=id).sockets.all()
-    
+
+    def filter(self, **kwargs):
+        return ChargingStation.objects.filter(**kwargs)
+    def get(self, **kwargs):
+        return ChargingStation.objects.get(**kwargs)
     pass
 
 class ChargingStation(models.Model):
@@ -33,6 +41,12 @@ class ChargingStation(models.Model):
 
     def get_id(self):
         return self.id
+
+    def get_address(self):
+        return self.address
+
+    def get_city(self):
+        return self.city
     
     def get_sockets(self):
         return self.sockets.all()

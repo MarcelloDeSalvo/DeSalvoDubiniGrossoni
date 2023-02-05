@@ -3,6 +3,8 @@ import datetime
 from rest_framework import serializers
 from ChargingStation.models import ChargingStation, ChargingStationManager
 from Socket.serializers import SocketSerializer
+from Discount.serializers import DiscountSerializer
+from Discount.models import Discount
 from EnergyProvider.serializers import DSO_Serializer, BSS_Serializer
 from Booking.serializers import BookingSerializer
 # keep in mind that there won't be an actual form available for the user to add a station
@@ -16,7 +18,7 @@ class ChargingStationSerializer(serializers.ModelSerializer):
     bookings = BookingSerializer(many=True, read_only=True)
     class Meta:
         model = ChargingStation
-        fields = ('id', 'address', 'active_dso', 'sockets', 'connected_dsos', 'connected_bss', 'bookings')
+        fields = ('id', 'address', 'active_dso', 'sockets', 'connected_dsos', 'connected_bss', 'bookings', 'city')
 
 #Same as above, but with less details (suitable for the EMSP)
 class ChargingStationBookingsSerializer(serializers.ModelSerializer):
@@ -24,7 +26,7 @@ class ChargingStationBookingsSerializer(serializers.ModelSerializer):
     sockets = SocketSerializer(many=True, read_only=True)
     class Meta:
         model = ChargingStation
-        fields = ('id', 'address', 'sockets', 'bookings')
+        fields = ('id', 'address', 'sockets', 'bookings', 'city')
 
 class CreateChargingStationSerializer(serializers.ModelSerializer):
     _db = 'default'
@@ -58,7 +60,8 @@ class CreateChargingStationSerializer(serializers.ModelSerializer):
                 self,
                 validated_data['address'],
                 validated_data['connected_dsos'],
-                validated_data['active_dso']
+                validated_data['active_dso'],
+                validated_data['city']
             )
             return station
             

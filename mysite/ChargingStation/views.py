@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from rest_framework.response import Response
-
+from Discount.serializers import DiscountSerializer
 from ChargingStation.models import ChargingStation, ChargingStationManager
+from Discount.models import Discount
 from .serializers import ChargingStationSerializer, CreateChargingStationSerializer
 from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -56,5 +57,12 @@ def getChargingStations(request):
 def getChargingStation(request, pk):
     station = ChargingStation.objects.get(id=pk)
     serializer = ChargingStationSerializer(station, many=False)
-    return Response(serializer.data)
+    discounts = station.applied_stations.all()
+    serializerDiscount = DiscountSerializer(discounts, many=True)
+    response={
+        'station': serializer.data,
+        'discounts': serializerDiscount.data
+    }
+
+    return Response(response)
     
