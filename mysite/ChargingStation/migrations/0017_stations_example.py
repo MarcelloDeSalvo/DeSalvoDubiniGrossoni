@@ -6,7 +6,7 @@ def create_example_stations(apps, schema_editor):
     s1.save()
     s1.connected_dsos.set([1,2])
 
-    s2 = Station(city="Milan", address="Via Milano, 2", active_dso_id=2)
+    s2 = Station(city="Rome", address="Via Roma, 2", active_dso_id=2)
     s2.save()
     s2.connected_dsos.set([2,3,4])
 
