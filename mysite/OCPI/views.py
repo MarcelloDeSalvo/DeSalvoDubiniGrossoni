@@ -78,11 +78,12 @@ def startChargeFromBooking(request):
 
     #find the time difference
     bookingDateTime = datetime.combine(date, time)
-    currentDateTime = datetime.now()
-    rome = pytz.timezone("Europe/Rome")
-    currentDateTime = rome.localize(currentDateTime)
-    bookingDateTime = rome.localize(bookingDateTime)
     
+    rome = pytz.timezone("Europe/Rome")
+    currentDateTime = datetime.now(rome)
+    bookingDateTime = rome.localize(bookingDateTime)
+    print(currentDateTime.time())
+    print(bookingDateTime)
     timeDifference= abs(bookingDateTime - currentDateTime)
     #check if the booking starting time has arrived
     if(currentDateTime>bookingDateTime):    
@@ -155,10 +156,8 @@ def startCharge(request):
     socket=Socket.objects.filter(id=request.data['socket']).first()
 
     if(socket.is_available()):
-        
-        currentDateTime = datetime.now()
         rome = pytz.timezone("Europe/Rome")
-        currentDateTime = rome.localize(currentDateTime)
+        currentDateTime = datetime.now(rome)
         delta=timedelta(minutes=10)
         bookings=Booking.objects.filter(socket=socket.get_id(), date=currentDateTime.date(), time__range=((currentDateTime-delta).time(), (currentDateTime+delta).time()))
         if(len(bookings)==0):
