@@ -101,7 +101,7 @@
 
 \section{Introduction}
 The code can be found in the official project repository on GitHub at the link:
-https://github.com/MarcelloDeSalvo/DeSalvoDubiniGrossoni.git.
+\url{https://github.com/MarcelloDeSalvo/DeSalvoDubiniGrossoni.git}.
 
 \subsection{Purpose}
 
@@ -162,7 +162,7 @@ This document will use technical language as it's aimed for programmers, but sta
 \newpage
 \section{Development}
 \subsection{Implemented Functionalities}
-We implemented the following functionalities for emsp users and cpo's operators:
+We implemented the following functionalities for emsp users and cpo operators:
 
 \subsubsection*{User}
 \begin{itemize}
@@ -190,7 +190,7 @@ daily check in pseudocode the machine would run, placed inside Discount/Manageme
 A similar reasoning was applied to the dynamic DSO decision, given that our data was static. We implemented a button that displays the funcionlity on the CPMS portal, but in reality it would be activated by a trigger
 placed on the DSO price database.
 \subsection{Implemented requirements}
-Here it follows the list of requirements taken from the RASD.
+Here follows the list of requirements taken from the RASD.
 The implemented ones are checked with a checkmark.
 \subsubsection*{Shared requirements}
 \newcounter{RequirementCtr}
@@ -375,7 +375,7 @@ database that provides a reliable, robust and ACID-compliant system and that gua
 We chose to host our front-end with Vercel, a platform as a service (PaaS) that allows
 to build, run, and host applications entirely in the cloud for free.
 \begin{itemize}
-    \item \url{de-salvo-dubini-grossoni.vercel.app}
+    \item \url{https://de-salvo-dubini-grossoni.vercel.app/}
 \end{itemize}
 
 
@@ -409,8 +409,8 @@ By doing so, we had to separate the two subsystems' backends inside two differen
 \end{itemize}
 
 
-\subsubsection{Apps}
-\subsection{eMSP backend}
+\subsection{Apps}
+\subsubsection{eMSP backend}
 \begin{itemize}
     \item \textbf{User}: contains all the models and views related to the user, from logging to authentication and account creation.
     \item \textbf{Booking}: contains all the models and views related to bookings, from booking creation to booking cancellation.
@@ -418,7 +418,7 @@ By doing so, we had to separate the two subsystems' backends inside two differen
     \item \textbf{OCPI}: contains the views relative to the OCPI protocol, it allows to send and receive OCPI messages to and from the CPMSs.
 \end{itemize}
 
-\subsection{CPMS backend}
+\subsubsection{CPMS backend}
 \begin{itemize}
     \item \textbf{User}: contains model and views related to the CPOW, from logging to account creation.
     \item \textbf{Booking}: contains all the models and views related to bookings, so the stations can see their associated bookings.
@@ -565,16 +565,16 @@ Now you can open each folder inside your IDE and start following the next instru
 
 
 \subsubsection{Backend}
-\textbf{Optional:} create a virtual environment to install all the required dependencies.
+\textbf{Optional:} Create a virtual environment to install all the required dependencies.
 You can use any virtual environment managers like venv, conda or virtualenv.
 For this example we will use venv:
 \begin{itemize}
-    \item[1)] create a virtual environment named "django"
+    \item[1)] Create a virtual environment named "django"
     \begin{lstlisting}[language=shell]
         python -m venv /path/to/new/virtual/environment/django
     \end{lstlisting}
     
-    \item[2)] activate the environment in WINDOWS
+    \item[2)] Activate the environment in WINDOWS
     \begin{lstlisting}[language=shell]
         path\django\Scripts\activate.bat
     \end{lstlisting}
@@ -687,9 +687,9 @@ Example:
     \begin{tabular}{|c||c|}
         \hline
         Student & Time for implementation\\ \hline
-        Marcello De Salvo & 20000h  \\
-        Francesco Dubini & 0 h (licenziato) \\
-        Riccardo Grossoni & 3 KW/h \\
+        Marcello De Salvo & 60 \\
+        Francesco Dubini &  53 \\
+        Riccardo Grossoni & 58 \\
         \hline
     \end{tabular}
 

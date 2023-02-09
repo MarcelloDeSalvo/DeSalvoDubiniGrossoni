@@ -8,7 +8,8 @@ We decided to split the main 4 projects in separate branches
 3 - emsp-back-end -> eMSP backend
 4 - cpms-back-end -> CPMS backend
 ```
-
+Alternatively you can open the respective folders inside the IT folder as separate projects..
+  
 ## Git worktree
 In order to setup the repo we strongly suggest to use git worktree and setup different folders to run each branch independently
 
