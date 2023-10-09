@@ -1,5 +1,24 @@
 # DeSalvoDubiniGrossoni
 
+# Introduction
+eMall is a software project that was created for PoliMi's Software Engineering 2 course during the 2022–2023 academic year. It is focused on the analysis, design, implementation, and testing of a system in accordance with the RASD (Requirement Analysis and Specification Document) and DD (Design Document).
+
+# Overview
+There are two types of users: Drivers and Charging Point Operators that can manage all the charging stations through another private section of the website
+Drivers of eMall can:
+- Locate nearby charging stations
+- Access information about the charging station
+- Book and start charging sessions
+
+A CPO can:
+- Manage current charging points and add new ones.
+- Decide on prices and provide discounts
+  
+![Home page](https://i.imgur.com/AIMcuV3.png)
+![Charging station](https://i.imgur.com/UgeF8pq.png)
+![Booking](https://i.imgur.com/8LZWFXe.png)
+
+
 # Installation
 We decided to split the main 4 projects in separate branches
 ```bash
